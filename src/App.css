@@ -1,38 +1,75 @@
+body {
+  background-color: rgb(148, 148, 148);
+  font-family: "Roboto", sans-serif;
+}
 .App {
   text-align: center;
+  display: grid;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.pokemonCard {
+  display: inline-block;
+  margin: 10px;
+  color: black;
+  padding: 8px;
+  border-radius: 2px;
+  width: 100px;
+  background-color: rgb(223, 223, 223);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a:hover {
+  transform: translateX(5), translateY(5);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.pokemonCard hr {
+  border: 2px solid black;
+}
+
+.searchBar {
+  display: inline-block;
+  background-color: rgb(80, 80, 80);
+  margin-top: 5px;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+input[type="text"] {
+  background: transparent;
+  border: none;
   color: white;
+  font-size: 30px;
 }
 
-.App-link {
-  color: #61dafb;
+.header {
+  display: block;
+  height: 100px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.forwardButton,
+.backButton {
+  margin: 25px;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: gray;
+}
+
+.forwardButton {
+  float: right;
+}
+
+.backButton {
+  float: left;
+}
+
+.type {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-family: "Quicksand", sans-serif;
+  border-radius: 10px;
+  border: solid;
+  border-color: orange;
+  color: orange;
+  border-width: thick;
+  padding: 5px;
+  background-color: yellow;
+  float: right;
 }
