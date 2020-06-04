@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Type from "./Type.js";
 
 const PokemonCard = ({ pokemon }) => {
@@ -10,28 +10,13 @@ const PokemonCard = ({ pokemon }) => {
           <hr />
           <img src={onePokemon.image} alt="pokemon" />
           <br />
-          {/* TYPES NEEDS MAPPING */}
+          <div className="typeBar">
+            <Type types={onePokemon.types} />
+          </div>
         </div>
       ))}
     </span>
   );
 };
-// class PokemonCard extends Component {
-//   render() {
-//     return (
-//       <a href="youtube.com">
-//         <span className="pokemonCard">
-//           <div>
-//             <label>Sample</label>
-//             <hr />
-//             <img src="" alt="pokemon" />
-//             <br />
-//             <Type />
-//           </div>
-//         </span>
-//       </a>
-//     );
-//   }
-// }
 
 export default PokemonCard;

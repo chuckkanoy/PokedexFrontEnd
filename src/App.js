@@ -2,71 +2,42 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import PokemonCard from "./components/PokemonCard.js";
-import ReactDOM from "react-dom";
 import axios from "axios";
-
-// var items = [];
-// for (var i = 0; i < 100; i++) {
-//   items.push(<PokemonCard />);
-// }
+import Home from "./components/Home";
 
 class App extends Component {
-  //default state object
-  state = {
-    pokemon: [],
-  };
-
-  componentDidMount() {
-    axios
-      .get("https://intern-pokedex.myriadapps.com/api/v1/pokemon")
-      .then((response) => {
-        //create an array of pokemon
-        const newPokemon = response.data.data.map((p) => {
-          return {
-            id: p.id,
-            name: p.name,
-            image: p.image,
-            types: p.types,
-          };
-        });
-        //create new state object
-        const newState = Object.assign({}, this.state, {
-          pokemon: newPokemon,
-        });
-
-        //store new state in components state
-        this.setState(newState);
-      })
-      .catch((error) => console.log(error));
+  constructor(props) {
+    super(props);
+    //default state object
+    this.state = [];
   }
 
+  //callback function to change the page number
+  getStateChanged = (childData) => {
+    this.setState(childData);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.state.pageData);
+    // this.updateUserData(
+    //   "https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=" +
+    //     this.state.pageData.current_page
+    // );
+  }
+
+  //call load automatically
+  componentDidMount() {
+    //this.loadUserData("https://intern-pokedex.myriadapps.com/api/v1/pokemon");
+  }
+
+  //display data
   render() {
     return (
       <div className="App">
-        <Header />
-        <PokemonCard pokemon={this.state.pokemon} />
+        <Home getStateChanged={this.getStateChanged} />
       </div>
     );
   }
 }
-
-// function App() {
-//   //get the data from the API
-//   axios
-//     .get("https://intern-pokedex.myriadapps.com/api/v1/pokemon")
-//     .then(function (response) {
-//       console.log(response);
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-//   //return view
-//   return (
-//     <div className="App">
-//       <Header />
-//       <div className="item-container">{items}</div>
-//     </div>
-//   );
-// }
 
 export default App;
