@@ -35,6 +35,48 @@ a:hover {
   width: 100%;
 }
 
+/* styling for pokemon detail */
+.pokemondDetail {
+  text-align: center;
+}
+
+.pokemonDetailCard {
+  display: inline-block;
+  margin: 10px;
+  color: black;
+  padding: 8px;
+  border-radius: 2px;
+  width: 50%;
+  height: auto;
+  background-color: rgb(223, 223, 223);
+}
+
+.pokemonDetailCard label {
+  font-size: 50px;
+}
+
+.pokemonDetailCard img {
+  align-items: left;
+  width: 50%;
+}
+
+.pokemonDetailCard .middleContainer {
+  display: block;
+  position: relative;
+}
+
+.pokemonDetailCard .statBox {
+  text-align: left;
+  align-content: right;
+  margin-right: 25px;
+}
+
+.pokemonDetailCard .infoBox {
+  position: relative;
+  text-align: left;
+  display: grid;
+}
+
 /* styling for header */
 .header {
   display: block;
@@ -82,12 +124,13 @@ object {
   display: grid;
   height: 30px;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 .type {
   font-family: "Open Sans Condensed", sans-serif;
   font-family: "Quicksand", sans-serif;
   float: right;
-  margin: 0px 5px 0px 5px;
+  margin: 5px;
   height: 50px;
 }
 

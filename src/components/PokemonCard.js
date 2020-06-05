@@ -1,22 +1,32 @@
-import React from "react";
+import React, { Component } from "react";
 import Type from "./Type.js";
 
-const PokemonCard = ({ pokemon }) => {
-  return (
-    <span>
-      {pokemon.map((onePokemon) => (
+class PokemonCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.sendData = this.sendData.bind(this);
+  }
+
+  sendData() {
+    this.props.updateView(this.props.pokemon);
+  }
+
+  render() {
+    return (
+      <a href="#" onClick={this.sendData}>
         <div className="pokemonCard">
-          <label>{onePokemon.name}</label>
+          <label>{this.props.pokemon.name}</label>
           <hr />
-          <img src={onePokemon.image} alt="pokemon" />
+          <img src={this.props.pokemon.image} alt="pokemon" />
           <br />
           <div className="typeBar">
-            <Type types={onePokemon.types} />
+            <Type types={this.props.pokemon.types} />
           </div>
         </div>
-      ))}
-    </span>
-  );
-};
+      </a>
+    );
+  }
+}
 
 export default PokemonCard;
