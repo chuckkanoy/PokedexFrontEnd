@@ -6,6 +6,7 @@ import axios from "axios";
 import PokemonDetail from "./components/PokemonDetail";
 
 class App extends Component {
+  //initialize state, constants, and methods
   constructor(props) {
     super(props);
     const pokemon = null;
@@ -17,21 +18,20 @@ class App extends Component {
       pokemon: null,
       current_page: 1,
       name: "",
+      searchingName: false,
     };
     this.updateView = this.updateView.bind(this);
   }
 
+  //get initial page of pokemon
   componentDidMount() {
     this.loadUserData("https://intern-pokedex.myriadapps.com/api/v1/pokemon");
   }
-
+  //update the current paginated data
   onPageChanged = (newData) => {
-    // const {data} = this.state.data;
     const { current_page, pageLimit } = newData;
 
-    // const offset = (currentPage - 1) * pageLimit;
-    // const currentPokemon = data.slice(offset, offset + pageLimit);
-
+    //get new response data for current query
     axios
       .get(
         "https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=" +
@@ -47,14 +47,16 @@ class App extends Component {
 
   //callback to change data
   updatePageData = (newData) => {
-    const { current_page, totalPages, pageLimit, totalRecords } = newData;
-    console.log(
-      `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${current_page}&limit=${totalPages}`
-    );
+    const { current_page, totalPages } = newData;
+    var link = `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${current_page}`;
+
+    if (this.state.name !== "") {
+      link = `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${this.state.name}&page=${current_page}`;
+    }
+
+    //update query to new page
     axios
-      .get(
-        `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${current_page}&limit=${totalPages}`
-      )
+      .get(link)
       .then((response) => {
         //create an array of pokemon
         const newData = response.data.data.map((p) => {
@@ -85,8 +87,8 @@ class App extends Component {
       .catch((error) => console.log(error));
   };
 
-  searchPartialPokemon = (e) => {
-    this.setState({ name: this.state.name + e });
+  //search pokemon as user types in data
+  searchPokemon = async (e) => {
     axios
       .get(`https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${e}`)
       .then((response) => {
@@ -112,26 +114,26 @@ class App extends Component {
         });
       })
       .catch((error) => console.log(error));
+
+    //update the name state to what is in input field
+    this.setState({ name: e });
   };
 
-  searchFullPokemon = (e) => {
-    this.setState({ name: "" });
-    this.searchPartialPokemon(e);
-  };
-
+  //update the view if pokemon is specified
   updateView = (newPokemon) => {
     this.pokemon = newPokemon;
     this.setState({ pokemonDetailFlag: true });
   };
 
+  //return to appropriate page
   revert = (newValue) => {
-    console.log(this.state.current_page);
     this.setState({ pokemonDetailFlag: newValue });
   };
 
   //display data
   render() {
-    const { data, meta, links } = this.state;
+    //grab the data from the state
+    const { data } = this.state;
     //const totalPokemon = allPokemon.length;
 
     //if (totalPokemon === 0) return null;
@@ -141,8 +143,7 @@ class App extends Component {
           <Header
             onPageChanged={this.updatePageData}
             current_page={this.state.current_page}
-            searchPartialPokemon={this.searchPartialPokemon}
-            searchFullPokemon={this.searchFullPokemon}
+            searchPokemon={this.searchPokemon}
             name={this.state.name}
           />
           <div>

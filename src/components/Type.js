@@ -1,4 +1,5 @@
 import React from "react";
+import "./Type.css";
 
 //get the appropriate type of the pokemon and add as classname for styling
 function getType(type) {

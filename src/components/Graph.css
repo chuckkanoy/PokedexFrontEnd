@@ -1,0 +1,9 @@
+.graph {
+  position: relative;
+  width: 50%;
+  height: 100px;
+  background: #ddd;
+  display: grid;
+  text-align: left;
+  float: right;
+}

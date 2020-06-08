@@ -1,25 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-
-//direction constants
-const LEFT_PAGE = "LEFT";
-const RIGHT_PAGE = "RIGHT";
-
-//helper method
-const range = (from, to, step = 1) => {
-  let i = from;
-  const range = [];
-
-  while (i <= to) {
-    range.push(i);
-    i += step;
-  }
-
-  return range;
-};
+import "./Header.css";
 
 class Header extends Component {
+  //initialize state and constants
   constructor(props) {
     super(props);
     const { totalPokemon = null, pageLimit = 15, pageNeighbors = 0 } = props;
@@ -46,6 +31,7 @@ class Header extends Component {
     this.loadUserData("https://intern-pokedex.myriadapps.com/api/v1/pokemon");
   }
 
+  //change page data if necesssary
   goToPage = (page) => {
     const { onPageChanged = (f) => f } = this.props;
 
@@ -64,20 +50,23 @@ class Header extends Component {
     this.setState({ current_page }, () => onPageChanged(paginationData));
   };
 
+  //handle if moving back in pages
   handleMoveLeft = (evt) => {
     evt.preventDefault();
     this.goToPage(this.state.current_page - 1);
   };
 
+  //handle if moving forward
   handleMoveRight = (evt) => {
     evt.preventDefault();
     this.goToPage(this.state.current_page + 1);
   };
 
+  //display the view of the header
   render() {
-    const { current_page } = this.state;
     return (
       <div className="header">
+        {/* back button */}
         <span className="backButton">
           <a href="#" onClick={this.handleMoveLeft}>
             <object
@@ -89,6 +78,7 @@ class Header extends Component {
             </object>
           </a>
         </span>
+        {/* search bar */}
         <span className="searchBar">
           <object type="image/svg+xml" data="search-24px.svg" class="logo">
             Search
@@ -96,12 +86,11 @@ class Header extends Component {
           <input
             type="text"
             placeholder="Pokémon"
-            onChange={(event) =>
-              this.props.searchPartialPokemon(event.target.value)
-            }
+            onChange={(e) => this.props.searchPokemon(e.target.value)}
             value={this.props.name}
           />
         </span>
+        {/* forward button */}
         <span className="forwardButton">
           <a href="#" onClick={this.handleMoveRight}>
             <object
@@ -139,6 +128,7 @@ class Header extends Component {
   }
 }
 
+//props for pagination
 Header.propTypes = {
   totalPokemon: PropTypes.number.isRequired,
   pageLimit: PropTypes.number,

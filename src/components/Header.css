@@ -1,0 +1,41 @@
+/* styling for header */
+.header {
+  display: block;
+  height: 100px;
+}
+
+.searchBar {
+  display: inline-block;
+  background-color: rgb(80, 80, 80);
+  margin-top: 5px;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+input[type="text"] {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+  margin: 0px 0px 0px 10px;
+}
+
+object {
+  pointer-events: none;
+}
+
+.forwardButton,
+.backButton {
+  margin: 25px;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: gray;
+}
+
+.forwardButton {
+  float: right;
+}
+
+.backButton {
+  float: left;
+}
