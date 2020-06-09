@@ -1,9 +1,8 @@
 .graph {
   position: relative;
-  width: 50%;
-  height: 100px;
+  width: 500px;
+  height: 200px;
   background: #ddd;
-  display: grid;
   text-align: left;
-  float: right;
+  /* float: right; */
 }

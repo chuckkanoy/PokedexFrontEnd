@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "./Header.css";
+import { Route } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import ForwardButton from "./ForwardButton";
 
 class Header extends Component {
   //initialize state and constants
@@ -53,13 +56,13 @@ class Header extends Component {
   //handle if moving back in pages
   handleMoveLeft = (evt) => {
     evt.preventDefault();
-    this.goToPage(this.state.current_page - 1);
+    return this.goToPage(this.props.current_page - 1);
   };
 
   //handle if moving forward
   handleMoveRight = (evt) => {
     evt.preventDefault();
-    this.goToPage(this.state.current_page + 1);
+    return this.goToPage(this.props.current_page + 1);
   };
 
   //display the view of the header
@@ -67,16 +70,10 @@ class Header extends Component {
     return (
       <div className="header">
         {/* back button */}
-        <span className="backButton">
-          <a href="#" onClick={this.handleMoveLeft}>
-            <object
-              type="image/svg+xml"
-              data="arrow_back-24px.svg"
-              class="logo"
-            >
-              Forward
-            </object>
-          </a>
+        <span className="backButton" onClick={this.handleMoveLeft}>
+          <object type="image/svg+xml" data="arrow_back-24px.svg" class="logo">
+            Back
+          </object>
         </span>
         {/* search bar */}
         <span className="searchBar">
@@ -91,16 +88,14 @@ class Header extends Component {
           />
         </span>
         {/* forward button */}
-        <span className="forwardButton">
-          <a href="#" onClick={this.handleMoveRight}>
-            <object
-              type="image/svg+xml"
-              data="arrow_forward-24px.svg"
-              class="logo"
-            >
-              Forward
-            </object>
-          </a>
+        <span className="forwardButton" onClick={this.handleMoveRight}>
+          <object
+            type="image/svg+xml"
+            data="arrow_forward-24px.svg"
+            class="logo"
+          >
+            Forward
+          </object>
         </span>
       </div>
     );

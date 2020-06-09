@@ -4,6 +4,8 @@ import axios from "axios";
 import BarChart from "react-bar-chart";
 import Graph from "./Graph.js";
 import "./PokemonDetail.css";
+import { useLocation } from "react-router";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class PokemonDetail extends Component {
   //initialize state, constant, and methods
@@ -13,6 +15,8 @@ class PokemonDetail extends Component {
     this.state = {
       pokemon: [],
     };
+
+    const count = 0;
 
     this.handleBack = this.handleBack.bind(this);
     this.getStatChart = this.getStatChart.bind(this);
@@ -41,18 +45,16 @@ class PokemonDetail extends Component {
 
       //display the actual data once loaded
       return (
-        <div>
+        <div className="detailWrapper">
           {/* back button for returning to pagination */}
-          <span className="backButton">
-            <a href="#" onClick={this.handleBack}>
-              <object
-                type="image/svg+xml"
-                data="arrow_back-24px.svg"
-                class="logo"
-              >
-                Back
-              </object>
-            </a>
+          <span className="backButton" onClick={this.props.history.goBack}>
+            {/* <object
+              type="image/svg+xml"
+              data="arrow_back-24px.svg"
+              class="logo"
+            > */}
+            Back
+            {/* </object> */}
           </span>
           <h1 className="pokemonDetailHeader">{this.state.pokemon.name}</h1>
           {/* actual detail card data */}
@@ -62,12 +64,16 @@ class PokemonDetail extends Component {
               <label>
                 <strong>{this.state.pokemon.name}</strong>
               </label>
-              <label>&emsp; #{this.state.pokemon.id}</label>
+              <label className="pokemonNumber">
+                &emsp; #{this.state.pokemon.id}
+              </label>
             </div>
             <hr />
             {/* container holding pokemon image and statistics */}
             <div className="middleContainer">
-              <img src={this.state.pokemon.image} alt="pokemon" />
+              <div className="pokemonImage">
+                <img src={this.state.pokemon.image} alt="pokemon" />
+              </div>
               {/* display statistics */}
               <div className="statBox">
                 <Graph
@@ -76,6 +82,7 @@ class PokemonDetail extends Component {
                 />
               </div>
             </div>
+            <br />
             <div className="infoBox">
               <strong>{this.state.pokemon.genus}</strong>
               <br />
@@ -84,18 +91,17 @@ class PokemonDetail extends Component {
             </div>
             <div className="profile">
               <p className="profileHeader">&emsp;Profile</p>
-              Height: {this.state.pokemon.height}
+              Height: &emsp;&emsp;&emsp;
+              {this.state.pokemon.height}
               <br />
-              Weight: {this.state.pokemon.weight}
+              Weight:&emsp;&emsp;&emsp;
+              {this.state.pokemon.weight}
               <br />
-              Abilities:
-              {this.state.pokemon.abilities.map((ability) => (
-                <p>{ability}</p>
-              ))}
-              Egg groups:
-              {this.state.pokemon.egg_groups.map((group) => (
-                <p>{group}</p>
-              ))}
+              Abilities:&emsp;&emsp;&nbsp;&nbsp;
+              {this.state.pokemon.abilities.map((ability) => `${ability},`)}
+              <br />
+              Egg groups:&emsp;
+              {this.state.pokemon.egg_groups.map((group) => `${group},`)}
             </div>
             <br />
           </div>
@@ -122,9 +128,11 @@ class PokemonDetail extends Component {
 
   //display appropriate pokemon data according to id
   componentDidMount() {
-    this.loadPokemonData(
-      `https://intern-pokedex.myriadapps.com/api/v1/pokemon/${this.props.pokemon.id}`
-    );
+    if (this.props.location.state !== undefined) {
+      this.loadPokemonData(
+        `https://intern-pokedex.myriadapps.com/api/v1/pokemon/${this.props.location.state.pokemon.id}`
+      );
+    }
   }
 
   //get the pokemon from the api

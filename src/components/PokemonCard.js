@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Type from "./Type.js";
 import "./PokemonCard.css";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class PokemonCard extends Component {
   //initialize method
@@ -18,7 +19,14 @@ class PokemonCard extends Component {
   //render the view of the pokemon cards
   render() {
     return (
-      <a href="#" onClick={this.sendData}>
+      <Link
+        to={{
+          pathname: `/pokemon/${this.props.pokemon.id}`,
+          state: {
+            pokemon: this.props.pokemon,
+          },
+        }}
+      >
         <div className="pokemonCard">
           <label>{this.props.pokemon.name}</label>
           <hr />
@@ -28,7 +36,7 @@ class PokemonCard extends Component {
             <Type types={this.props.pokemon.types} />
           </div>
         </div>
-      </a>
+      </Link>
     );
   }
 }

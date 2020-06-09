@@ -13,7 +13,6 @@
   font-family: "Quicksand", sans-serif;
   float: right;
   margin: 0px 2px 0px 2px;
-  height: 10px;
 }
 
 /* styling for specific types */
@@ -22,6 +21,8 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  height: 10px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: rebeccapurple;
   color: rebeccapurple;
@@ -33,6 +34,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: darkgreen;
   color: darkgreen;
@@ -44,6 +46,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: darkred;
   color: darkred;
@@ -55,6 +58,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: gray;
   color: gray;
@@ -66,6 +70,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: darkblue;
   color: darkblue;
@@ -77,6 +82,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: darkgreen;
   color: darkgreen;
@@ -88,6 +94,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: black;
   color: black;
@@ -99,6 +106,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: gold;
   color: gold;
@@ -110,6 +118,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: rgb(114, 30, 30);
   color: rgb(114, 30, 30);
@@ -121,6 +130,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: rgb(255, 2, 255);
   color: rgb(255, 2, 255);
@@ -132,6 +142,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: darkorange;
   color: darkorange;
@@ -143,6 +154,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: black;
   color: black;
@@ -154,6 +166,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: black;
   color: black;
@@ -165,6 +178,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: black;
   color: black;
@@ -176,6 +190,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: cyan;
   color: cyan;
@@ -187,6 +202,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: gray;
   color: gray;
@@ -198,6 +214,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: orangered;
   color: orangered;
@@ -209,6 +226,7 @@
   border: solid;
   border-width: normal;
   padding: 5px;
+  vertical-align: middle;
   /* changing for each type */
   border-color: black;
   color: black;

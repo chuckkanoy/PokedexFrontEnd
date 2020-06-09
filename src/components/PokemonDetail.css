@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.detailWrapper {
+  text-align: center;
+}
+
 .pokemonDetailCard {
   display: inline-block;
   margin: 10px;
@@ -32,12 +36,19 @@ h1 {
 }
 
 .pokemonDetailCard img {
-  float: left;
-  width: 25%;
+  width: 35%;
+  text-align: center;
+}
+
+.pokemonImage {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
 }
 
 .pokemonDetailCard .middleContainer {
-  display: inline-block;
+  text-align: center;
+  position: relative;
   width: 100%;
   vertical-align: middle;
 }
@@ -49,5 +60,10 @@ h1 {
 }
 
 .pokemonDetailCard .statBox {
-  vertical-align: baseline;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.pokemonNumber {
+  color: white;
 }
