@@ -128,11 +128,10 @@ class PokemonDetail extends Component {
 
   //display appropriate pokemon data according to id
   componentDidMount() {
-    if (this.props.location.state !== undefined) {
-      this.loadPokemonData(
-        `https://intern-pokedex.myriadapps.com/api/v1/pokemon/${this.props.location.state.pokemon.id}`
-      );
-    }
+    console.log(this.props.match.params.id);
+    this.loadPokemonData(
+      `https://intern-pokedex.myriadapps.com/api/v1/pokemon/${this.props.match.params.id}`
+    );
   }
 
   //get the pokemon from the api
