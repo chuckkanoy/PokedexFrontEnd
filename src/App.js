@@ -120,15 +120,15 @@ class App extends Component {
   // };
 
   //update the view if pokemon is specified
-  updateView = (newPokemon) => {
-    this.pokemon = newPokemon;
-    this.setState({ pokemonDetailFlag: true });
-  };
+  // updateView = (newPokemon) => {
+  //   this.pokemon = newPokemon;
+  //   this.setState({ pokemonDetailFlag: true });
+  // };
 
-  //return to appropriate page
-  revert = (newValue) => {
-    this.setState({ pokemonDetailFlag: newValue });
-  };
+  // //return to appropriate page
+  // revert = (newValue) => {
+  //   this.setState({ pokemonDetailFlag: newValue });
+  // };
 
   //display data
   // render() {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import "./Header.css";
 import { Route } from "react-router-dom";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ForwardButton from "./ForwardButton";
 
 class Header extends Component {
@@ -11,6 +11,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     const { totalPokemon = null, pageLimit = 15, pageNeighbors = 0 } = props;
+    const data = 0;
 
     this.pageLimit = typeof pageLimit === "number" ? pageLimit : 15;
     this.totalPokemon = typeof totalPokemon === "number" ? totalPokemon : 0;
@@ -27,43 +28,51 @@ class Header extends Component {
       totalPages: 0,
       pageLimit: 15,
     };
+
+    this.onPageChanged = this.onPageChanged.bind(this);
   }
 
   //load initial data
   componentDidMount() {
-    this.loadUserData("https://intern-pokedex.myriadapps.com/api/v1/pokemon");
+    // this.loadUserData("https://intern-pokedex.myriadapps.com/api/v1/pokemon");
   }
 
+  onPageChanged = (newData) => {
+    this.data = newData;
+    console.log(this.data);
+  };
+
   //change page data if necesssary
-  goToPage = (page) => {
-    const { onPageChanged = (f) => f } = this.props;
+  // goToPage = (page) => {
+  //   const { onPageChanged = (f) => f } = this.props;
 
-    const current_page = Math.max(
-      this.state.from,
-      Math.min(page, this.state.totalPages)
-    );
+  //   const current_page = Math.max(
+  //     this.state.from,
+  //     Math.min(page, this.state.totalPages)
+  //   );
 
-    const paginationData = {
-      current_page: current_page,
-      totalPages: this.state.totalPages,
-      pageLimit: this.state.pageLimit,
-      totalRecords: 553,
-    };
+  //   const paginationData = {
+  //     current_page: current_page,
+  //     totalPages: this.state.totalPages,
+  //     pageLimit: this.state.pageLimit,
+  //     totalRecords: 553,
+  //   };
 
-    this.setState({ current_page }, () => onPageChanged(paginationData));
-  };
+  //   console.log(current_page);
+  //   this.setState({ current_page }, () => onPageChanged(paginationData));
+  // };
 
-  //handle if moving back in pages
-  handleMoveLeft = (evt) => {
-    evt.preventDefault();
-    return this.goToPage(this.props.current_page - 1);
-  };
+  // //handle if moving back in pages
+  // handleMoveLeft = (evt) => {
+  //   evt.preventDefault();
+  //   return this.goToPage(this.props.current_page - 1);
+  // };
 
-  //handle if moving forward
-  handleMoveRight = (evt) => {
-    evt.preventDefault();
-    return this.goToPage(this.props.current_page + 1);
-  };
+  // //handle if moving forward
+  // handleMoveRight = (evt) => {
+  //   evt.preventDefault();
+  //   return this.goToPage(this.props.current_page + 1);
+  // };
 
   //display the view of the header
   render() {
@@ -83,44 +92,37 @@ class Header extends Component {
           <input
             type="text"
             placeholder="Pokémon"
-            onChange={(e) => this.props.searchPokemon(e.target.value)}
+            // onChange={(e) => this.props.searchPokemon(e.target.value)}
             value={this.props.name}
           />
         </span>
         {/* forward button */}
-        <span className="forwardButton" onClick={this.handleMoveRight}>
-          <object
-            type="image/svg+xml"
-            data="arrow_forward-24px.svg"
-            class="logo"
-          >
-            Forward
-          </object>
-        </span>
+
+        <ForwardButton onPageChanged={this.onPageChanged} />
       </div>
     );
   }
 
   //get the pokemon from the api
-  loadUserData(link) {
-    axios
-      .get(link)
-      .then((response) => {
-        //grab link data
-        const from = response.data.meta.from;
-        const totalPages = response.data.meta.last_page;
-        const pageLimit = response.data.meta.per_page;
-        const totalRecords = response.data.meta.total;
-        //store new state in components state
-        this.setState({
-          totalPages: totalPages,
-          pageLimit: pageLimit,
-          totalRecords: totalRecords,
-          from: from,
-        });
-      })
-      .catch((error) => console.log(error));
-  }
+  // loadUserData(link) {
+  //   axios
+  //     .get(link)
+  //     .then((response) => {
+  //       //grab link data
+  //       const from = response.data.meta.from;
+  //       const totalPages = response.data.meta.last_page;
+  //       const pageLimit = response.data.meta.per_page;
+  //       const totalRecords = response.data.meta.total;
+  //       //store new state in components state
+  //       this.setState({
+  //         totalPages: totalPages,
+  //         pageLimit: pageLimit,
+  //         totalRecords: totalRecords,
+  //         from: from,
+  //       });
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
 }
 
 //props for pagination

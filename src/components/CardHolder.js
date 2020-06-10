@@ -4,9 +4,8 @@ import PokemonCard from "./PokemonCard.js";
 import axios from "axios";
 import PokemonDetail from "./PokemonDetail";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import CardHolder from "./CardHolder";
 
-class Home extends Component {
+class CardHolder extends Component {
   constructor(props) {
     super(props);
     const pokemon = null;
@@ -56,14 +55,14 @@ class Home extends Component {
   render() {
     const { data } = this.state;
     return (
-      <div className="App">
-        <Header
-          // onPageChanged={this.updatePageData}
-          current_page={this.state.current_page}
-          searchPokemon={this.searchPokemon}
-          name={this.state.name}
-        />
-        <CardHolder />
+      <div>
+        {data.map((pokemon) => (
+          <PokemonCard
+            key={pokemon.cca3}
+            pokemon={pokemon}
+            updateView={this.updateView}
+          />
+        ))}
       </div>
     );
   }
@@ -137,14 +136,13 @@ class Home extends Component {
 
   //get initial page of pokemon
   componentDidMount() {
-    console.log(this.props.match.params.page);
-    if (this.props.match.params !== {}) {
+    console.log(this.props);
+    if (this.props.match !== undefined) {
       this.loadUserData(
         `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${this.props.match.params.page}`
         // `{https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${this.props.params.page}}`
       );
     } else {
-      console.log(this.props.params.page);
       this.loadUserData(
         `https://intern-pokedex.myriadapps.com/api/v1/pokemon`
         // `{https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${this.props.params.page}}`
@@ -171,4 +169,4 @@ class Home extends Component {
   // }
 }
 
-export default Home;
+export default CardHolder;
