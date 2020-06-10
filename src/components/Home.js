@@ -3,8 +3,10 @@ import Header from "./Header";
 import PokemonCard from "./PokemonCard.js";
 import axios from "axios";
 import PokemonDetail from "./PokemonDetail";
+import { browserHistory } from "react-router";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import CardHolder from "./CardHolder";
+
+const root = `https://intern-pokedex.myriadapps.com/api/v1/pokemon`;
 
 class Home extends Component {
   constructor(props) {
@@ -17,59 +19,76 @@ class Home extends Component {
       pokemonDetailFlag: false,
       pokemon: null,
       current_page: 1,
+      pageLimit: 37,
       name: "",
       searchingName: false,
     };
-    // this.updateView = this.updateView.bind(this);
   }
 
   //search pokemon as user types in data
-  // searchPokemon = async (e) => {
-  //   axios
-  //     .get(`https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${e}`)
-  //     .then((response) => {
-  //       //create an array of pokemon
-  //       const newData = response.data.data.map((p) => {
-  //         return {
-  //           id: p.id,
-  //           name: p.name,
-  //           image: p.image,
-  //           types: p.types,
-  //         };
-  //       });
-  //       const newMetaData = response.data.meta;
-  //       const newLinksData = response.data.links;
-  //       //change the state to the new state
-  //       this.setState({
-  //         data: newData,
-  //         meta: newMetaData,
-  //         links: newLinksData,
-  //         //current_page: current_page,
-  //       });
-  //     })
-  //     .catch((error) => console.log(error));
-
-  //   //update the name state to what is in input field
-  //   this.setState({ name: e });
-  // };
+  searchPokemon = async (e, current) => {
+    var link = ``;
+    if (this.props.match.params.name !== "") {
+      link = root + `?name=${e}&page=${current}`;
+    } else {
+      link = root + `?page=${current}`;
+    }
+    axios
+      .get(link)
+      .then((response) => {
+        //create an array of pokemon
+        const newData = response.data.data.map((p) => {
+          return {
+            id: p.id,
+            name: p.name,
+            image: p.image,
+            types: p.types,
+          };
+        });
+        const newMetaData = response.data.meta;
+        const newLinksData = response.data.links;
+        //change the state to the new state
+        this.setState({
+          data: newData,
+          meta: newMetaData,
+          links: newLinksData,
+          //current_page: current_page,
+        });
+      })
+      .catch((error) => console.log(error));
+    //update the name state to what is in input field
+    this.setState({ name: e });
+    console.log(this.state.meta);
+  };
 
   render() {
     const { data } = this.state;
     return (
       <div className="App">
         <Header
-          // onPageChanged={this.updatePageData}
+          onPageChanged={this.onPageChanged}
           current_page={this.state.current_page}
           searchPokemon={this.searchPokemon}
           name={this.state.name}
+          from={this.state.meta.from}
+          last={this.state.meta.last_page}
         />
-        <CardHolder />
+
+        <div>
+          {data.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.cca3}
+              pokemon={pokemon}
+              updateView={this.updateView}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 
+  //load in data based on link
   loadUserData(link) {
-    console.log(link);
     axios
       .get(link)
       .then((response) => {
@@ -90,85 +109,30 @@ class Home extends Component {
       .catch((error) => console.log(error));
   }
 
-  // //callback to change data
-  // updatePageData = (newData) => {
-  //   const { current_page, totalPages } = newData;
-  //   console.log(this.props);
-  //   var link = `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${current_page}`;
-
-  //   if (this.state.name !== "") {
-  //     link = `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${this.state.name}&page=${current_page}`;
-  //   }
-
-  //   //update query to new page
-  //   axios
-  //     .get(link)
-  //     .then((response) => {
-  //       //create an array of pokemon
-  //       const newData = response.data.data.map((p) => {
-  //         return {
-  //           id: p.id,
-  //           name: p.name,
-  //           image: p.image,
-  //           types: p.types,
-  //         };
-  //       });
-  //       const newMetaData = response.data.meta;
-  //       const newLinksData = response.data.links;
-  //       //create new state object
-  //       const newState = {
-  //         data: newData,
-  //         meta: newMetaData,
-  //         links: newLinksData,
-  //       };
-
-  //       //change the state to the new state
-  //       this.setState({
-  //         data: newData,
-  //         meta: newMetaData,
-  //         links: newLinksData,
-  //         current_page: current_page,
-  //       });
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
-
-  //initialize state, constants, and methods
-
   //get initial page of pokemon
   componentDidMount() {
-    console.log(this.props.match.params.page);
-    if (this.props.match.params !== {}) {
+    if (this.props.match.params.name) {
       this.loadUserData(
-        `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${this.props.match.params.page}`
-        // `{https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${this.props.params.page}}`
+        root +
+          `?name=${this.props.match.params.name}&page=${this.props.match.params.page}`
       );
+    } else if (this.props.match.params) {
+      this.loadUserData(root + `?page=${this.props.match.params.page}`);
     } else {
-      console.log(this.props.params.page);
-      this.loadUserData(
-        `https://intern-pokedex.myriadapps.com/api/v1/pokemon`
-        // `{https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${this.props.params.page}}`
-      );
+      this.loadUserData(root);
     }
   }
   //update the current paginated data
-  //   onPageChanged = (newData) => {
-  //     const { current_page, pageLimit } = newData;
-
-  //     //get new response data for current query
-  //     axios
-  //       .get(
-  //         "https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=" +
-  //           current_page +
-  //           "&limit=" +
-  //           pageLimit
-  //       )
-  //       .then((response) => {
-  //         const currentPokemon = response.data.data;
-  //         this.setState({ data: response.data.data, current_page: current_page });
-  //       });
-  //   };
-  // }
+  onPageChanged = (newData) => {
+    const { current_page, pageLimit } = newData;
+    console.log(current_page);
+    if (this.props.match.params.name) {
+      this.searchPokemon(this.props.match.params.name, current_page);
+    } else {
+      this.loadUserData(root + `?page=${current_page}`);
+    }
+    this.setState({ current_page: current_page });
+  };
 }
 
 export default Home;

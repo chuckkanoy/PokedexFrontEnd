@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import "./Header.css";
 import { Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import ForwardButton from "./ForwardButton";
+import { BrowserRouter as Router, Link, withRouter } from "react-router-dom";
 
 class Header extends Component {
   //initialize state and constants
@@ -32,97 +31,120 @@ class Header extends Component {
     this.onPageChanged = this.onPageChanged.bind(this);
   }
 
-  //load initial data
-  componentDidMount() {
-    // this.loadUserData("https://intern-pokedex.myriadapps.com/api/v1/pokemon");
-  }
-
   onPageChanged = (newData) => {
     this.data = newData;
     console.log(this.data);
   };
 
+  getCurrent = (e) => {
+    return Math.max(1, Math.min(e, this.props.last));
+  };
+
   //change page data if necesssary
-  // goToPage = (page) => {
-  //   const { onPageChanged = (f) => f } = this.props;
+  goToPage = (page) => {
+    const { onPageChanged = (f) => f } = this.props;
 
-  //   const current_page = Math.max(
-  //     this.state.from,
-  //     Math.min(page, this.state.totalPages)
-  //   );
+    const current_page = Math.max(1, Math.min(page, this.props.last));
 
-  //   const paginationData = {
-  //     current_page: current_page,
-  //     totalPages: this.state.totalPages,
-  //     pageLimit: this.state.pageLimit,
-  //     totalRecords: 553,
-  //   };
+    const paginationData = {
+      current_page: current_page,
+      totalPages: this.state.totalPages,
+      pageLimit: this.state.pageLimit,
+      totalRecords: 553,
+    };
 
-  //   console.log(current_page);
-  //   this.setState({ current_page }, () => onPageChanged(paginationData));
-  // };
+    this.setState({ current_page }, () => onPageChanged(paginationData));
+  };
 
-  // //handle if moving back in pages
-  // handleMoveLeft = (evt) => {
-  //   evt.preventDefault();
-  //   return this.goToPage(this.props.current_page - 1);
-  // };
+  //handle if moving back in pages
+  handleMoveLeft = (evt) => {
+    evt.preventDefault();
+    this.goToPage(this.props.current_page - 1);
+  };
 
-  // //handle if moving forward
-  // handleMoveRight = (evt) => {
-  //   evt.preventDefault();
-  //   return this.goToPage(this.props.current_page + 1);
-  // };
+  //handle if moving forward
+  handleMoveRight = (evt) => {
+    evt.preventDefault();
+    this.goToPage(parseInt(this.props.current_page) + 1);
+  };
 
   //display the view of the header
   render() {
-    return (
-      <div className="header">
-        {/* back button */}
-        <span className="backButton" onClick={this.handleMoveLeft}>
-          <object type="image/svg+xml" data="arrow_back-24px.svg" class="logo">
-            Back
-          </object>
-        </span>
-        {/* search bar */}
-        <span className="searchBar">
-          <object type="image/svg+xml" data="search-24px.svg" class="logo">
-            Search
-          </object>
-          <input
-            type="text"
-            placeholder="Pokémon"
-            // onChange={(e) => this.props.searchPokemon(e.target.value)}
-            value={this.props.name}
-          />
-        </span>
-        {/* forward button */}
+    if (this.props.name !== "") {
+      return (
+        <div className="header">
+          {/* back button */}
+          <span className="backButton" onClick={this.handleMoveLeft}>
+            <Link
+              to={`/home/${this.props.name}/${this.getCurrent(
+                parseInt(this.props.current_page) - 1
+              )}`}
+            >
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </Link>
+          </span>
+          {/* search bar */}
 
-        <ForwardButton onPageChanged={this.onPageChanged} />
-      </div>
-    );
+          <span className="searchBar">
+            <ion-icon name="search-sharp"></ion-icon>
+            <input
+              type="text"
+              placeholder="Pokémon"
+              onChange={(e) => (
+                this.props.searchPokemon(e.target.value),
+                this.props.history.push(
+                  `/home/${e.target.value}/${this.getCurrent(
+                    this.props.match.params.page
+                  )}`
+                )
+              )}
+              value={this.props.name}
+            />
+          </span>
+          {/* forward button */}
+          <span className="forwardButton" onClick={this.handleMoveRight}>
+            <Link
+              to={`/home/${this.props.name}/${this.getCurrent(
+                parseInt(this.props.current_page) + 1
+              )}`}
+            >
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </Link>
+          </span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="header">
+          {/* back button */}
+          <span className="backButton" onClick={this.handleMoveLeft}>
+            <Link to={`/home/${parseInt(this.props.current_page) - 1}`}>
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </Link>
+          </span>
+          {/* search bar */}
+
+          <span className="searchBar">
+            <ion-icon name="search-sharp"></ion-icon>
+            <input
+              type="text"
+              placeholder="Pokémon"
+              onChange={(e) => (
+                this.props.searchPokemon(e.target.value), this.goToPage(1)
+              )}
+              value={this.props.name}
+            />
+          </span>
+          {/* forward button */}
+          <span className="forwardButton" onClick={this.handleMoveRight}>
+            <Link to={`/home/${this.getCurrent(this.props.current_page + 1)}`}>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </Link>
+          </span>
+        </div>
+      );
+    }
   }
-
-  //get the pokemon from the api
-  // loadUserData(link) {
-  //   axios
-  //     .get(link)
-  //     .then((response) => {
-  //       //grab link data
-  //       const from = response.data.meta.from;
-  //       const totalPages = response.data.meta.last_page;
-  //       const pageLimit = response.data.meta.per_page;
-  //       const totalRecords = response.data.meta.total;
-  //       //store new state in components state
-  //       this.setState({
-  //         totalPages: totalPages,
-  //         pageLimit: pageLimit,
-  //         totalRecords: totalRecords,
-  //         from: from,
-  //       });
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
 }
 
 //props for pagination
@@ -133,4 +155,4 @@ Header.propTypes = {
   onPageChanged: PropTypes.func,
 };
 
-export default Header;
+export default withRouter(Header);

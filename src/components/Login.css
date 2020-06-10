@@ -1,0 +1,12 @@
+.login {
+  align-content: center;
+}
+
+.box {
+  display: block;
+  background-color: black;
+  width: 25%;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+}
