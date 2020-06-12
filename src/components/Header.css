@@ -12,7 +12,7 @@
   border-radius: 4px;
 }
 
-input[type="text"] {
+input {
   background: transparent;
   border: none;
   color: white;
@@ -43,5 +43,10 @@ object {
 ion-icon {
   width: 30px;
   height: 30px;
+  color: white;
+}
+
+.captureButton {
+  text-decoration: none;
   color: white;
 }

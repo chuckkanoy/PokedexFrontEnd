@@ -10,6 +10,7 @@ class Graph extends React.Component {
     this.initializeStats = this.initializeStats.bind(this);
   }
 
+  //grab the stats from the parent component
   initializeStats() {
     var stats = [
       this.props.stats["hp"],
@@ -34,6 +35,7 @@ class Graph extends React.Component {
     return stats;
   }
 
+  //visualize the graph using bar components
   render() {
     var stats = this.initializeStats();
     return (

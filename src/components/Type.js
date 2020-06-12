@@ -1,5 +1,6 @@
 import React from "react";
 import "./Type.css";
+import { Link } from "react-router-dom";
 
 //get the appropriate type of the pokemon and add as classname for styling
 function getType(type) {
@@ -41,16 +42,20 @@ function getType(type) {
     case "dark":
       return <label className="dark">{type}</label>;
     default:
-      return <label>{type}</label>;
+      return <label className="capture">{type}</label>;
   }
 }
 
-//
+//register the type label appropriate for
 const Type = ({ types }) => {
   return (
     <span>
       {types.map((oneType) => (
-        <div className="type">{getType(oneType)}</div>
+        <div className="typeWrapper">
+          <Link to={`/home/types/${oneType}/1`}>
+            <div className="type">{getType(oneType)}</div>
+          </Link>
+        </div>
       ))}
     </span>
   );

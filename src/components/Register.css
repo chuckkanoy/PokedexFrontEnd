@@ -1,12 +1,18 @@
-.login {
-  align-content: center;
+.register {
+  text-align: center;
 }
 
 .box {
-  display: block;
   background-color: black;
   width: 25%;
   text-align: center;
   color: white;
   border-radius: 10px;
+  margin: auto;
+}
+
+input[type="submit"] {
+  background-color: darkgray;
+  border-radius: 10px;
+  padding: 5px;
 }

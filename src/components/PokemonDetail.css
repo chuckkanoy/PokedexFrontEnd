@@ -26,6 +26,7 @@
 
 h1 {
   font-size: 50px;
+  text-align: center;
 }
 
 .pokemonDetailCard .detailHeader {
@@ -66,4 +67,8 @@ h1 {
 
 .pokemonNumber {
   color: white;
+}
+
+.attributeLink {
+  text-decoration: none;
 }

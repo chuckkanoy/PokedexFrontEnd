@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import Type from "./Type.js";
 import axios from "axios";
-import BarChart from "react-bar-chart";
 import Graph from "./Graph.js";
 import "./PokemonDetail.css";
-import { useLocation } from "react-router";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config.js";
+import colorThief from "colorthief";
+
+const ColorThief = require("colorthief");
 
 class PokemonDetail extends Component {
   //initialize state, constant, and methods
   constructor(props) {
     super(props);
 
+    this.imgRef = React.createRef();
     this.state = {
       pokemon: [],
     };
@@ -20,6 +23,8 @@ class PokemonDetail extends Component {
 
     this.handleBack = this.handleBack.bind(this);
     this.getStatChart = this.getStatChart.bind(this);
+    this.getCaptureButton = this.getCaptureButton.bind(this);
+    this.capturePokemon = this.capturePokemon.bind(this);
   }
 
   //callback function for returning to pagination
@@ -27,18 +32,25 @@ class PokemonDetail extends Component {
     this.props.handleBack(false);
   }
 
+  getCaptureButton() {
+    if (this.props.user.data) {
+      return <button onClick={this.capturePokemon}>Capture</button>;
+    }
+  }
+
   //render the view of the details page
   render() {
+    let captured = "Capture";
+    // ColorThief.getColor(this.state.pokemon.image)
+    //   .then((color) => {
+    //     console.log(color);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     if (this.state.pokemon.types === undefined) {
       //workaround for fraction of a second load
-      return (
-        <div className="pokemonCard">
-          <label>{this.state.pokemon.name}</label>
-          <hr />
-          <img src={this.state.pokemon.image} alt="pokemon" />
-          <br />
-        </div>
-      );
+      return <h1 className="pokemonDetailHeader">Loading...</h1>;
     } else {
       //store the necessary data
       this.getStatChart();
@@ -66,7 +78,18 @@ class PokemonDetail extends Component {
             {/* container holding pokemon image and statistics */}
             <div className="middleContainer">
               <div className="pokemonImage">
-                <img src={this.state.pokemon.image} alt="pokemon" />
+                <img
+                  // crossOrigin={"anonymous"}
+                  ref={this.imgRef}
+                  src={this.state.pokemon.image}
+                  alt="pokemon"
+                  // onLoad={() => {
+                  //   const colorThief = new ColorThief();
+                  //   const img = this.imgRef.current;
+                  //   const result = colorThief.getColor(img, 25);
+                  //   console.log(result);
+                  // }}
+                />
               </div>
               {/* display statistics */}
               <div className="statBox">
@@ -92,16 +115,51 @@ class PokemonDetail extends Component {
               {this.state.pokemon.weight}
               <br />
               Abilities:&emsp;&emsp;&nbsp;&nbsp;
-              {this.state.pokemon.abilities.map((ability) => `${ability},`)}
+              {/* {this.state.pokemon.abilities.map((ability) => `${ability},`)} */}
+              {this.state.pokemon.abilities.map((ability) => {
+                return (
+                  <Link
+                    to={`/home/abilities/${ability}`}
+                    className="attributeLink"
+                  >
+                    {ability}&emsp;
+                  </Link>
+                );
+              })}
               <br />
               Egg groups:&emsp;
-              {this.state.pokemon.egg_groups.map((group) => `${group},`)}
+              {this.state.pokemon.egg_groups.map((group) => {
+                return (
+                  <Link to={`/home/groups/${group}`} className="attributeLink">
+                    {group}&emsp;
+                  </Link>
+                );
+              })}
             </div>
             <br />
+            <div className="captureBar">{this.getCaptureButton()}</div>
           </div>
         </div>
       );
     }
+  }
+
+  capturePokemon(captured) {
+    console.log(this.props.user.data.api_token);
+    axios
+      .post(
+        API_BASE_URL + `/pokemon/capture/${this.props.match.params.id}`,
+        { key: "value" },
+        {
+          headers: {
+            Authorization: `Bearer ${this.props.user.data.api_token}`,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+        captured = "Captured";
+      });
   }
 
   getStatChart() {
@@ -122,9 +180,8 @@ class PokemonDetail extends Component {
 
   //display appropriate pokemon data according to id
   componentDidMount() {
-    console.log(this.props.match.params.id);
     this.loadPokemonData(
-      `https://intern-pokedex.myriadapps.com/api/v1/pokemon/${this.props.match.params.id}`
+      API_BASE_URL + `/pokemon/${this.props.match.params.id}`
     );
   }
 

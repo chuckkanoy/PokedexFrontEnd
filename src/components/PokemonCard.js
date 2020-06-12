@@ -24,6 +24,7 @@ class PokemonCard extends Component {
           pathname: `/pokemon/${this.props.pokemon.id}`,
           state: {
             pokemon: this.props.pokemon,
+            user: this.props.user,
           },
         }}
       >

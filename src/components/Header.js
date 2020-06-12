@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import "./Header.css";
-import { Route } from "react-router-dom";
-import { BrowserRouter as Router, Link, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { withCookies, Cookies } from "react-cookie";
+
+let loginButton = "Login";
 
 class Header extends Component {
   //initialize state and constants
   constructor(props) {
     super(props);
     const { totalPokemon = null, pageLimit = 15, pageNeighbors = 0 } = props;
-    const data = 0;
 
     this.pageLimit = typeof pageLimit === "number" ? pageLimit : 15;
     this.totalPokemon = typeof totalPokemon === "number" ? totalPokemon : 0;
@@ -31,11 +31,12 @@ class Header extends Component {
     this.onPageChanged = this.onPageChanged.bind(this);
   }
 
+  //update constant when a page is changed
   onPageChanged = (newData) => {
     this.data = newData;
-    console.log(this.data);
   };
 
+  //repeated function for getting the current page within the bounds
   getCurrent = (e) => {
     return Math.max(1, Math.min(e, this.props.last));
   };
@@ -59,7 +60,7 @@ class Header extends Component {
   //handle if moving back in pages
   handleMoveLeft = (evt) => {
     evt.preventDefault();
-    this.goToPage(this.props.current_page - 1);
+    this.goToPage(parseInt(this.props.current_page) - 1);
   };
 
   //handle if moving forward
@@ -68,82 +69,107 @@ class Header extends Component {
     this.goToPage(parseInt(this.props.current_page) + 1);
   };
 
-  //display the view of the header
-  render() {
-    if (this.props.name !== "") {
+  //return the appropriate text in the button of the user
+  getUser() {
+    if (this.props.user) {
       return (
-        <div className="header">
-          {/* back button */}
-          <span className="backButton" onClick={this.handleMoveLeft}>
-            <Link
-              to={`/home/${this.props.name}/${this.getCurrent(
-                parseInt(this.props.current_page) - 1
-              )}`}
-            >
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </Link>
-          </span>
-          {/* search bar */}
-
-          <span className="searchBar">
-            <ion-icon name="search-sharp"></ion-icon>
-            <input
-              type="text"
-              placeholder="Pokémon"
-              onChange={(e) => (
-                this.props.searchPokemon(e.target.value),
-                this.props.history.push(
-                  `/home/${e.target.value}/${this.getCurrent(
-                    this.props.match.params.page
-                  )}`
-                )
-              )}
-              value={this.props.name}
-            />
-          </span>
-          {/* forward button */}
-          <span className="forwardButton" onClick={this.handleMoveRight}>
-            <Link
-              to={`/home/${this.props.name}/${this.getCurrent(
-                parseInt(this.props.current_page) + 1
-              )}`}
-            >
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </Link>
-          </span>
-        </div>
+        <button onClick={this.props.getCaptured}>
+          <Link to="/captured" className="captureButton">
+            {this.props.user.data.name}
+          </Link>
+        </button>
       );
     } else {
-      return (
-        <div className="header">
-          {/* back button */}
-          <span className="backButton" onClick={this.handleMoveLeft}>
-            <Link to={`/home/${parseInt(this.props.current_page) - 1}`}>
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </Link>
-          </span>
-          {/* search bar */}
-
-          <span className="searchBar">
-            <ion-icon name="search-sharp"></ion-icon>
-            <input
-              type="text"
-              placeholder="Pokémon"
-              onChange={(e) => (
-                this.props.searchPokemon(e.target.value), this.goToPage(1)
-              )}
-              value={this.props.name}
-            />
-          </span>
-          {/* forward button */}
-          <span className="forwardButton" onClick={this.handleMoveRight}>
-            <Link to={`/home/${this.getCurrent(this.props.current_page + 1)}`}>
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </Link>
-          </span>
-        </div>
-      );
+      return <button>Guest</button>;
     }
+  }
+
+  //display the view of the header
+  render() {
+    let forwardLink = "";
+    let backLink = "";
+    if (this.props.name) {
+      backLink = `/home/${this.props.name}/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/${this.props.name}/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else if (this.props.type) {
+      backLink = `/home/types/${this.props.type}/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/types/${this.props.type}/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else if (this.props.ability) {
+      backLink = `/home/abilities/${this.props.ability}/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/abilities/${this.props.ability}/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else if (this.props.group) {
+      backLink = `/home/groups/${this.props.group}/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/groups/${this.props.group}/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else if (this.props.location.pathname.includes(`/captured`)) {
+      backLink = `/captured/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/captured/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else {
+      backLink = `/home/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    }
+    return (
+      <div className="header">
+        {/* back button */}
+        <span className="backButton" onClick={this.handleMoveLeft}>
+          <Link to={backLink}>
+            <ion-icon name="arrow-back-outline"></ion-icon>
+          </Link>
+        </span>
+        <Link to="/home">
+          <button>Home</button>
+        </Link>
+        {this.getUser()}
+        {/* search bar */}
+        <span className="searchBar">
+          <ion-icon name="search-sharp"></ion-icon>
+          <input
+            type="text"
+            placeholder="Pokémon"
+            onChange={(e) => (
+              this.props.searchPokemon(e.target.value, this.getCurrent(1)),
+              this.props.history.push(
+                `/home/${e.target.value}/${this.getCurrent(1)}`
+              )
+            )}
+            value={this.props.name}
+          />
+        </span>
+        {/* Links to login and register pages */}
+        <Link to={`/login`}>
+          <button>Login</button>
+        </Link>
+        {/* forward button */}
+        <span className="forwardButton" onClick={this.handleMoveRight}>
+          <Link to={forwardLink}>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </Link>
+        </span>
+      </div>
+    );
   }
 }
 
@@ -155,4 +181,4 @@ Header.propTypes = {
   onPageChanged: PropTypes.func,
 };
 
-export default withRouter(Header);
+export default withCookies(withRouter(Header));
