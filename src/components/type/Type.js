@@ -1,6 +1,7 @@
 import React from "react";
 import "./Type.css";
 import { Link } from "react-router-dom";
+import { uuid } from "uuidv4";
 
 //get the appropriate type of the pokemon and add as classname for styling
 function getType(type) {
@@ -51,7 +52,7 @@ const Type = ({ types }) => {
   return (
     <span>
       {types.map((oneType) => (
-        <div className="typeWrapper">
+        <div className="typeWrapper" key={uuid()}>
           <Link to={`/home/types/${oneType}/1`}>
             <div className="type">{getType(oneType)}</div>
           </Link>

@@ -1,11 +1,10 @@
 import React from "react";
-import { Link, useHistory, withRouter } from "react-router-dom";
-import "./Register.css";
-import { useForm } from "react-hook-form";
+import { Link, withRouter } from "react-router-dom";
+import "./Login.css";
 import axios from "axios";
-import { API_BASE_URL } from "../config.js";
+import { API_BASE_URL } from "../../../config.js";
 import { Component } from "react";
-import { withCookies, Cookies } from "react-cookie";
+import { withCookies } from "react-cookie";
 
 class Login extends Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class Login extends Component {
   }
 
   validateEmail(email) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({ validationEmail: "" });
       return true;
     }
@@ -57,14 +56,15 @@ class Login extends Component {
   }
 
   registerUser(data) {
-    const { cookies } = this.props;
     axios
       .post(API_BASE_URL + `/login`, data)
       .then((response) => {
         console.log(typeof response);
-        this.props.updateUser(response);
+        // this.props.updateUser(response);
         this.props.history.push(`/home`);
-        cookies.set("user", JSON.stringify(response));
+        localStorage.setItem("user", JSON.stringify(response));
+        window.location.reload();
+        // cookies.set("user", JSON.stringify(response));
       })
       .catch((error) => {
         console.log(error);

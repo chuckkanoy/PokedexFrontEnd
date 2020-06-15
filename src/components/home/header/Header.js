@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./Header.css";
 import { Link, withRouter } from "react-router-dom";
-import { withCookies, Cookies } from "react-cookie";
-
-let loginButton = "Login";
+import { withCookies } from "react-cookie";
 
 class Header extends Component {
   //initialize state and constants
@@ -73,14 +71,40 @@ class Header extends Component {
   getUser() {
     if (this.props.user) {
       return (
-        <button onClick={this.props.getCaptured}>
-          <Link to="/captured" className="captureButton">
+        <Link to="/captured" className="captureButton">
+          <button onClick={this.props.getCaptured}>
             {this.props.user.data.name}
-          </Link>
-        </button>
+          </button>
+        </Link>
       );
     } else {
       return <button>Guest</button>;
+    }
+  }
+
+  getLogin() {
+    if (this.props.user) {
+      return (
+        <Link to={`/home`}>
+          <button onClick={() => this.logout()}>Logout</button>
+        </Link>
+      );
+    } else {
+      return (
+        <Link to={`/login`}>
+          <button>Login</button>
+        </Link>
+      );
+    }
+  }
+
+  //log user out of system
+  logout() {
+    let currentComponent = this;
+    if (currentComponent.props.user) {
+      localStorage.removeItem("user");
+      currentComponent.props.history.push(`/home`);
+      window.location.reload();
     }
   }
 
@@ -149,19 +173,14 @@ class Header extends Component {
           <input
             type="text"
             placeholder="Pokémon"
-            onChange={(e) => (
-              this.props.searchPokemon(e.target.value, this.getCurrent(1)),
-              this.props.history.push(
-                `/home/${e.target.value}/${this.getCurrent(1)}`
-              )
-            )}
+            onChange={(e) =>
+              this.props.searchPokemon(e.target.value, this.getCurrent(1))
+            }
             value={this.props.name}
           />
         </span>
         {/* Links to login and register pages */}
-        <Link to={`/login`}>
-          <button>Login</button>
-        </Link>
+        {this.getLogin()}
         {/* forward button */}
         <span className="forwardButton" onClick={this.handleMoveRight}>
           <Link to={forwardLink}>
@@ -175,7 +194,6 @@ class Header extends Component {
 
 //props for pagination
 Header.propTypes = {
-  totalPokemon: PropTypes.number.isRequired,
   pageLimit: PropTypes.number,
   pageNeighbors: PropTypes.number,
   onPageChanged: PropTypes.func,

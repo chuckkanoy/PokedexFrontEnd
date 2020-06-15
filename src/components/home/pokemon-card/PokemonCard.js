@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Type from "./Type.js";
+import Type from "../../type/Type.js";
 import "./PokemonCard.css";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class PokemonCard extends Component {
   //initialize method

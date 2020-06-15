@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import Type from "./Type.js";
+import Type from "../../type/Type.js";
 import axios from "axios";
-import Graph from "./Graph.js";
+import Graph from "../chart/graph/Graph.js";
 import "./PokemonDetail.css";
 import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../config.js";
-import colorThief from "colorthief";
-
-const ColorThief = require("colorthief");
+import { API_BASE_URL } from "../../../config.js";
+import { uuid } from "uuidv4";
 
 class PokemonDetail extends Component {
   //initialize state, constant, and methods
@@ -17,9 +15,8 @@ class PokemonDetail extends Component {
     this.imgRef = React.createRef();
     this.state = {
       pokemon: [],
+      captureMessage: "",
     };
-
-    const count = 0;
 
     this.handleBack = this.handleBack.bind(this);
     this.getStatChart = this.getStatChart.bind(this);
@@ -32,22 +29,15 @@ class PokemonDetail extends Component {
     this.props.handleBack(false);
   }
 
+  //only displays the capture button if logged in
   getCaptureButton() {
-    if (this.props.user.data) {
-      return <button onClick={this.capturePokemon}>Capture</button>;
+    if (this.props.user) {
+      return <button onClick={() => this.capturePokemon()}>Capture</button>;
     }
   }
 
   //render the view of the details page
   render() {
-    let captured = "Capture";
-    // ColorThief.getColor(this.state.pokemon.image)
-    //   .then((color) => {
-    //     console.log(color);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
     if (this.state.pokemon.types === undefined) {
       //workaround for fraction of a second load
       return <h1 className="pokemonDetailHeader">Loading...</h1>;
@@ -83,12 +73,6 @@ class PokemonDetail extends Component {
                   ref={this.imgRef}
                   src={this.state.pokemon.image}
                   alt="pokemon"
-                  // onLoad={() => {
-                  //   const colorThief = new ColorThief();
-                  //   const img = this.imgRef.current;
-                  //   const result = colorThief.getColor(img, 25);
-                  //   console.log(result);
-                  // }}
                 />
               </div>
               {/* display statistics */}
@@ -115,12 +99,12 @@ class PokemonDetail extends Component {
               {this.state.pokemon.weight}
               <br />
               Abilities:&emsp;&emsp;&nbsp;&nbsp;
-              {/* {this.state.pokemon.abilities.map((ability) => `${ability},`)} */}
               {this.state.pokemon.abilities.map((ability) => {
                 return (
                   <Link
                     to={`/home/abilities/${ability}`}
                     className="attributeLink"
+                    key={uuid()}
                   >
                     {ability}&emsp;
                   </Link>
@@ -130,14 +114,21 @@ class PokemonDetail extends Component {
               Egg groups:&emsp;
               {this.state.pokemon.egg_groups.map((group) => {
                 return (
-                  <Link to={`/home/groups/${group}`} className="attributeLink">
+                  <Link
+                    to={`/home/groups/${group}`}
+                    className="attributeLink"
+                    key={uuid()}
+                  >
                     {group}&emsp;
                   </Link>
                 );
               })}
             </div>
             <br />
-            <div className="captureBar">{this.getCaptureButton()}</div>
+            <div className="captureBar">
+              {this.getCaptureButton()}
+              {this.state.captureMessage}
+            </div>
           </div>
         </div>
       );
@@ -145,7 +136,10 @@ class PokemonDetail extends Component {
   }
 
   capturePokemon(captured) {
-    console.log(this.props.user.data.api_token);
+    //this has to defined outside of a nested function call
+    let currentComponent = this;
+
+    //send request to api
     axios
       .post(
         API_BASE_URL + `/pokemon/capture/${this.props.match.params.id}`,
@@ -157,8 +151,7 @@ class PokemonDetail extends Component {
         }
       )
       .then(function (response) {
-        console.log(response);
-        captured = "Captured";
+        currentComponent.setState({ captureMessage: response.data });
       });
   }
 

@@ -1,39 +1,27 @@
 import React, { Component } from "react";
 import "./App.css";
-import PokemonDetail from "./components/PokemonDetail";
+import PokemonDetail from "./components/pokemon-detail/pokemon-detail/PokemonDetail";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
-import Home from "./components/Home";
-import NotFound from "./components/NotFound";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import { withCookies, Cookies } from "react-cookie";
+import Home from "./components/home/home/Home";
+import NotFound from "./components/security/NotFound";
+import Login from "./components/security/login/Login";
+import Register from "./components/security/register/Register";
+import { withCookies } from "react-cookie";
 
 class App extends Component {
   constructor(props) {
     super(props);
-
-    const { cookies } = this.props;
     this.state = {
-      user: cookies.get("user"),
+      user: JSON.parse(localStorage.getItem("user")),
     };
-
-    this.updateUser = this.updateUser.bind(this);
   }
 
-  updateUser = (data) => {
-    const { cookies } = this.props;
-    console.log(this.state.user);
-    this.setState({ user: cookies.get("user") });
-  };
-
   render() {
-    const { cookies } = this.props;
-    if (cookies.get("user")) console.log(cookies.get("user").data.api_token);
     return (
       <Router>
         <Switch>

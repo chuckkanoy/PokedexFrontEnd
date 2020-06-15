@@ -1,9 +1,8 @@
 import React from "react";
-import { Link, useHistory, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./Register.css";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { API_BASE_URL } from "../config.js";
+import { API_BASE_URL } from "../../../config.js";
 import { Component } from "react";
 
 class Register extends Component {
@@ -41,7 +40,7 @@ class Register extends Component {
   }
 
   validateEmail(email) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({ validationEmail: "" });
       return true;
     }
@@ -79,8 +78,9 @@ class Register extends Component {
       .post(API_BASE_URL + `/register`, data)
       .then((response) => {
         console.log(response);
-        this.props.updateUser(response);
+        localStorage.setItem("user", JSON.stringify(response));
         this.props.history.push(`/home`);
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
