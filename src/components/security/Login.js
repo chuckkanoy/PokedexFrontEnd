@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import "./Register.css";
+import "./Security.css";
 import axios from "axios";
-import { API_BASE_URL } from "../../../config.js";
+import { API_BASE_URL } from "../../config.js";
 import { Component } from "react";
+import { withCookies } from "react-cookie";
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,10 +19,8 @@ class Register extends Component {
     };
 
     this.validateEmail = this.validateEmail.bind(this);
-    this.validateName = this.validateName.bind(this);
     this.validateData = this.validateData.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -29,10 +28,6 @@ class Register extends Component {
 
   handleEmailChange(event) {
     this.setState({ email: event.target.value });
-  }
-
-  handleNameChange(event) {
-    this.setState({ name: event.target.value });
   }
 
   handlePasswordChange(event) {
@@ -50,23 +45,10 @@ class Register extends Component {
     return false;
   }
 
-  validateName(name) {
-    if (/^[A-Za-z]+/.test(name)) {
-      this.setState({ validationEmail: "" });
-      return true;
-    }
-    this.setState({ validationEmail: "You have entered an invalid name!" });
-    return false;
-  }
-
   validateData() {
-    if (
-      this.validateEmail(this.state.email) &&
-      this.validateName(this.state.name)
-    ) {
+    if (this.validateEmail(this.state.email)) {
       let data = {
         email: this.state.email,
-        name: this.state.name,
         password: this.state.password,
       };
       this.registerUser(data);
@@ -75,12 +57,14 @@ class Register extends Component {
 
   registerUser(data) {
     axios
-      .post(API_BASE_URL + `/register`, data)
+      .post(API_BASE_URL + `/login`, data)
       .then((response) => {
-        console.log(response);
-        localStorage.setItem("user", JSON.stringify(response));
+        console.log(typeof response);
+        // this.props.updateUser(response);
         this.props.history.push(`/home`);
+        localStorage.setItem("user", JSON.stringify(response));
         window.location.reload();
+        // cookies.set("user", JSON.stringify(response));
       })
       .catch((error) => {
         console.log(error);
@@ -104,20 +88,7 @@ class Register extends Component {
     return (
       <div className="register">
         <form onSubmit={this.handleSubmit}>
-          <h1>Register</h1>
-          {this.state.alreadyRegistered}
-          <div className="box">
-            Name <br />
-            <input
-              type="text"
-              placeholder="Name"
-              name="name"
-              onChange={this.handleNameChange}
-              required
-            />
-          </div>
-          {this.state.validationName}
-          <br />
+          <h1>Login</h1>
           <div className="box">
             Email <br />
             <input
@@ -141,9 +112,10 @@ class Register extends Component {
             />
           </div>
           <br />
-          <input type="submit" value="Register" />
+          <input type="submit" value="Login" />
           <br />
-          Already a registered trainer? <Link to="/login">Login Here</Link>
+          <br />
+          No account? <Link to="/register">Sign Up</Link>
           <br />
           <Link to="/home/">Continue as Guest</Link>
           <br />
@@ -153,4 +125,4 @@ class Register extends Component {
   }
 }
 
-export default withRouter(Register);
+export default withCookies(withRouter(Login));

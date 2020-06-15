@@ -4,14 +4,10 @@
   margin: 10px;
   color: black;
   padding: 8px;
-  border-radius: 2px;
+  border-radius: 6px;
   width: 200px;
   background-color: rgb(223, 223, 223);
   font-size: 30px;
-}
-
-a:hover {
-  transform: translateX(5), translateY(5);
 }
 
 .pokemonCard hr {

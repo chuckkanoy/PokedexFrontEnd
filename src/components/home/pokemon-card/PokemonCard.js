@@ -4,18 +4,6 @@ import "./PokemonCard.css";
 import { Link } from "react-router-dom";
 
 class PokemonCard extends Component {
-  //initialize method
-  constructor(props) {
-    super(props);
-
-    this.sendData = this.sendData.bind(this);
-  }
-
-  //function for pokemon card component
-  sendData() {
-    this.props.updateView(this.props.pokemon);
-  }
-
   //render the view of the pokemon cards
   render() {
     return (

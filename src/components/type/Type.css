@@ -8,225 +8,122 @@
   font-weight: bold;
   font-size: 12px;
 }
-.type {
+.type > * {
   font-family: "Open Sans Condensed", sans-serif;
   font-family: "Quicksand", sans-serif;
   float: right;
   margin: 0px 2px 0px 2px;
-}
-
-/* styling for specific types */
-.type .poison {
   border-radius: 10px;
   border: solid;
   border-width: normal;
   padding: 5px;
   vertical-align: middle;
-  /* changing for each type */
+}
+
+/* styling for specific types */
+.type .poison {
   border-color: rebeccapurple;
   color: rebeccapurple;
   background-color: rgb(198, 150, 247);
 }
 
 .type .grass {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: darkgreen;
   color: darkgreen;
   background-color: rgb(69, 250, 69);
 }
 
 .type .fire {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: darkred;
   color: darkred;
   background-color: rgb(233, 78, 78);
 }
 
 .type .flying {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: gray;
   color: gray;
   background-color: rgb(241, 241, 241);
 }
 
 .type .water {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: darkblue;
   color: darkblue;
   background-color: rgb(148, 148, 255);
 }
 
 .type .bug {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: darkgreen;
   color: darkgreen;
   background-color: rgb(172, 172, 255);
 }
 
 .type .normal {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: black;
   color: black;
   background-color: rgb(255, 255, 255);
 }
 
 .type .electric {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: gold;
   color: gold;
   background-color: rgb(255, 248, 210);
 }
 
 .type .ground {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: rgb(114, 30, 30);
   color: rgb(114, 30, 30);
   background-color: rgb(173, 44, 44);
 }
 
 .type .fairy {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: rgb(255, 2, 255);
   color: rgb(255, 2, 255);
   background-color: rgb(255, 167, 255);
 }
 
 .type .fighting {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: darkorange;
   color: darkorange;
   background-color: rgb(255, 185, 100);
 }
 
 .type .psychic {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: black;
   color: black;
   background-color: rebeccapurple;
 }
 
 .type .rock {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
-  border-color: black;
-  color: black;
+  border-color: gray;
+  color: gray;
   background-color: rgb(75, 75, 75);
 }
 
 .type .steel {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: black;
   color: black;
   background-color: rgb(202, 200, 200);
 }
 
 .type .ice {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: cyan;
   color: cyan;
   background-color: white;
 }
 
 .type .ghost {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: gray;
   color: gray;
   background-color: whitesmoke;
 }
 
 .type .dragon {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: orangered;
   color: orangered;
   background-color: rgb(252, 164, 132);
 }
 
 .type .dark {
-  border-radius: 10px;
-  border: solid;
-  border-width: normal;
-  padding: 5px;
-  vertical-align: middle;
-  /* changing for each type */
   border-color: black;
   color: black;
   background-color: rgb(87, 73, 73);

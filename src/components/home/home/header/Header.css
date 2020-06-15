@@ -2,14 +2,16 @@
 .header {
   display: block;
   height: 100px;
+  margin-top: 10px;
 }
 
 .searchBar {
   display: inline-block;
   background-color: rgb(80, 80, 80);
   margin-top: 5px;
-  padding: 20px;
+  padding: 10px 20px 25px 20px;
   border-radius: 4px;
+  height: 25px;
 }
 
 input {
@@ -20,13 +22,9 @@ input {
   margin: 0px 0px 0px 10px;
 }
 
-object {
-  pointer-events: none;
-}
-
 .forwardButton,
 .backButton {
-  margin: 25px;
+  margin: 20px;
   border-radius: 50%;
   padding: 10px;
   background-color: turquoise;
@@ -46,7 +44,7 @@ ion-icon {
   color: white;
 }
 
-.captureButton {
+button {
   text-decoration: none;
   color: white;
 }

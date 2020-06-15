@@ -8,104 +8,10 @@ class Header extends Component {
   //initialize state and constants
   constructor(props) {
     super(props);
-    const { totalPokemon = null, pageLimit = 15, pageNeighbors = 0 } = props;
-
-    this.pageLimit = typeof pageLimit === "number" ? pageLimit : 15;
-    this.totalPokemon = typeof totalPokemon === "number" ? totalPokemon : 0;
-
-    this.pageNeighbors =
-      typeof pageNeighbors === "number"
-        ? Math.max(0, Math.min(pageNeighbors, 2))
-        : 0;
-
-    this.totalPages = Math.ceil(this.totalPokemon / this.pageLimit);
 
     this.state = {
       current_page: this.props.current_page,
-      totalPages: 0,
-      pageLimit: 15,
     };
-
-    this.onPageChanged = this.onPageChanged.bind(this);
-  }
-
-  //update constant when a page is changed
-  onPageChanged = (newData) => {
-    this.data = newData;
-  };
-
-  //repeated function for getting the current page within the bounds
-  getCurrent = (e) => {
-    return Math.max(1, Math.min(e, this.props.last));
-  };
-
-  //change page data if necesssary
-  goToPage = (page) => {
-    const { onPageChanged = (f) => f } = this.props;
-
-    const current_page = Math.max(1, Math.min(page, this.props.last));
-
-    const paginationData = {
-      current_page: current_page,
-      totalPages: this.state.totalPages,
-      pageLimit: this.state.pageLimit,
-      totalRecords: 553,
-    };
-
-    this.setState({ current_page }, () => onPageChanged(paginationData));
-  };
-
-  //handle if moving back in pages
-  handleMoveLeft = (evt) => {
-    evt.preventDefault();
-    this.goToPage(parseInt(this.props.current_page) - 1);
-  };
-
-  //handle if moving forward
-  handleMoveRight = (evt) => {
-    evt.preventDefault();
-    this.goToPage(parseInt(this.props.current_page) + 1);
-  };
-
-  //return the appropriate text in the button of the user
-  getUser() {
-    if (this.props.user) {
-      return (
-        <Link to="/captured" className="captureButton">
-          <button onClick={this.props.getCaptured}>
-            {this.props.user.data.name}
-          </button>
-        </Link>
-      );
-    } else {
-      return <button>Guest</button>;
-    }
-  }
-
-  getLogin() {
-    if (this.props.user) {
-      return (
-        <Link to={`/home`}>
-          <button onClick={() => this.logout()}>Logout</button>
-        </Link>
-      );
-    } else {
-      return (
-        <Link to={`/login`}>
-          <button>Login</button>
-        </Link>
-      );
-    }
-  }
-
-  //log user out of system
-  logout() {
-    let currentComponent = this;
-    if (currentComponent.props.user) {
-      localStorage.removeItem("user");
-      currentComponent.props.history.push(`/home`);
-      window.location.reload();
-    }
   }
 
   //display the view of the header
@@ -158,9 +64,11 @@ class Header extends Component {
     return (
       <div className="header">
         {/* back button */}
-        <span className="backButton" onClick={this.handleMoveLeft}>
+        <span onClick={this.handleMoveLeft}>
           <Link to={backLink}>
-            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span className="backButton">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </span>
           </Link>
         </span>
         <Link to="/home">
@@ -182,13 +90,91 @@ class Header extends Component {
         {/* Links to login and register pages */}
         {this.getLogin()}
         {/* forward button */}
-        <span className="forwardButton" onClick={this.handleMoveRight}>
+        <span onClick={this.handleMoveRight}>
           <Link to={forwardLink}>
-            <ion-icon name="arrow-forward-outline"></ion-icon>
+            <span className="forwardButton">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </span>
           </Link>
         </span>
       </div>
     );
+  }
+
+  //repeated function for getting the current page within the bounds
+  getCurrent = (e) => {
+    return Math.max(1, Math.min(e, this.props.last));
+  };
+
+  //change page data if necesssary
+  goToPage = (page) => {
+    const { onPageChanged = (f) => f } = this.props;
+
+    const current_page = Math.max(1, Math.min(page, this.props.last));
+
+    const paginationData = {
+      current_page: current_page,
+    };
+
+    this.setState({ current_page }, () => onPageChanged(paginationData));
+  };
+
+  //handle if moving back in pages
+  handleMoveLeft = (evt) => {
+    evt.preventDefault();
+    this.goToPage(parseInt(this.props.current_page) - 1);
+  };
+
+  //handle if moving forward
+  handleMoveRight = (evt) => {
+    evt.preventDefault();
+    this.goToPage(parseInt(this.props.current_page) + 1);
+  };
+
+  //return the appropriate text in the button of the user
+  getUser() {
+    if (this.props.user) {
+      return (
+        <Link to="/captured" className="captureButton">
+          <button onClick={this.props.getCaptured}>
+            {this.props.user.data.name}
+          </button>
+        </Link>
+      );
+    } else {
+      return (
+        <Link to={`/login`}>
+          <button>Guest</button>
+        </Link>
+      );
+    }
+  }
+
+  // get appropriate button and link for user according to login status
+  getLogin() {
+    if (this.props.user) {
+      return (
+        <Link to={`/home`}>
+          <button onClick={() => this.logout()}>Logout</button>
+        </Link>
+      );
+    } else {
+      return (
+        <Link to={`/login`}>
+          <button>Login</button>
+        </Link>
+      );
+    }
+  }
+
+  //log user out of system
+  logout() {
+    let currentComponent = this;
+    if (currentComponent.props.user) {
+      localStorage.removeItem("user");
+      currentComponent.props.history.push(`/home`);
+      window.location.reload();
+    }
   }
 }
 

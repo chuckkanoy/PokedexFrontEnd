@@ -1,6 +1,7 @@
 import React from "react";
 import "./Bar.css";
 
+// initialize a repeatable bar object for use in graph component
 const Bar = ({ stat, percent }) => {
   return (
     <div className="barObject">

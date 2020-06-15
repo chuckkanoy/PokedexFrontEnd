@@ -9,8 +9,8 @@ import {
 } from "react-router-dom";
 import Home from "./components/home/home/Home";
 import NotFound from "./components/security/NotFound";
-import Login from "./components/security/login/Login";
-import Register from "./components/security/register/Register";
+import Login from "./components/security/Login";
+import Register from "./components/security/Register";
 import { withCookies } from "react-cookie";
 
 class App extends Component {
@@ -21,6 +21,7 @@ class App extends Component {
     };
   }
 
+  // renders routes passing props when necessary
   render() {
     return (
       <Router>

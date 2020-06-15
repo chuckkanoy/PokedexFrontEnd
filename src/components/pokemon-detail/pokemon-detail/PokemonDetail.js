@@ -18,22 +18,8 @@ class PokemonDetail extends Component {
       captureMessage: "",
     };
 
-    this.handleBack = this.handleBack.bind(this);
-    this.getStatChart = this.getStatChart.bind(this);
     this.getCaptureButton = this.getCaptureButton.bind(this);
     this.capturePokemon = this.capturePokemon.bind(this);
-  }
-
-  //callback function for returning to pagination
-  handleBack() {
-    this.props.handleBack(false);
-  }
-
-  //only displays the capture button if logged in
-  getCaptureButton() {
-    if (this.props.user) {
-      return <button onClick={() => this.capturePokemon()}>Capture</button>;
-    }
   }
 
   //render the view of the details page
@@ -42,9 +28,6 @@ class PokemonDetail extends Component {
       //workaround for fraction of a second load
       return <h1 className="pokemonDetailHeader">Loading...</h1>;
     } else {
-      //store the necessary data
-      this.getStatChart();
-
       //display the actual data once loaded
       return (
         <div className="detailWrapper">
@@ -55,6 +38,7 @@ class PokemonDetail extends Component {
           <h1 className="pokemonDetailHeader">{this.state.pokemon.name}</h1>
           {/* actual detail card data */}
           <div className="pokemonDetailCard">
+            {/* header */}
             <div className="detailHeader">
               <Type types={this.state.pokemon.types} />
               <label>
@@ -84,6 +68,7 @@ class PokemonDetail extends Component {
               </div>
             </div>
             <br />
+            {/* profile data */}
             <div className="infoBox">
               <strong>{this.state.pokemon.genus}</strong>
               <br />
@@ -125,6 +110,7 @@ class PokemonDetail extends Component {
               })}
             </div>
             <br />
+            {/* option for logged in users to capture pokemon */}
             <div className="captureBar">
               {this.getCaptureButton()}
               {this.state.captureMessage}
@@ -135,7 +121,8 @@ class PokemonDetail extends Component {
     }
   }
 
-  capturePokemon(captured) {
+  // post request to mark pokemon as captured
+  capturePokemon() {
     //this has to defined outside of a nested function call
     let currentComponent = this;
 
@@ -155,35 +142,26 @@ class PokemonDetail extends Component {
       });
   }
 
-  getStatChart() {
-    //get the maximum stat for ratio
-    var max = 0;
-    var array = [
-      this.state.pokemon.stats["hp"],
-      this.state.pokemon.stats["speed"],
-      this.state.pokemon.stats["attack"],
-      this.state.pokemon.stats["defense"],
-      this.state.pokemon.stats["special-attack"],
-      this.state.pokemon.stats["special-defense"],
-    ];
-    array.forEach((element) => {
-      if (max < element) max = element;
-    });
+  // only displays the capture button if logged in
+  getCaptureButton() {
+    if (this.props.user) {
+      return <button onClick={() => this.capturePokemon()}>Capture</button>;
+    }
   }
 
-  //display appropriate pokemon data according to id
+  // display appropriate pokemon data according to id
   componentDidMount() {
     this.loadPokemonData(
       API_BASE_URL + `/pokemon/${this.props.match.params.id}`
     );
   }
 
-  //get the pokemon from the api
+  // get the pokemon from the api
   loadPokemonData(link) {
     axios
       .get(link)
       .then((response) => {
-        //grab link data
+        // grab link data
         this.setState({
           pokemon: response.data.data,
         });
