@@ -5,12 +5,13 @@
   margin-bottom: 10px;
 }
 .type label {
-  font-weight: bold;
-  font-size: 12px;
+  /* font-weight: bold; */
+  font-size: 12pt;
 }
 .type > * {
-  font-family: "Open Sans Condensed", sans-serif;
-  font-family: "Quicksand", sans-serif;
+  /* font-family: "Open Sans Condensed", sans-serif; */
+  /* font-family: "Quicksand", sans-serif; */
+  font-family: "SF UI Text", sans-serif;
   float: right;
   margin: 0px 2px 0px 2px;
   border-radius: 10px;

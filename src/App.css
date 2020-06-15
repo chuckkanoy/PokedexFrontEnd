@@ -1,7 +1,8 @@
 /* styling for main page */
 body {
-  background-color: rgb(228, 76, 76);
-  font-family: "Roboto", sans-serif;
+  background-color: rgba(85, 166, 156, 1);
+  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto";
 }
 .App {
   text-align: center;

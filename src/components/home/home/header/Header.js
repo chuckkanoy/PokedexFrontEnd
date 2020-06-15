@@ -66,15 +66,14 @@ class Header extends Component {
         {/* back button */}
         <span onClick={this.handleMoveLeft}>
           <Link to={backLink}>
-            <span className="backButton">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </span>
+            <i class="fas fa-arrow-left"></i>
           </Link>
         </span>
         {/* search bar */}
         <span className="searchBar">
-          <ion-icon name="search-sharp"></ion-icon>
+          <i class="fas fa-search"></i>
           <input
+            className="mainSearch"
             type="text"
             placeholder="Pokémon"
             onChange={(e) =>
@@ -84,17 +83,15 @@ class Header extends Component {
           />
         </span>
         {/* Links to login and register pages */}
-        <Link to="/home">
+        {/* <Link to="/home">
           <button>Home</button>
         </Link>
         {this.getUser()}
-        {this.getLogin()}
+        {this.getLogin()} */}
         {/* forward button */}
         <span onClick={this.handleMoveRight}>
           <Link to={forwardLink}>
-            <span className="forwardButton">
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </span>
+            <i class="fas fa-arrow-right"></i>
           </Link>
         </span>
       </div>

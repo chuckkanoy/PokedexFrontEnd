@@ -32,10 +32,14 @@ class PokemonDetail extends Component {
       return (
         <div className="detailWrapper">
           {/* back button for returning to pagination */}
-          <span className="backButton" onClick={this.props.history.goBack}>
-            <ion-icon name="arrow-back-outline"></ion-icon>
-          </span>
-          <h1 className="pokemonDetailHeader">{this.state.pokemon.name}</h1>
+          <div className="pokemonDetailHeader">
+            <i
+              class="fas fa-arrow-left"
+              onClick={this.props.history.goBack}
+            ></i>
+            {this.state.pokemon.name}
+          </div>
+
           {/* actual detail card data */}
           <div className="pokemonDetailCard">
             {/* header */}
