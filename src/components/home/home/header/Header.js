@@ -71,10 +71,6 @@ class Header extends Component {
             </span>
           </Link>
         </span>
-        <Link to="/home">
-          <button>Home</button>
-        </Link>
-        {this.getUser()}
         {/* search bar */}
         <span className="searchBar">
           <ion-icon name="search-sharp"></ion-icon>
@@ -88,6 +84,10 @@ class Header extends Component {
           />
         </span>
         {/* Links to login and register pages */}
+        <Link to="/home">
+          <button>Home</button>
+        </Link>
+        {this.getUser()}
         {this.getLogin()}
         {/* forward button */}
         <span onClick={this.handleMoveRight}>

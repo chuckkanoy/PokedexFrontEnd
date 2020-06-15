@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Type from "../../type/Type.js";
 import axios from "axios";
-import Graph from "../chart/graph/Graph.js";
+import Graph from "./chart/graph/Graph.js";
 import "./PokemonDetail.css";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../../config.js";

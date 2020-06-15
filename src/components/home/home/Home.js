@@ -147,7 +147,7 @@ class Home extends Component {
   //search pokemon as user types in data
   searchPokemon = async (e, current) => {
     var link = ``;
-    if (this.props.match.params.name !== "") {
+    if (e !== "") {
       link = API_BASE_URL + `/pokemon?name=${e}&page=${current}`;
     } else {
       link = API_BASE_URL + `/pokemon?page=${current}`;
