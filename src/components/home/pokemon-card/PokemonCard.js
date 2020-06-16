@@ -15,6 +15,12 @@ class PokemonCard extends Component {
             user: this.props.user,
           },
         }}
+        onClick={() => {
+          localStorage.setItem(
+            "currentPokemon",
+            JSON.stringify(this.props.pokemon)
+          );
+        }}
       >
         <div className="pokemonCard">
           <label>{this.props.pokemon.name}</label>

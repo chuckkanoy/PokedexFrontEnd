@@ -9,12 +9,30 @@
   color: white;
   border-radius: 10px;
   margin: auto;
+  padding: 10px 0px;
 }
 
 input[type="submit"] {
-  background-color: darkgray;
+  background-color: darkslategray;
+  color: white;
   border-radius: 10px;
+  border: none;
   padding: 5px;
+  font-size: 32px;
+}
+
+.login {
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  color: white;
+}
+
+input[type="password"] {
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  color: white;
 }
 
 h1 {

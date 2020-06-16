@@ -61,9 +61,9 @@ class Login extends Component {
       .then((response) => {
         console.log(typeof response);
         // this.props.updateUser(response);
-        this.props.history.push(`/home`);
+
         localStorage.setItem("user", JSON.stringify(response));
-        window.location.reload();
+        this.props.history.goBack();
         // cookies.set("user", JSON.stringify(response));
       })
       .catch((error) => {
@@ -95,6 +95,7 @@ class Login extends Component {
               type="text"
               placeholder="Email"
               name="email"
+              className="login"
               onChange={this.handleEmailChange}
               required
             />
@@ -107,6 +108,7 @@ class Login extends Component {
               type="password"
               placeholder="Password"
               name="password"
+              className="login"
               onChange={this.handlePasswordChange}
               required
             />
@@ -115,9 +117,14 @@ class Login extends Component {
           <input type="submit" value="Login" />
           <br />
           <br />
-          No account? <Link to="/register">Sign Up</Link>
+          No account?{" "}
+          <Link to="/register" style={{ "text-decoration": "none" }}>
+            Sign Up
+          </Link>
           <br />
-          <Link to="/home/">Continue as Guest</Link>
+          <Link to="/home/" style={{ "text-decoration": "none" }}>
+            Continue as Guest
+          </Link>
           <br />
         </form>
       </div>

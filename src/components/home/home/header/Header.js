@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./Header.css";
 import { Link, withRouter } from "react-router-dom";
 import { withCookies } from "react-cookie";
+import UserButton from "../../../user/UserButton.js";
 
 class Header extends Component {
   //initialize state and constants
@@ -63,6 +64,7 @@ class Header extends Component {
     }
     return (
       <div className="header">
+        <UserButton user={this.props.user}></UserButton>
         {/* back button */}
         <span onClick={this.handleMoveLeft}>
           <Link to={backLink}>
@@ -82,12 +84,6 @@ class Header extends Component {
             value={this.props.name}
           />
         </span>
-        {/* Links to login and register pages */}
-        {/* <Link to="/home">
-          <button>Home</button>
-        </Link>
-        {this.getUser()}
-        {this.getLogin()} */}
         {/* forward button */}
         <span onClick={this.handleMoveRight}>
           <Link to={forwardLink}>
@@ -127,59 +123,6 @@ class Header extends Component {
     evt.preventDefault();
     this.goToPage(parseInt(this.props.current_page) + 1);
   };
-
-  //return the appropriate text in the button of the user
-  getUser() {
-    if (this.props.user) {
-      return (
-        <Link to="/captured" className="captureButton">
-          <button onClick={this.props.getCaptured}>
-            {this.props.user.data.name}
-          </button>
-        </Link>
-      );
-    } else {
-      return (
-        <Link to={`/login`}>
-          <button>Guest</button>
-        </Link>
-      );
-    }
-  }
-
-  // get appropriate button and link for user according to login status
-  getLogin() {
-    if (this.props.user) {
-      return (
-        <Link to={`/home`}>
-          <button onClick={() => this.logout()}>Logout</button>
-        </Link>
-      );
-    } else {
-      return (
-        <Link to={`/login`}>
-          <button>Login</button>
-        </Link>
-      );
-    }
-  }
-
-  //log user out of system
-  logout() {
-    let currentComponent = this;
-    if (currentComponent.props.user) {
-      localStorage.removeItem("user");
-      currentComponent.props.history.push(`/home`);
-      window.location.reload();
-    }
-  }
 }
-
-//props for pagination
-Header.propTypes = {
-  pageLimit: PropTypes.number,
-  pageNeighbors: PropTypes.number,
-  onPageChanged: PropTypes.func,
-};
 
 export default withCookies(withRouter(Header));

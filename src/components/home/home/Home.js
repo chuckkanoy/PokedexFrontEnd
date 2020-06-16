@@ -66,8 +66,8 @@ class Home extends Component {
     );
   }
 
+  //reload page with parameter data unless it is a name search
   componentWillReceiveProps(newProps) {
-    //reload page with parameter data unless it is a name search
     if (
       newProps.location.pathname !==
       `/home/${newProps.match.params.name}/${newProps.match.params.page}`
@@ -78,48 +78,43 @@ class Home extends Component {
     }
   }
 
-  //get initial page of pokemon
-  componentDidMount() {
+  checkConditions(page) {
     // check url for name parameter
     if (this.props.match.params.name) {
-      this.loadUserData(
-        API_BASE_URL +
-          `/pokemon?name=${this.props.match.params.name}&page=${this.props.match.params.page}`
-      );
+      this.searchPokemon(this.props.match.params.name, page);
     }
     // check url for type parameter
     else if (this.props.match.params.type) {
       this.loadUserData(
         API_BASE_URL +
-          `/pokemon/types/${this.props.match.params.type}?type=${this.props.match.params.type}&page=${this.props.match.params.page}`
+          `/pokemon/types/${this.props.match.params.type}?type=${this.props.match.params.type}&page=${page}`
       );
     }
-    // check url for abilitiy parameter
+    // check url for ability parameter
     else if (this.props.match.params.ability) {
       this.loadUserData(
         API_BASE_URL +
-          `/pokemon/abilities/${this.props.match.params.ability}?ability=${this.props.match.params.ability}&page=${this.props.match.params.page}`
+          `/pokemon/abilities/${this.props.match.params.ability}?ability=${this.props.match.params.ability}&page=${page}`
       );
     }
     // check url for group parameter
     else if (this.props.match.params.group) {
       this.loadUserData(
         API_BASE_URL +
-          `/pokemon/groups/${this.props.match.params.group}?group=${this.props.match.params.group}&page=${this.props.match.params.page}`
+          `/pokemon/groups/${this.props.match.params.group}?group=${this.props.match.params.group}&page=${page}`
       );
     }
-    // check url for captured
+    // check url for captured path
     else if (this.props.location.pathname.includes(`/captured`)) {
-      this.getCaptured(1);
-    }
-    // check page
-    else if (this.props.match.params) {
-      this.loadUserData(
-        API_BASE_URL + `/pokemon?page=${this.props.match.params.page}`
-      );
+      this.getCaptured(page);
     } else {
-      this.loadUserData(API_BASE_URL);
+      this.loadUserData(API_BASE_URL + `/pokemon?page=${page}`);
     }
+  }
+
+  //get initial page of pokemon
+  componentDidMount() {
+    this.checkConditions(this.props.match.params.page);
   }
 
   //load in data based on link
@@ -152,28 +147,7 @@ class Home extends Component {
     } else {
       link = API_BASE_URL + `/pokemon?page=${current}`;
     }
-    axios
-      .get(link)
-      .then((response) => {
-        //create an array of pokemon
-        const newData = response.data.data.map((p) => {
-          return {
-            id: p.id,
-            name: p.name,
-            image: p.image,
-            types: p.types,
-          };
-        });
-        const newMetaData = response.data.meta;
-        const newLinksData = response.data.links;
-        //change the state to the new state
-        this.setState({
-          data: newData,
-          meta: newMetaData,
-          links: newLinksData,
-        });
-      })
-      .catch((error) => console.log(error));
+    this.loadUserData(link);
     //update the name state to what is in input field
     this.setState({ name: e });
     this.props.history.push(`/home/${e}/${current}`);
@@ -182,37 +156,7 @@ class Home extends Component {
   //update the current paginated data
   onPageChanged = (newData) => {
     const { current_page } = newData;
-    // check url for name parameter
-    if (this.props.match.params.name) {
-      this.searchPokemon(this.props.match.params.name, current_page);
-    }
-    // check url for type parameter
-    else if (this.props.match.params.type) {
-      this.loadUserData(
-        API_BASE_URL +
-          `/pokemon/types/${this.props.match.params.type}?type=${this.props.match.params.type}&page=${current_page}`
-      );
-    }
-    // check url for ability parameter
-    else if (this.props.match.params.ability) {
-      this.loadUserData(
-        API_BASE_URL +
-          `/pokemon/abilities/${this.props.match.params.ability}?ability=${this.props.match.params.ability}&page=${current_page}`
-      );
-    }
-    // check url for group parameter
-    else if (this.props.match.params.group) {
-      this.loadUserData(
-        API_BASE_URL +
-          `/pokemon/groups/${this.props.match.params.group}?group=${this.props.match.params.group}&page=${current_page}`
-      );
-    }
-    // check url for captured path
-    else if (this.props.location.pathname.includes(`/captured`)) {
-      this.getCaptured(current_page);
-    } else {
-      this.loadUserData(API_BASE_URL + `/pokemon?page=${current_page}`);
-    }
+    this.checkConditions(current_page);
     this.setState({ current_page: current_page });
   };
 

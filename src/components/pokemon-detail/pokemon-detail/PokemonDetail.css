@@ -11,31 +11,43 @@
 .pokemonDetailHeader {
   color: white;
   font-size: 72px;
-  margin: 20px 100px 50px 0px;
+  margin: 20px 100px 30px 0px;
 }
 
 .pokemonDetailCard {
   display: grid;
-  margin: 10px;
   color: black;
   padding: 8px;
   border-radius: 2px;
-  width: 50%;
+  width: 40%;
   height: auto;
   text-align: left;
   background-color: white;
   margin: auto;
+  font-weight: normal;
+}
+
+.profile {
+  width: 50%;
+  margin: 20px;
+  padding-left: 20;
 }
 
 .profileHeader {
   background-color: darkgray;
   color: white;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 h1 {
   /* font-size: 50px; */
   text-align: center;
   color: white;
+}
+
+.infoBox {
+  margin: 20px;
 }
 
 .pokemonDetailCard .detailHeader {
@@ -45,14 +57,15 @@ h1 {
 }
 
 .pokemonDetailCard img {
-  width: 35%;
-  text-align: center;
+  width: 80%;
 }
 
 .pokemonImage {
   display: inline-block;
-  width: 40%;
-  text-align: center;
+  width: 30%;
+  margin: auto;
+  margin-right: 20px;
+  padding-right: 80px;
 }
 
 .pokemonDetailCard .middleContainer {
@@ -80,4 +93,11 @@ h1 {
 
 .attributeLink {
   text-decoration: none;
+}
+
+hr {
+  border: solid;
+  border-width: thin;
+  border-color: lightgray;
+  width: 100%;
 }

@@ -79,7 +79,7 @@ class Register extends Component {
       .then((response) => {
         console.log(response);
         localStorage.setItem("user", JSON.stringify(response));
-        this.props.history.push(`/home`);
+        this.props.history.goBack();
         window.location.reload();
       })
       .catch((error) => {
@@ -112,6 +112,7 @@ class Register extends Component {
               type="text"
               placeholder="Name"
               name="name"
+              className="login"
               onChange={this.handleNameChange}
               required
             />
@@ -124,6 +125,7 @@ class Register extends Component {
               type="text"
               placeholder="Email"
               name="email"
+              className="login"
               onChange={this.handleEmailChange}
               required
             />
@@ -144,9 +146,14 @@ class Register extends Component {
           <input type="submit" value="Register" />
           <br />
           <br />
-          Already a registered trainer? <Link to="/login">Login Here</Link>
+          Already a registered trainer?{" "}
+          <Link to="/login" style={{ "text-decoration": "none" }}>
+            Login Here
+          </Link>
           <br />
-          <Link to="/home/">Continue as Guest</Link>
+          <Link to="/home/" style={{ "text-decoration": "none" }}>
+            Continue as Guest
+          </Link>
           <br />
         </form>
       </div>

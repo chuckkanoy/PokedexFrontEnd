@@ -1,5 +1,5 @@
 import React from "react";
-import Bar from "../bar/Bar";
+import Bar from "./bar/Bar";
 import "./Graph.css";
 
 class Graph extends React.Component {
@@ -72,7 +72,7 @@ class Graph extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Special Attack</td>
+                  <td>Sp Atk</td>
                   <td>
                     <Bar
                       stat={this.props.stats["special-attack"]}
@@ -81,7 +81,7 @@ class Graph extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Special Defense</td>
+                  <td>Sp Def</td>
                   <td>
                     <Bar
                       stat={this.props.stats["special-defense"]}

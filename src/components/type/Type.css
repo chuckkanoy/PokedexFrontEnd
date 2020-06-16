@@ -1,11 +1,11 @@
 /* styling for types */
 .typeBar {
   display: grid;
-  height: 30px;
+  height: 20px;
   margin-bottom: 10px;
 }
 .type label {
-  /* font-weight: bold; */
+  font-weight: normal;
   font-size: 12pt;
 }
 .type > * {
