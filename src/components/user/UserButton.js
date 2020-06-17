@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./UserButton.css";
 
 //log user out of system
@@ -11,50 +11,67 @@ function logout(props) {
 }
 
 //return the appropriate text in the button of the user
-function getUser(props) {
+function getUserElements(props) {
+  let element = ``;
+
   if (props.user) {
-    return (
+    element = (
       <Link to="/captured" className="captureButton">
         <button onClick={props.getCaptured}>{props.user.data.name}</button>
       </Link>
     );
   } else {
-    return (
+    element = (
       <Link to={`/login`}>
         <button>Guest</button>
       </Link>
     );
   }
+
+  return element;
 }
 
 // get appropriate button and link for user according to login status
-function getLogin(props) {
+function getLoginElements(props) {
+  let element = ``;
+
   if (props.user) {
-    return (
+    element = (
       <Link to={`/home`}>
         <button onClick={() => logout(props)}>Logout</button>
       </Link>
     );
   } else {
-    return (
+    element = (
       <Link to={`/login`}>
         <button>Login</button>
       </Link>
     );
   }
+
+  return element;
 }
 
 function UserButton(props) {
   return (
     <div className="userLinks">
+      <Link to="/home/types/1">
+        <button>Types</button>
+      </Link>
+      <Link to="/home/abilities/1">
+        <button>Abilities</button>
+      </Link>
+      <Link to="/home/groups/1">
+        <button>Egg Groups</button>
+      </Link>
       {/* Links to login and register pages */}
       <Link to="/home">
         <button>Home</button>
       </Link>
-      {getUser(props)}
-      {getLogin(props)}
+      {getUserElements(props)}
+      {getLoginElements(props)}
     </div>
   );
 }
 
-export default withRouter(UserButton);
+export default UserButton;

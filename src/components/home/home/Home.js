@@ -5,21 +5,14 @@ import axios from "axios";
 import { API_BASE_URL } from "../../../config.js";
 import "./Home.css";
 import { Link, withRouter } from "react-router-dom";
-import AttributeSelection from "../../attributes/attribute-selection/AttributeSelection";
 
 class Home extends Component {
-  //constructor to initialize state and constants
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      meta: [],
-      links: [],
-      name: "",
-    };
-
-    this.getCaptured = this.getCaptured.bind(this);
-  }
+  state = {
+    data: [],
+    meta: [],
+    links: [],
+    name: "",
+  };
 
   //visualize the home page
   render() {
@@ -52,7 +45,7 @@ class Home extends Component {
           getCaptured={this.getCaptured}
           logout={this.logout}
         />
-        <AttributeSelection />
+
         {this.getDisplay()}
       </div>
     );
@@ -70,48 +63,33 @@ class Home extends Component {
     }
   }
 
-  getDisplay() {
-    if (
-      this.props.location.pathname ===
-      `/home/types/${this.props.match.params.page}`
-    ) {
-      return (
+  getDisplay = () => {
+    let path = this.props.location.pathname;
+    let page = this.props.match.params.page;
+    let element = ``;
+
+    if (path === `/home/types/${page}`) {
+      element = (
         <div className="attributeContainer">
-          {this.state.data.map((type) => (
-            <Link to={`/home/types/${type.name}/1`}>
-              <button className="typeButton">{type.name}</button>
-            </Link>
-          ))}
+          {this.state.data.map((type) => this.displayHelper("types", type))}
         </div>
       );
-    } else if (
-      this.props.location.pathname ===
-      `/home/abilities/${this.props.match.params.page}`
-    ) {
-      return (
+    } else if (path === `/home/abilities/${page}`) {
+      element = (
         <div className="attributeContainer">
-          {this.state.data.map((ability) => (
-            <Link to={`/home/abilities/${ability.name}/1`}>
-              <button className="abilityButton">{ability.name}</button>
-            </Link>
-          ))}
+          {this.state.data.map((ability) =>
+            this.displayHelper("abilities", ability)
+          )}
         </div>
       );
-    } else if (
-      this.props.location.pathname ===
-      `/home/groups/${this.props.match.params.page}`
-    ) {
-      return (
+    } else if (path === `/home/groups/${page}`) {
+      element = (
         <div className="attributeContainer">
-          {this.state.data.map((group) => (
-            <Link to={`/home/groups/${group.name}/1`}>
-              <button className="groupButton">{group.name}</button>
-            </Link>
-          ))}
+          {this.state.data.map((group) => this.displayHelper("groups", group))}
         </div>
       );
     } else {
-      return (
+      element = (
         <div className="pokemonCardHolder">
           {this.state.data.map((pokemon) => (
             <PokemonCard
@@ -124,7 +102,20 @@ class Home extends Component {
         </div>
       );
     }
-  }
+
+    return element;
+  };
+
+  displayHelper = (identifier, attribute) => {
+    let element = null;
+    element = (
+      <Link to={`/home/${identifier}/${attribute.name}/1`}>
+        <button className={`${identifier}Button`}>{attribute.name}</button>
+      </Link>
+    );
+
+    return element;
+  };
 
   checkConditions(page) {
     // check url for name parameter
@@ -194,8 +185,8 @@ class Home extends Component {
   }
 
   //search pokemon as user types in data
-  searchPokemon = async (e, current) => {
-    var link = ``;
+  searchPokemon = (e, current) => {
+    let link = ``;
     if (e !== "") {
       link = API_BASE_URL + `/pokemon?name=${e}&page=${current}`;
     } else {
@@ -215,7 +206,7 @@ class Home extends Component {
   };
 
   // send request for captured pokemon
-  getCaptured() {
+  getCaptured = () => {
     if (this.props.user) {
       axios
         .get(
@@ -243,7 +234,7 @@ class Home extends Component {
         })
         .catch(console.log);
     }
-  }
+  };
 }
 
 export default withRouter(Home);

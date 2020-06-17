@@ -11,15 +11,11 @@ import Home from "./components/home/home/Home";
 import NotFound from "./components/security/NotFound";
 import Login from "./components/security/Login";
 import Register from "./components/security/Register";
-import { withCookies } from "react-cookie";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: JSON.parse(localStorage.getItem("user")),
-    };
-  }
+  state = {
+    user: JSON.parse(localStorage.getItem("user")),
+  };
 
   // renders routes passing props when necessary
   render() {
@@ -117,4 +113,4 @@ class App extends Component {
   }
 }
 
-export default withCookies(App);
+export default App;

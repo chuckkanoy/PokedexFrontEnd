@@ -4,42 +4,31 @@ import "./Security.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../config.js";
 import { Component } from "react";
+import { API_Access } from "../../API.js";
 
 class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      name: "",
-      password: "",
-      validationName: "",
-      validationEmail: "",
-      alreadyRegistered: "",
-    };
+  state = {
+    email: "",
+    name: "",
+    password: "",
+    validationName: "",
+    validationEmail: "",
+    alreadyRegistered: "",
+  };
 
-    this.validateEmail = this.validateEmail.bind(this);
-    this.validateName = this.validateName.bind(this);
-    this.validateData = this.validateData.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.registerUser = this.registerUser.bind(this);
-  }
-
-  handleEmailChange(event) {
+  handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
-  }
+  };
 
-  handleNameChange(event) {
+  handleNameChange = (event) => {
     this.setState({ name: event.target.value });
-  }
+  };
 
-  handlePasswordChange(event) {
+  handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
-  }
+  };
 
-  validateEmail(email) {
+  validateEmail = (email) => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({ validationEmail: "" });
       return true;
@@ -48,18 +37,18 @@ class Register extends Component {
       validationEmail: "You have entered an invalid email address!",
     });
     return false;
-  }
+  };
 
-  validateName(name) {
+  validateName = (name) => {
     if (/^[A-Za-z]+/.test(name)) {
       this.setState({ validationEmail: "" });
       return true;
     }
     this.setState({ validationEmail: "You have entered an invalid name!" });
     return false;
-  }
+  };
 
-  validateData() {
+  validateData = () => {
     if (
       this.validateEmail(this.state.email) &&
       this.validateName(this.state.name)
@@ -71,32 +60,37 @@ class Register extends Component {
       };
       this.registerUser(data);
     }
-  }
+  };
 
-  registerUser(data) {
-    axios
-      .post(API_BASE_URL + `/register`, data)
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("user", JSON.stringify(response));
-        window.location = document.referrer;
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response) {
-          if (error.response.status === 422) {
-            this.setState({
-              alreadyRegistered: "A user with this email already exists!",
-            });
-          }
-        }
-      });
-  }
+  registerUser = (data) => {
+    if (API_Access.registerUser(data)) {
+      this.props.history.push("/");
+    } else {
+      this.setState({ alreadyRegistered: "Invalid email or password!" });
+    }
+    // axios
+    //   .post(API_BASE_URL + `/register`, data)
+    //   .then((response) => {
+    //     console.log(response);
+    //     localStorage.setItem("user", JSON.stringify(response));
+    //     window.location = document.referrer;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     if (error.response) {
+    //       if (error.response.status === 422) {
+    //         this.setState({
+    //           alreadyRegistered: "A user with this email already exists!",
+    //         });
+    //       }
+    //     }
+    //   });
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.validateData();
-  }
+  };
 
   render() {
     //visualize the registration page

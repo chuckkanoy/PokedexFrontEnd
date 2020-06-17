@@ -19,17 +19,17 @@
   border-radius: 2px;
 }
 
-.typeButton {
+.typesButton {
   width: 200px;
   background-color: orange;
 }
 
-.groupButton {
+.groupsButton {
   width: 200px;
   background-color: rgb(91, 168, 47);
 }
 
-.abilityButton {
+.abilitiesButton {
   width: 200px;
   background-color: rgb(134, 45, 134);
 }

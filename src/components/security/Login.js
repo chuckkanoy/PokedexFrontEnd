@@ -4,37 +4,26 @@ import "./Security.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../config.js";
 import { Component } from "react";
-import { withCookies } from "react-cookie";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      name: "",
-      password: "",
-      validationName: "",
-      validationEmail: "",
-      alreadyRegistered: "",
-    };
+  state = {
+    email: "",
+    name: "",
+    password: "",
+    validationName: "",
+    validationEmail: "",
+    alreadyRegistered: "",
+  };
 
-    this.validateEmail = this.validateEmail.bind(this);
-    this.validateData = this.validateData.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.registerUser = this.registerUser.bind(this);
-  }
-
-  handleEmailChange(event) {
+  handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
-  }
+  };
 
-  handlePasswordChange(event) {
+  handlePasswordChange = (event) => {
     this.setState({ password: event.target.value });
-  }
+  };
 
-  validateEmail(email) {
+  validateEmail = (email) => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({ validationEmail: "" });
       return true;
@@ -43,9 +32,9 @@ class Login extends Component {
       validationEmail: "You have entered an invalid email address!",
     });
     return false;
-  }
+  };
 
-  validateData() {
+  validateData = () => {
     if (this.validateEmail(this.state.email)) {
       let data = {
         email: this.state.email,
@@ -53,9 +42,9 @@ class Login extends Component {
       };
       this.registerUser(data);
     }
-  }
+  };
 
-  registerUser(data) {
+  registerUser = (data) => {
     axios
       .post(API_BASE_URL + `/login`, data)
       .then((response) => {
@@ -68,19 +57,19 @@ class Login extends Component {
       .catch((error) => {
         console.log(error);
         if (error.response) {
-          if (error.response.status === 422) {
+          if (error.response.status === 401) {
             this.setState({
-              alreadyRegistered: "A user with this email already exists!",
+              alreadyRegistered: "Invalid email or password!",
             });
           }
         }
       });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.validateData();
-  }
+  };
 
   render() {
     //visualize the registration page
@@ -131,4 +120,4 @@ class Login extends Component {
   }
 }
 
-export default withCookies(withRouter(Login));
+export default withRouter(Login);
