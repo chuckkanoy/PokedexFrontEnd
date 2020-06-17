@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import "./Header.css";
 import { Link, withRouter } from "react-router-dom";
 import { withCookies } from "react-cookie";
@@ -54,6 +53,34 @@ class Header extends Component {
       forwardLink = `/captured/${this.getCurrent(
         parseInt(this.props.current_page) + 1
       )}`;
+    } else if (
+      this.props.location.pathname === `/home/types/${this.props.current_page}`
+    ) {
+      backLink = `/home/types/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/types/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else if (
+      this.props.location.pathname ===
+      `/home/abilities/${this.props.current_page}`
+    ) {
+      backLink = `/home/abilities/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/abilities/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
+    } else if (
+      this.props.location.pathname === `/home/groups/${this.props.current_page}`
+    ) {
+      backLink = `/home/groups/${this.getCurrent(
+        parseInt(this.props.current_page) - 1
+      )}`;
+      forwardLink = `/home/groups/${this.getCurrent(
+        parseInt(this.props.current_page) + 1
+      )}`;
     } else {
       backLink = `/home/${this.getCurrent(
         parseInt(this.props.current_page) - 1
@@ -68,16 +95,16 @@ class Header extends Component {
         {/* back button */}
         <span onClick={this.handleMoveLeft}>
           <Link to={backLink}>
-            <i class="fas fa-arrow-left"></i>
+            <i className="fas fa-arrow-left"></i>
           </Link>
         </span>
         {/* search bar */}
         <span className="searchBar">
-          <i class="fas fa-search"></i>
+          <i className="fas fa-search"></i>
           <input
             className="mainSearch"
             type="text"
-            placeholder="Pokémon"
+            placeholder="Pokédex"
             onChange={(e) =>
               this.props.searchPokemon(e.target.value, this.getCurrent(1))
             }
@@ -87,7 +114,7 @@ class Header extends Component {
         {/* forward button */}
         <span onClick={this.handleMoveRight}>
           <Link to={forwardLink}>
-            <i class="fas fa-arrow-right"></i>
+            <i className="fas fa-arrow-right"></i>
           </Link>
         </span>
       </div>
@@ -105,11 +132,7 @@ class Header extends Component {
 
     const current_page = Math.max(1, Math.min(page, this.props.last));
 
-    const paginationData = {
-      current_page: current_page,
-    };
-
-    this.setState({ current_page }, () => onPageChanged(paginationData));
+    this.setState({ current_page }, () => onPageChanged(current_page));
   };
 
   //handle if moving back in pages

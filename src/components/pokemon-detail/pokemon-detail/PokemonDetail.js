@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Type from "../../type/Type.js";
+import Type from "../../attributes/type/Type.js";
 import axios from "axios";
 import Graph from "./chart/graph/Graph.js";
 import "./PokemonDetail.css";
@@ -38,13 +38,16 @@ class PokemonDetail extends Component {
       return (
         <div
           className="detailWrapper"
-          style={{ "background-color": this.getPokemonColor() }}
+          style={{
+            backgroundColor: this.getPokemonColor(),
+            height: "100vh",
+          }}
         >
           <UserButton user={this.props.user} />
           {/* back button for returning to pagination */}
           <div className="pokemonDetailHeader">
             <i
-              class="fas fa-arrow-left"
+              className="fas fa-arrow-left"
               onClick={() => {
                 this.props.history.goBack();
                 localStorage.removeItem("currentPokemon");
@@ -57,14 +60,14 @@ class PokemonDetail extends Component {
             {/* header */}
             <div className="detailHeader">
               <Type types={this.state.pokemon.types} />
-              <text style={{ "font-size": "32pt" }}>
+              <label style={{ fontSize: "32pt" }}>
                 <label>
                   <strong>{this.state.pokemon.name}</strong>
                 </label>
                 <label className="pokemonNumber">
                   &emsp; #{this.state.pokemon.id}
                 </label>
-              </text>
+              </label>
             </div>
             <hr />
             {/* container holding pokemon image and statistics */}
@@ -81,7 +84,8 @@ class PokemonDetail extends Component {
               <div className="statBox">
                 <Graph
                   style={{ "vertical-align": "middle" }}
-                  stats={this.state.pokemon.stats}
+                  pokemon={this.state.pokemon}
+                  getPokemonColor={this.getPokemonColor}
                 />
               </div>
             </div>
@@ -95,21 +99,21 @@ class PokemonDetail extends Component {
             </div>
             <p className="profileHeader">&emsp;Profile</p>
             <div className="profile">
-              <text style={{ "font-weight": "bold" }}>
+              <label style={{ fontWeight: "bold" }}>
                 Height:&emsp;&emsp;&emsp;&nbsp;
-              </text>
+              </label>
               {this.state.pokemon.height}
               <br />
               <br />
-              <text style={{ "font-weight": "bold" }}>
+              <label style={{ fontWeight: "bold" }}>
                 Weight:&emsp;&emsp;&emsp;
-              </text>
+              </label>
               {this.state.pokemon.weight}
               <br />
               <br />
-              <text style={{ "font-weight": "bold" }}>
+              <label style={{ fontWeight: "bold" }}>
                 Abilities:&emsp;&emsp;&nbsp;&nbsp;
-              </text>
+              </label>
               {this.state.pokemon.abilities.map((ability) => {
                 return (
                   <Link
@@ -123,7 +127,7 @@ class PokemonDetail extends Component {
               })}
               <br />
               <br />
-              <text style={{ "font-weight": "bold" }}>Egg groups:&emsp;</text>
+              <label style={{ fontWeight: "bold" }}>Egg groups:&emsp;</label>
               {this.state.pokemon.egg_groups.map((group) => {
                 return (
                   <Link
@@ -138,10 +142,7 @@ class PokemonDetail extends Component {
             </div>
             <br />
             {/* option for logged in users to capture pokemon */}
-            <div className="captureBar">
-              {this.getCaptureButton()}
-              {this.state.captureMessage}
-            </div>
+            <div className="captureBar">{this.getCaptureButton()}</div>
           </div>
         </div>
       );
@@ -149,46 +150,48 @@ class PokemonDetail extends Component {
   }
 
   getPokemonColor() {
-    const types = JSON.parse(localStorage.getItem("currentPokemon")).types;
-    switch (types[types.length - 1]) {
-      case "poison":
-        return "rgb(198, 150, 247)";
-      case "grass":
-        return "rgb(69, 250, 69)";
-      case "fire":
-        return "rgb(233, 78, 78)";
-      case "flying":
-        return "rgb(241, 241, 241)";
-      case "water":
-        return "rgb(148, 148, 255)";
-      case "bug":
-        return "rgb(172, 172, 255)";
-      case "normal":
-        return "rgb(255, 255, 255)";
-      case "electric":
-        return "rgb(255, 248, 210)";
-      case "ground":
-        return "rgb(173, 44, 44)";
-      case "fairy":
-        return "rgb(255, 167, 255)";
-      case "fighting":
-        return "rgb(255, 185, 100)";
-      case "psychic":
-        return "rebeccapurple";
-      case "rock":
-        return "rgb(75, 75, 75)";
-      case "steel":
-        return "rgb(202, 200, 200)";
-      case "ice":
-        return "cyan";
-      case "ghost":
-        return "gray";
-      case "dragon":
-        return "rgb(252, 164, 132)";
-      case "dark":
-        return "rgb(87, 73, 73)";
-      default:
-        return "rgb(87, 73, 73)";
+    if (localStorage.getItem("currentPokemon")) {
+      const types = JSON.parse(localStorage.getItem("currentPokemon")).types;
+      switch (types[types.length - 1]) {
+        case "poison":
+          return "rgb(198, 150, 247)";
+        case "grass":
+          return "rgb(107, 180, 107)";
+        case "fire":
+          return "rgb(233, 78, 78)";
+        case "flying":
+          return "rgb(241, 241, 241)";
+        case "water":
+          return "rgb(148, 148, 255)";
+        case "bug":
+          return "rgb(172, 172, 255)";
+        case "normal":
+          return "rgb(196, 162, 162)";
+        case "electric":
+          return "rgb(231, 222, 88)";
+        case "ground":
+          return "rgb(173, 44, 44)";
+        case "fairy":
+          return "rgb(255, 167, 255)";
+        case "fighting":
+          return "rgb(255, 185, 100)";
+        case "psychic":
+          return "rebeccapurple";
+        case "rock":
+          return "rgb(75, 75, 75)";
+        case "steel":
+          return "rgb(202, 200, 200)";
+        case "ice":
+          return "rgb(0, 190, 190)";
+        case "ghost":
+          return "gray";
+        case "dragon":
+          return "rgb(252, 164, 132)";
+        case "dark":
+          return "rgb(87, 73, 73)";
+        default:
+          return "rgb(87, 73, 73)";
+      }
     }
   }
 
@@ -213,13 +216,46 @@ class PokemonDetail extends Component {
       });
   }
 
+  //send release request
+  releasePokemon() {
+    //this has to defined outside of a nested function call
+    let currentComponent = this;
+
+    //send request to api
+    axios
+      .post(
+        API_BASE_URL + `/pokemon/release/${this.props.match.params.id}`,
+        { key: "value" },
+        {
+          headers: {
+            Authorization: `Bearer ${this.props.user.data.api_token}`,
+          },
+        }
+      )
+      .then(function (response) {
+        currentComponent.setState({ captureMessage: response.data });
+      });
+  }
+
   // only displays the capture button if logged in
   getCaptureButton() {
     if (this.props.user) {
       return (
-        <button className="captureButton" onClick={() => this.capturePokemon()}>
-          Capture
-        </button>
+        <div>
+          <button
+            className="captureButton"
+            onClick={() => this.capturePokemon()}
+          >
+            Capture
+          </button>
+          <button
+            className="captureButton"
+            onClick={() => this.releasePokemon()}
+          >
+            Release
+          </button>
+          <label>{this.state.captureMessage}</label>
+        </div>
       );
     }
   }

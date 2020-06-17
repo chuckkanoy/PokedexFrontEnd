@@ -4,13 +4,9 @@
   height: 20px;
   margin-bottom: 10px;
 }
-.type label {
-  font-weight: normal;
-  font-size: 12pt;
-}
+
+/* styling for all types */
 .type > * {
-  /* font-family: "Open Sans Condensed", sans-serif; */
-  /* font-family: "Quicksand", sans-serif; */
   font-family: "SF UI Text", sans-serif;
   float: right;
   margin: 0px 2px 0px 2px;
@@ -19,6 +15,8 @@
   border-width: normal;
   padding: 5px;
   vertical-align: middle;
+  font-weight: normal;
+  font-size: 12pt;
 }
 
 /* styling for specific types */
@@ -108,6 +106,12 @@
 
 .type .ice {
   border-color: cyan;
+  color: cyan;
+  background-color: white;
+}
+
+.type .ice {
+  border-color: rgb(0, 190, 190);
   color: cyan;
   background-color: white;
 }

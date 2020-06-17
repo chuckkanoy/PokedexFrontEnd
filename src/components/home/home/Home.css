@@ -1,9 +1,35 @@
+/* align content of page */
 .App {
   align-content: center;
 }
 
+/* pokemon card container */
 .pokemonCardHolder {
   width: 1200px;
   text-align: left;
   margin: auto;
+}
+
+.attributeContainer {
+  width: 300px;
+  margin: auto;
+  transform: translateX(-5px);
+  padding: 10px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.typeButton {
+  width: 200px;
+  background-color: orange;
+}
+
+.groupButton {
+  width: 200px;
+  background-color: rgb(91, 168, 47);
+}
+
+.abilityButton {
+  width: 200px;
+  background-color: rgb(134, 45, 134);
 }

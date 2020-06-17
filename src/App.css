@@ -1,16 +1,14 @@
 /* styling for main page */
+/* set main styling */
 body {
   background-color: rgba(85, 166, 156, 1);
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-}
-.App {
   text-align: center;
   display: grid;
 }
 
 button {
-  background-color: turquoise;
   color: white;
   font-size: 25px;
   border-radius: 10px;

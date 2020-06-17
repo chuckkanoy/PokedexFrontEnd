@@ -1,4 +1,5 @@
 /* styling for header */
+/* wrapper styling */
 .header {
   display: block;
   height: 64px;
@@ -6,6 +7,7 @@
   margin-bottom: 100px;
 }
 
+/* search bar wrapper */
 .searchBar {
   display: inline-block;
   background-color: rgba(0, 0, 0, 1);
@@ -16,21 +18,28 @@
   height: 50px;
 }
 
+/* search icon */
 .fa-search {
   font-size: 30px;
   margin: 0px 20px 0px 10px;
-  font-weight: bold;
+  background-color: black;
+  opacity: 1;
+  padding: 10px;
 }
 
+/* search input */
 .mainSearch {
   background: transparent;
   border: none;
   color: white;
+  opacity: 100%;
   font-size: 60px;
-  width: 500px;
+  width: 300px;
   margin: 0px 10px 0px 0px;
+  font-weight: bold;
 }
 
+/* arrow icons (with some overlap for search icon) */
 i {
   font-size: 36px;
   color: white;
@@ -40,13 +49,6 @@ i {
   height: 36px;
   width: 36px;
   border-radius: 50%;
-  padding: 10px;
+  padding: 20px;
   margin: 0px 100px 0px 100px;
-}
-
-.arrow {
-  background-color: black;
-  color: white;
-  z-index: 1;
-  padding: 10px;
 }

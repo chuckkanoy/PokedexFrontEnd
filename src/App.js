@@ -30,36 +30,52 @@ class App extends Component {
           <Redirect exact from="/home/" to="/home/1" />
           <Redirect exact from="/home//:page" to="/home/1" />
           <Redirect exact from="/home/NaN" to="/home/1" />
+          <Redirect exact from="/captured" to="/captured/1" />
           <Route
             exact
             path="/home/:page"
             render={(props) => <Home {...props} user={this.state.user} />}
           />
-          <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
+          <Route
+            exact
+            path="/home/types/:page"
+            render={(props) => <Home {...props} user={this.state.user} />}
+          />
+          <Route
+            exact
+            path="/home/abilities/:page"
+            render={(props) => <Home {...props} user={this.state.user} />}
+          />
+          <Route
+            exact
+            path="/home/groups/:page"
+            render={(props) => <Home {...props} user={this.state.user} />}
+          />
           <Route
             exact
             path="/home/types/:type/:page"
             render={(props) => <Home {...props} user={this.state.user} />}
-          />
-          <Redirect
-            exact
-            from="/home/abilities/:ability"
-            to="/home/abilities/:ability/1"
           />
           <Route
             exact
             path="/home/abilities/:ability/:page"
             render={(props) => <Home {...props} user={this.state.user} />}
           />
-          <Redirect
-            exact
-            from="/home/groups/:group"
-            to="/home/groups/:group/1"
-          />
           <Route
             exact
             path="/home/groups/:group/:page"
             render={(props) => <Home {...props} user={this.state.user} />}
+          />
+          <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
+          <Redirect
+            exact
+            from="/home/abilities/:ability"
+            to="/home/abilities/:ability/1"
+          />
+          <Redirect
+            exact
+            from="/home/groups/:group"
+            to="/home/groups/:group/1"
           />
           <Route
             exact
@@ -71,7 +87,6 @@ class App extends Component {
             path="/home/:name?/:page"
             render={(props) => <Home {...props} user={this.state.user} />}
           />
-          <Redirect exact from="/captured" to="/captured/1" />
           <Route
             exact
             path="/captured/:page"

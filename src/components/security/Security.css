@@ -1,7 +1,9 @@
+/* wrapper for both login and register */
 .register {
   text-align: center;
 }
 
+/* wrapper for input */
 .box {
   background-color: black;
   width: 25%;
@@ -12,6 +14,7 @@
   padding: 10px 0px;
 }
 
+/* submit button input */
 input[type="submit"] {
   background-color: darkslategray;
   color: white;
@@ -21,6 +24,7 @@ input[type="submit"] {
   font-size: 32px;
 }
 
+/* email */
 .login {
   background-color: transparent;
   border: none;
@@ -28,6 +32,7 @@ input[type="submit"] {
   color: white;
 }
 
+/* password input */
 input[type="password"] {
   background-color: transparent;
   border: none;
@@ -35,10 +40,13 @@ input[type="password"] {
   color: white;
 }
 
+/* header */
 h1 {
   text-align: center;
+  color: white;
 }
 
+/* not found wrapper */
 .notfound {
   justify-content: center;
   text-align: center;

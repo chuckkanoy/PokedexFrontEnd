@@ -79,8 +79,7 @@ class Register extends Component {
       .then((response) => {
         console.log(response);
         localStorage.setItem("user", JSON.stringify(response));
-        this.props.history.goBack();
-        window.location.reload();
+        window.location = document.referrer;
       })
       .catch((error) => {
         console.log(error);
@@ -147,11 +146,11 @@ class Register extends Component {
           <br />
           <br />
           Already a registered trainer?{" "}
-          <Link to="/login" style={{ "text-decoration": "none" }}>
+          <Link to="/login" style={{ textDecoration: "none" }}>
             Login Here
           </Link>
           <br />
-          <Link to="/home/" style={{ "text-decoration": "none" }}>
+          <Link to="/home/" style={{ textDecoration: "none" }}>
             Continue as Guest
           </Link>
           <br />

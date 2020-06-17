@@ -1,19 +1,20 @@
 /* styling for pokemon detail */
+/* pokemon detail wrappers */
 .pokemondDetail {
-  text-align: center;
   font-size: 16pt;
 }
-
 .detailWrapper {
   text-align: center;
 }
 
+/* header for pokemon detail (above card) */
 .pokemonDetailHeader {
   color: white;
   font-size: 72px;
   margin: 20px 100px 30px 0px;
 }
 
+/* wrapper for pokemon detail card */
 .pokemonDetailCard {
   display: grid;
   color: black;
@@ -27,39 +28,24 @@
   font-weight: normal;
 }
 
-.profile {
-  width: 50%;
-  margin: 20px;
-  padding-left: 20;
-}
-
-.profileHeader {
-  background-color: darkgray;
-  color: white;
+/* pokemon number mod */
+.pokemonNumber {
+  color: lightgray;
   font-weight: bold;
-  font-size: 20px;
 }
 
-h1 {
-  /* font-size: 50px; */
-  text-align: center;
-  color: white;
+/* horizontal line */
+hr {
+  border: solid;
+  border-width: thin;
+  border-color: lightgray;
+  width: 100%;
 }
 
-.infoBox {
-  margin: 20px;
-}
-
-.pokemonDetailCard .detailHeader {
-  text-align: left;
-  height: 40px;
-  margin-bottom: 10px;
-}
-
+/* control the image with wrapper and actual object */
 .pokemonDetailCard img {
   width: 80%;
 }
-
 .pokemonImage {
   display: inline-block;
   width: 30%;
@@ -68,6 +54,7 @@ h1 {
   padding-right: 80px;
 }
 
+/* wrapper for graph and image */
 .pokemonDetailCard .middleContainer {
   text-align: center;
   position: relative;
@@ -75,29 +62,35 @@ h1 {
   vertical-align: middle;
 }
 
-.pokemonDetailCard .infoBox {
+/* basic info */
+.infoBox {
+  margin: 20px;
   position: relative;
   text-align: left;
   display: grid;
 }
 
-.pokemonDetailCard .statBox {
+/* profile header wrapper */
+.profileHeader {
+  background-color: darkgray;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* profile data*/
+.profile {
+  margin: 20px;
+}
+
+/* control statistics */
+.statBox {
   display: inline-block;
   vertical-align: top;
 }
 
-.pokemonNumber {
-  color: lightgray;
-  font-weight: bold;
-}
-
+/* remove text decoration */
 .attributeLink {
   text-decoration: none;
-}
-
-hr {
-  border: solid;
-  border-width: thin;
-  border-color: lightgray;
-  width: 100%;
+  color: black;
 }

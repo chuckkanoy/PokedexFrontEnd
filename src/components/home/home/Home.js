@@ -4,7 +4,8 @@ import PokemonCard from "../pokemon-card/PokemonCard.js";
 import axios from "axios";
 import { API_BASE_URL } from "../../../config.js";
 import "./Home.css";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import AttributeSelection from "../../attributes/attribute-selection/AttributeSelection";
 
 class Home extends Component {
   //constructor to initialize state and constants
@@ -15,7 +16,6 @@ class Home extends Component {
       meta: [],
       links: [],
       name: "",
-      searchingName: false,
     };
 
     this.getCaptured = this.getCaptured.bind(this);
@@ -52,16 +52,8 @@ class Home extends Component {
           getCaptured={this.getCaptured}
           logout={this.logout}
         />
-        <div className="pokemonCardHolder">
-          {this.state.data.map((pokemon) => (
-            <PokemonCard
-              key={pokemon.id}
-              pokemon={pokemon}
-              updateView={this.updateView}
-              user={this.props.user}
-            />
-          ))}
-        </div>
+        <AttributeSelection />
+        {this.getDisplay()}
       </div>
     );
   }
@@ -75,6 +67,62 @@ class Home extends Component {
       if (newProps.location.pathname !== this.props.location.pathname) {
         window.location.reload();
       }
+    }
+  }
+
+  getDisplay() {
+    if (
+      this.props.location.pathname ===
+      `/home/types/${this.props.match.params.page}`
+    ) {
+      return (
+        <div className="attributeContainer">
+          {this.state.data.map((type) => (
+            <Link to={`/home/types/${type.name}/1`}>
+              <button className="typeButton">{type.name}</button>
+            </Link>
+          ))}
+        </div>
+      );
+    } else if (
+      this.props.location.pathname ===
+      `/home/abilities/${this.props.match.params.page}`
+    ) {
+      return (
+        <div className="attributeContainer">
+          {this.state.data.map((ability) => (
+            <Link to={`/home/abilities/${ability.name}/1`}>
+              <button className="abilityButton">{ability.name}</button>
+            </Link>
+          ))}
+        </div>
+      );
+    } else if (
+      this.props.location.pathname ===
+      `/home/groups/${this.props.match.params.page}`
+    ) {
+      return (
+        <div className="attributeContainer">
+          {this.state.data.map((group) => (
+            <Link to={`/home/groups/${group.name}/1`}>
+              <button className="groupButton">{group.name}</button>
+            </Link>
+          ))}
+        </div>
+      );
+    } else {
+      return (
+        <div className="pokemonCardHolder">
+          {this.state.data.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.id}
+              pokemon={pokemon}
+              updateView={this.updateView}
+              user={this.props.user}
+            />
+          ))}
+        </div>
+      );
     }
   }
 
@@ -107,6 +155,12 @@ class Home extends Component {
     // check url for captured path
     else if (this.props.location.pathname.includes(`/captured`)) {
       this.getCaptured(page);
+    } else if (this.props.location.pathname === `/home/types/${page}`) {
+      this.loadUserData(API_BASE_URL + `/pokemon/types?page=${page}`);
+    } else if (this.props.location.pathname === `/home/abilities/${page}`) {
+      this.loadUserData(API_BASE_URL + `/pokemon/abilities?page=${page}`);
+    } else if (this.props.location.pathname === `/home/groups/${page}`) {
+      this.loadUserData(API_BASE_URL + `/pokemon/groups?page=${page}`);
     } else {
       this.loadUserData(API_BASE_URL + `/pokemon?page=${page}`);
     }
@@ -155,9 +209,9 @@ class Home extends Component {
 
   //update the current paginated data
   onPageChanged = (newData) => {
-    const { current_page } = newData;
-    this.checkConditions(current_page);
-    this.setState({ current_page: current_page });
+    //const current_page = newData;
+    this.checkConditions(newData);
+    this.setState({ current_page: newData });
   };
 
   // send request for captured pokemon

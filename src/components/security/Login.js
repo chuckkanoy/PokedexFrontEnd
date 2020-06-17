@@ -60,11 +60,10 @@ class Login extends Component {
       .post(API_BASE_URL + `/login`, data)
       .then((response) => {
         console.log(typeof response);
-        // this.props.updateUser(response);
 
         localStorage.setItem("user", JSON.stringify(response));
         this.props.history.goBack();
-        // cookies.set("user", JSON.stringify(response));
+        // window.location = document.referrer;
       })
       .catch((error) => {
         console.log(error);
@@ -118,11 +117,11 @@ class Login extends Component {
           <br />
           <br />
           No account?{" "}
-          <Link to="/register" style={{ "text-decoration": "none" }}>
+          <Link to="/register" style={{ textDecoration: "none" }}>
             Sign Up
           </Link>
           <br />
-          <Link to="/home/" style={{ "text-decoration": "none" }}>
+          <Link to="/home/" style={{ textDecoration: "none" }}>
             Continue as Guest
           </Link>
           <br />

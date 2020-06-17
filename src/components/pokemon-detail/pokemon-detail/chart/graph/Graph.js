@@ -13,12 +13,12 @@ class Graph extends React.Component {
   //grab the stats from the parent component
   initializeStats() {
     var stats = [
-      this.props.stats["hp"],
-      this.props.stats["speed"],
-      this.props.stats["attack"],
-      this.props.stats["defense"],
-      this.props.stats["special-attack"],
-      this.props.stats["special-defense"],
+      this.props.pokemon.stats["hp"],
+      this.props.pokemon.stats["speed"],
+      this.props.pokemon.stats["attack"],
+      this.props.pokemon.stats["defense"],
+      this.props.pokemon.stats["special-attack"],
+      this.props.pokemon.stats["special-defense"],
     ];
 
     //find maximum
@@ -47,27 +47,40 @@ class Graph extends React.Component {
                 <tr>
                   <td>HP</td>
                   <td>
-                    <Bar stat={this.props.stats["hp"]} percent={stats[0]} />
+                    <Bar
+                      stat={this.props.pokemon.stats["hp"]}
+                      percent={stats[0]}
+                      getPokemonColor={this.props.getPokemonColor()}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Speed</td>
                   <td>
-                    <Bar stat={this.props.stats["speed"]} percent={stats[1]} />
+                    <Bar
+                      stat={this.props.pokemon.stats["speed"]}
+                      percent={stats[1]}
+                      getPokemonColor={this.props.getPokemonColor()}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Attack</td>
                   <td>
-                    <Bar stat={this.props.stats["attack"]} percent={stats[2]} />
+                    <Bar
+                      stat={this.props.pokemon.stats["attack"]}
+                      percent={stats[2]}
+                      getPokemonColor={this.props.getPokemonColor()}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Defense</td>
                   <td>
                     <Bar
-                      stat={this.props.stats["defense"]}
+                      stat={this.props.pokemon.stats["defense"]}
                       percent={stats[3]}
+                      getPokemonColor={this.props.getPokemonColor()}
                     />
                   </td>
                 </tr>
@@ -75,8 +88,9 @@ class Graph extends React.Component {
                   <td>Sp Atk</td>
                   <td>
                     <Bar
-                      stat={this.props.stats["special-attack"]}
+                      stat={this.props.pokemon.stats["special-attack"]}
                       percent={stats[4]}
+                      getPokemonColor={this.props.getPokemonColor()}
                     />
                   </td>
                 </tr>
@@ -84,8 +98,9 @@ class Graph extends React.Component {
                   <td>Sp Def</td>
                   <td>
                     <Bar
-                      stat={this.props.stats["special-defense"]}
+                      stat={this.props.pokemon.stats["special-defense"]}
                       percent={stats[5]}
+                      getPokemonColor={this.props.getPokemonColor()}
                     />
                   </td>
                 </tr>
