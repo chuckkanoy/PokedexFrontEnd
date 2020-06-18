@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Type from "../../attributes/type/Type.js";
-import axios from "axios";
+import Type from "../../type/Type.js";
 import Graph from "./chart/graph/Graph.js";
 import "./PokemonDetail.css";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../../config.js";
 import { uuid } from "uuidv4";
-import UserButton from "../../user/UserButton.js";
+import UserButton from "../../home/home/navigation/menu/Menu.js";
+import { API_Access } from "../../../API.js";
 
 class PokemonDetail extends Component {
   state = {
@@ -60,46 +60,18 @@ class PokemonDetail extends Component {
     }
   };
 
-  // post request to mark pokemon as captured
-  capturePokemon = () => {
-    //this has to defined outside of a nested function call
+  interactPokemon = async (capture) => {
     let currentComponent = this;
+    let link = capture ? `capture` : `release`;
+    let request = await API_Access.interactPokemon(
+      link,
+      this.props.match.params.id,
+      this.props.user.data.api_token
+    );
 
-    //send request to api
-    axios
-      .post(
-        API_BASE_URL + `/pokemon/capture/${this.props.match.params.id}`,
-        { key: "value" },
-        {
-          headers: {
-            Authorization: `Bearer ${this.props.user.data.api_token}`,
-          },
-        }
-      )
-      .then(function (response) {
-        currentComponent.setState({ captureMessage: response.data });
-      });
-  };
-
-  //send release request
-  releasePokemon = () => {
-    //this has to defined outside of a nested function call
-    let currentComponent = this;
-
-    //send request to api
-    axios
-      .post(
-        API_BASE_URL + `/pokemon/release/${this.props.match.params.id}`,
-        { key: "value" },
-        {
-          headers: {
-            Authorization: `Bearer ${this.props.user.data.api_token}`,
-          },
-        }
-      )
-      .then(function (response) {
-        currentComponent.setState({ captureMessage: response.data });
-      });
+    if (request) {
+      currentComponent.setState(request);
+    }
   };
 
   // only displays the capture button if logged in
@@ -109,13 +81,13 @@ class PokemonDetail extends Component {
         <div>
           <button
             className="captureButton"
-            onClick={() => this.capturePokemon()}
+            onClick={() => this.interactPokemon(true)}
           >
             Capture
           </button>
           <button
             className="captureButton"
-            onClick={() => this.releasePokemon()}
+            onClick={() => this.interactPokemon(false)}
           >
             Release
           </button>
@@ -126,16 +98,12 @@ class PokemonDetail extends Component {
   };
 
   // get the pokemon from the api
-  loadPokemonData = (link) => {
-    axios
-      .get(link)
-      .then((response) => {
-        // grab link data
-        this.setState({
-          pokemon: response.data.data,
-        });
-      })
-      .catch((error) => console.log(error));
+  loadPokemonData = async (link) => {
+    const result = await API_Access.loadPokemonData(link);
+
+    if (result) {
+      this.setState(result);
+    }
   };
 
   // display appropriate pokemon data according to id

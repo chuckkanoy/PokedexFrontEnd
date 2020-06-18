@@ -8,7 +8,6 @@ import {
   Switch,
 } from "react-router-dom";
 import Home from "./components/home/home/Home";
-import NotFound from "./components/security/NotFound";
 import Login from "./components/security/Login";
 import Register from "./components/security/Register";
 
@@ -22,11 +21,6 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Redirect exact from="/" to="/home/1" />
-          <Redirect exact from="/home/" to="/home/1" />
-          <Redirect exact from="/home//:page" to="/home/1" />
-          <Redirect exact from="/home/NaN" to="/home/1" />
-          <Redirect exact from="/captured" to="/captured/1" />
           <Route
             exact
             path="/home/:page"
@@ -57,22 +51,7 @@ class App extends Component {
             path="/home/abilities/:ability/:page"
             render={(props) => <Home {...props} user={this.state.user} />}
           />
-          <Route
-            exact
-            path="/home/groups/:group/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
-          />
-          <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
-          <Redirect
-            exact
-            from="/home/abilities/:ability"
-            to="/home/abilities/:ability/1"
-          />
-          <Redirect
-            exact
-            from="/home/groups/:group"
-            to="/home/groups/:group/1"
-          />
+
           <Route
             exact
             path="/home/captured/:page"
@@ -105,8 +84,25 @@ class App extends Component {
             path="/register"
             render={() => <Register updateUser={this.updateUser} />}
           />
-          <Route path="/404" component={NotFound} />
-          <Redirect exact from="*" to="/404" />
+          <Route
+            exact
+            path="/home/groups/:group/:page"
+            render={(props) => <Home {...props} user={this.state.user} />}
+          />
+          <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
+          <Redirect
+            exact
+            from="/home/abilities/:ability"
+            to="/home/abilities/:ability/1"
+          />
+          <Redirect
+            exact
+            from="/home/groups/:group"
+            to="/home/groups/:group/1"
+          />
+          <Redirect exact from="/home/NaN" to="/home/1" />
+          <Redirect exact from="/captured" to="/captured/1" />
+          <Redirect exact from="*" to="/home/1" />
         </Switch>
       </Router>
     );

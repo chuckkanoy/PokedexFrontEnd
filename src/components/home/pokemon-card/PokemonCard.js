@@ -1,36 +1,37 @@
 import React, { Component } from "react";
-import Type from "../../attributes/type/Type.js";
+import Type from "../../type/Type.js";
 import "./PokemonCard.css";
 import { Link } from "react-router-dom";
 
 class PokemonCard extends Component {
-  //render the view of the pokemon cards
   render() {
+    const {
+      pokemon,
+      pokemon: { id, name, image, types },
+    } = this.props;
+
     return (
       <div className="pokemonCard">
         <Link
           to={{
-            pathname: `/pokemon/${this.props.pokemon.id}`,
+            pathname: `/pokemon/${id}`,
             state: {
-              pokemon: this.props.pokemon,
+              pokemon: pokemon,
               user: this.props.user,
             },
           }}
           onClick={() => {
-            localStorage.setItem(
-              "currentPokemon",
-              JSON.stringify(this.props.pokemon)
-            );
+            localStorage.setItem("currentPokemon", JSON.stringify(pokemon));
           }}
           style={{ textDecoration: "none", color: "black" }}
         >
-          <label>{this.props.pokemon.name}</label>
+          <label>{name}</label>
           <hr />
-          <img src={this.props.pokemon.image} alt="pokemon" />
+          <img src={image} alt="pokemon" />
         </Link>
         <br />
         <div className="typeBar">
-          <Type types={this.props.pokemon.types} />
+          <Type types={types} />
         </div>
       </div>
     );

@@ -1,93 +1,47 @@
 import React, { Component } from "react";
-import Header from "./header/Header";
+import Header from "./navigation/Navigation";
 import PokemonCard from "../pokemon-card/PokemonCard.js";
-import axios from "axios";
 import { API_BASE_URL } from "../../../config.js";
 import "./Home.css";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { API_Access } from "../../../API";
 
 class Home extends Component {
   state = {
     data: [],
     meta: [],
     links: [],
-    name: "",
+    name: this.props.match.params.name,
+    type: this.props.match.params.type,
+    ability: this.props.match.params.ability,
+    group: this.props.match.params.group,
+    path: this.props.location.pathname,
+    page: this.props.match.params.page,
   };
-
-  //visualize the home page
-  render() {
-    let name = "";
-    let current_page = 1;
-
-    //check for params to update
-    if (this.props.match) {
-      if (this.props.match.params.name) {
-        name = this.props.match.params.name;
-      } else {
-        name = this.state.name;
-      }
-      current_page = this.props.match.params.page;
-    }
-
-    return (
-      <div className="App">
-        <Header
-          onPageChanged={this.onPageChanged}
-          current_page={current_page}
-          searchPokemon={this.searchPokemon}
-          name={name}
-          from={this.state.meta.from}
-          last={this.state.meta.last_page}
-          type={this.props.match.params.type}
-          ability={this.props.match.params.ability}
-          group={this.props.match.params.group}
-          user={this.props.user}
-          getCaptured={this.getCaptured}
-          logout={this.logout}
-        />
-
-        {this.getDisplay()}
-      </div>
-    );
-  }
 
   //reload page with parameter data unless it is a name search
   componentWillReceiveProps(newProps) {
-    if (
-      newProps.location.pathname !==
-      `/home/${newProps.match.params.name}/${newProps.match.params.page}`
-    ) {
-      if (newProps.location.pathname !== this.props.location.pathname) {
+    const path = newProps.location.pathname;
+    const { name } = newProps.match.params;
+
+    if (path !== `/home/${name}/${this.state.page}`) {
+      if (newProps.location.pathname !== this.state.path) {
         window.location.reload();
       }
     }
   }
 
   getDisplay = () => {
-    let path = this.props.location.pathname;
-    let page = this.props.match.params.page;
+    let path = this.state.path;
+    let page = this.state.page;
     let element = ``;
 
     if (path === `/home/types/${page}`) {
-      element = (
-        <div className="attributeContainer">
-          {this.state.data.map((type) => this.displayHelper("types", type))}
-        </div>
-      );
+      element = this.getAttribute("types");
     } else if (path === `/home/abilities/${page}`) {
-      element = (
-        <div className="attributeContainer">
-          {this.state.data.map((ability) =>
-            this.displayHelper("abilities", ability)
-          )}
-        </div>
-      );
+      element = this.getAttribute("abilities");
     } else if (path === `/home/groups/${page}`) {
-      element = (
-        <div className="attributeContainer">
-          {this.state.data.map((group) => this.displayHelper("groups", group))}
-        </div>
-      );
+      element = this.getAttribute("groups");
     } else {
       element = (
         <div className="pokemonCardHolder">
@@ -106,135 +60,137 @@ class Home extends Component {
     return element;
   };
 
+  getAttribute(label) {
+    return (
+      <div className="attributeContainer">
+        {this.state.data.map((attribute) =>
+          this.displayHelper(label, attribute)
+        )}
+      </div>
+    );
+  }
+
   displayHelper = (identifier, attribute) => {
-    let element = null;
-    element = (
+    return (
       <Link to={`/home/${identifier}/${attribute.name}/1`}>
         <button className={`${identifier}Button`}>{attribute.name}</button>
       </Link>
     );
-
-    return element;
   };
 
   checkConditions(page) {
     // check url for name parameter
-    if (this.props.match.params.name) {
-      this.searchPokemon(this.props.match.params.name, page);
+    if (this.state.name) {
+      this.loadUserData(
+        this.constructURL(`/pokemon?name=${this.state.name}&page=${page}`)
+      );
     }
     // check url for type parameter
-    else if (this.props.match.params.type) {
+    else if (this.state.type) {
       this.loadUserData(
-        API_BASE_URL +
-          `/pokemon/types/${this.props.match.params.type}?type=${this.props.match.params.type}&page=${page}`
+        this.constructURL(
+          `/pokemon/types/${this.state.type}?type=${this.state.type}&page=${page}`
+        )
       );
     }
     // check url for ability parameter
-    else if (this.props.match.params.ability) {
+    else if (this.state.ability) {
       this.loadUserData(
-        API_BASE_URL +
-          `/pokemon/abilities/${this.props.match.params.ability}?ability=${this.props.match.params.ability}&page=${page}`
+        this.constructURL(
+          `/pokemon/abilities/${this.state.ability}?ability=${this.state.ability}&page=${page}`
+        )
       );
     }
     // check url for group parameter
-    else if (this.props.match.params.group) {
+    else if (this.state.group) {
       this.loadUserData(
-        API_BASE_URL +
-          `/pokemon/groups/${this.props.match.params.group}?group=${this.props.match.params.group}&page=${page}`
+        this.constructURL(
+          `/pokemon/groups/${this.state.group}?group=${this.state.group}&page=${page}`
+        )
       );
     }
     // check url for captured path
-    else if (this.props.location.pathname.includes(`/captured`)) {
+    else if (this.state.path.includes(`/captured`)) {
       this.getCaptured(page);
-    } else if (this.props.location.pathname === `/home/types/${page}`) {
-      this.loadUserData(API_BASE_URL + `/pokemon/types?page=${page}`);
-    } else if (this.props.location.pathname === `/home/abilities/${page}`) {
-      this.loadUserData(API_BASE_URL + `/pokemon/abilities?page=${page}`);
-    } else if (this.props.location.pathname === `/home/groups/${page}`) {
-      this.loadUserData(API_BASE_URL + `/pokemon/groups?page=${page}`);
+    } else if (this.state.path === `/home/types/${page}`) {
+      this.loadUserData(this.constructURL(`/pokemon/types?page=${page}`));
+    } else if (this.state.path === `/home/abilities/${page}`) {
+      this.loadUserData(this.constructURL(`/pokemon/abilities?page=${page}`));
+    } else if (this.state.path === `/home/groups/${page}`) {
+      this.loadUserData(this.constructURL(`/pokemon/groups?page=${page}`));
     } else {
-      this.loadUserData(API_BASE_URL + `/pokemon?page=${page}`);
+      this.loadUserData(this.constructURL(`/pokemon?page=${page}`));
     }
+  }
+
+  constructURL(path) {
+    return API_BASE_URL + path;
   }
 
   //get initial page of pokemon
   componentDidMount() {
-    this.checkConditions(this.props.match.params.page);
+    this.checkConditions(this.state.page);
   }
 
   //load in data based on link
-  loadUserData(link) {
-    axios
-      .get(link)
-      .then((response) => {
-        //grab data from link
-        const newPokemon = response.data.data;
-        const newPageData = response.data.meta;
-        const newLinksData = response.data.links;
-        //create new state object
-        const newState = Object.assign({}, this.state, {
-          data: newPokemon,
-          meta: newPageData,
-          links: newLinksData,
-        });
+  loadUserData = async (link) => {
+    const result = await API_Access.loadUserData(link);
 
-        //store new state in components state
-        this.setState(newState);
-      })
-      .catch((error) => console.log(error));
-  }
-
-  //search pokemon as user types in data
-  searchPokemon = (e, current) => {
-    let link = ``;
-    if (e !== "") {
-      link = API_BASE_URL + `/pokemon?name=${e}&page=${current}`;
-    } else {
-      link = API_BASE_URL + `/pokemon?page=${current}`;
+    if (result) {
+      this.setState(result);
     }
-    this.loadUserData(link);
-    //update the name state to what is in input field
-    this.setState({ name: e });
-    this.props.history.push(`/home/${e}/${current}`);
   };
 
   //update the current paginated data
   onPageChanged = (newData) => {
-    //const current_page = newData;
     this.checkConditions(newData);
     this.setState({ current_page: newData });
   };
 
   // send request for captured pokemon
-  getCaptured = () => {
+  getCaptured = async () => {
+    let result = null;
+
     if (this.props.user) {
-      axios
-        .get(
-          API_BASE_URL +
-            `/pokemon/captured?page=${this.props.match.params.page}`,
-          {
-            headers: {
-              Authorization: `Bearer ${this.props.user.data.api_token}`,
-            },
-          }
-        )
-        .then((response) => {
-          //grab data from link
-          const newPokemon = response.data.data;
-          const newPageData = response.data.meta;
-          const newLinksData = response.data.links;
-          //create new state object
-          const newState = Object.assign({}, this.state, {
-            data: newPokemon,
-            meta: newPageData,
-            links: newLinksData,
-          });
-          //store new state in components state
-          this.setState(newState);
-        })
-        .catch(console.log);
+      result = await API_Access.getCaptured(
+        this.props.match.params.page,
+        this.props.user.data.api_token
+      );
+    }
+    if (result) {
+      this.setState(result);
     }
   };
+
+  //visualize the home page
+  render() {
+    let name = "";
+
+    //check for params to update
+    if (this.props.match.params.name) {
+      name = this.props.match.params.name;
+    } else {
+      name = this.state.name;
+    }
+
+    return (
+      <div className="App">
+        <Header
+          // searchPokemon={this.searchPokemon}
+          loadUserData={this.loadUserData}
+          current_page={this.state.page}
+          name={name}
+          last={this.state.meta.last_page}
+          type={this.props.match.params.type}
+          ability={this.props.match.params.ability}
+          group={this.props.match.params.group}
+          user={this.props.user}
+        />
+
+        {this.getDisplay()}
+      </div>
+    );
+  }
 }
 
-export default withRouter(Home);
+export default Home;

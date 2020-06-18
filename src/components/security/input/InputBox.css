@@ -1,0 +1,26 @@
+/* wrapper for input */
+.box {
+  background-color: black;
+  width: 25%;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  margin: auto;
+  padding: 10px 0px;
+}
+
+/* email */
+.login {
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  color: white;
+}
+
+/* password input */
+input[type="password"] {
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  color: white;
+}

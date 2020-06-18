@@ -26,6 +26,21 @@ class Graph extends React.Component {
     this.setState({ stats: this.initializeStats() });
   }
 
+  barHelper = (label, stat, index) => {
+    return (
+      <tr>
+        <td>{label}</td>
+        <td>
+          <Bar
+            stat={this.props.pokemon.stats[`${stat}`]}
+            percent={this.state.stats[index]}
+            getPokemonColor={this.props.getPokemonColor()}
+          />
+        </td>
+      </tr>
+    );
+  };
+
   //visualize the graph using bar components
   render() {
     return this.state.stats ? (
@@ -34,66 +49,12 @@ class Graph extends React.Component {
           <div className="bar-lines-container">
             <table>
               <tbody>
-                <tr>
-                  <td>HP</td>
-                  <td>
-                    <Bar
-                      stat={this.props.pokemon.stats["hp"]}
-                      percent={this.state.stats[0]}
-                      getPokemonColor={this.props.getPokemonColor()}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Speed</td>
-                  <td>
-                    <Bar
-                      stat={this.props.pokemon.stats["speed"]}
-                      percent={this.state.stats[1]}
-                      getPokemonColor={this.props.getPokemonColor()}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Attack</td>
-                  <td>
-                    <Bar
-                      stat={this.props.pokemon.stats["attack"]}
-                      percent={this.state.stats[2]}
-                      getPokemonColor={this.props.getPokemonColor()}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Defense</td>
-                  <td>
-                    <Bar
-                      stat={this.props.pokemon.stats["defense"]}
-                      percent={this.state.stats[3]}
-                      getPokemonColor={this.props.getPokemonColor()}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Sp Atk</td>
-                  <td>
-                    <Bar
-                      stat={this.props.pokemon.stats["special-attack"]}
-                      percent={this.state.stats[4]}
-                      getPokemonColor={this.props.getPokemonColor()}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Sp Def</td>
-                  <td>
-                    <Bar
-                      stat={this.props.pokemon.stats["special-defense"]}
-                      percent={this.state.stats[5]}
-                      getPokemonColor={this.props.getPokemonColor()}
-                    />
-                  </td>
-                </tr>
+                {this.barHelper("HP", "hp", 0)}
+                {this.barHelper("Speed", "speed", 1)}
+                {this.barHelper("Attack", "attack", 2)}
+                {this.barHelper("Defense", "defense", 3)}
+                {this.barHelper("Sp Atk", "special-attack", 4)}
+                {this.barHelper("Sp Def", "special-defense", 5)}
               </tbody>
             </table>
           </div>

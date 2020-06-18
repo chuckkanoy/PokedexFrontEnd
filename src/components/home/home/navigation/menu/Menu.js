@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./UserButton.css";
+import "./Menu.css";
 
 //log user out of system
 function logout(props) {
@@ -52,7 +52,7 @@ function getLoginElements(props) {
   return element;
 }
 
-function UserButton(props) {
+function Menu(props) {
   return (
     <div className="userLinks">
       <Link to="/home/types/1">
@@ -74,4 +74,4 @@ function UserButton(props) {
   );
 }
 
-export default UserButton;
+export default Menu;

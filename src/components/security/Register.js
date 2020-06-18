@@ -1,10 +1,9 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Security.css";
-import axios from "axios";
-import { API_BASE_URL } from "../../config.js";
 import { Component } from "react";
 import { API_Access } from "../../API.js";
+import InputBox from "./input/InputBox.js";
 
 class Register extends Component {
   state = {
@@ -62,29 +61,15 @@ class Register extends Component {
     }
   };
 
-  registerUser = (data) => {
-    if (API_Access.registerUser(data)) {
+  registerUser = async (data) => {
+    let result = await API_Access.accessUser(`/register`, data);
+    if (result) {
       this.props.history.push("/");
     } else {
-      this.setState({ alreadyRegistered: "Invalid email or password!" });
+      this.setState({
+        alreadyRegistered: "A user with that email already exists",
+      });
     }
-    // axios
-    //   .post(API_BASE_URL + `/register`, data)
-    //   .then((response) => {
-    //     console.log(response);
-    //     localStorage.setItem("user", JSON.stringify(response));
-    //     window.location = document.referrer;
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     if (error.response) {
-    //       if (error.response.status === 422) {
-    //         this.setState({
-    //           alreadyRegistered: "A user with this email already exists!",
-    //         });
-    //       }
-    //     }
-    //   });
   };
 
   handleSubmit = (event) => {
@@ -99,42 +84,25 @@ class Register extends Component {
         <form onSubmit={this.handleSubmit}>
           <h1>Register</h1>
           {this.state.alreadyRegistered}
-          <div className="box">
-            Name <br />
-            <input
-              type="text"
-              placeholder="Name"
-              name="name"
-              className="login"
-              onChange={this.handleNameChange}
-              required
-            />
-          </div>
+          <InputBox
+            title={"Name"}
+            type={"text"}
+            handleChange={this.handleNameChange}
+          />
           {this.state.validationName}
           <br />
-          <div className="box">
-            Email <br />
-            <input
-              type="text"
-              placeholder="Email"
-              name="email"
-              className="login"
-              onChange={this.handleEmailChange}
-              required
-            />
-          </div>
+          <InputBox
+            title={"Email"}
+            type={"text"}
+            handleChange={this.handleEmailChange}
+          />
           {this.state.validationEmail}
           <br />
-          <div className="box">
-            Password <br />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={this.handlePasswordChange}
-              required
-            />
-          </div>
+          <InputBox
+            title={"Password"}
+            type={"password"}
+            handleChange={this.handlePasswordChange}
+          />
           <br />
           <input type="submit" value="Register" />
           <br />

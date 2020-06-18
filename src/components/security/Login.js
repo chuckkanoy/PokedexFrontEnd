@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Security.css";
-import axios from "axios";
-import { API_BASE_URL } from "../../config.js";
 import { Component } from "react";
+import { API_Access } from "../../API.js";
+import InputBox from "./input/InputBox";
 
 class Login extends Component {
   state = {
@@ -44,26 +44,16 @@ class Login extends Component {
     }
   };
 
-  registerUser = (data) => {
-    axios
-      .post(API_BASE_URL + `/login`, data)
-      .then((response) => {
-        console.log(typeof response);
+  registerUser = async (data) => {
+    const result = await API_Access.accessUser(`/login`, data);
 
-        localStorage.setItem("user", JSON.stringify(response));
-        this.props.history.goBack();
-        // window.location = document.referrer;
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response) {
-          if (error.response.status === 401) {
-            this.setState({
-              alreadyRegistered: "Invalid email or password!",
-            });
-          }
-        }
+    if (result) {
+      this.props.history.goBack();
+    } else {
+      this.setState({
+        alreadyRegistered: "Invalid email or password",
       });
+    }
   };
 
   handleSubmit = (event) => {
@@ -77,30 +67,19 @@ class Login extends Component {
       <div className="register">
         <form onSubmit={this.handleSubmit}>
           <h1>Login</h1>
-          <div className="box">
-            Email <br />
-            <input
-              type="text"
-              placeholder="Email"
-              name="email"
-              className="login"
-              onChange={this.handleEmailChange}
-              required
-            />
-          </div>
+          {this.state.alreadyRegistered}
+          <InputBox
+            title={"Email"}
+            type={"text"}
+            handleChange={this.handleEmailChange}
+          />
           {this.state.validationEmail}
           <br />
-          <div className="box">
-            Password <br />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              className="login"
-              onChange={this.handlePasswordChange}
-              required
-            />
-          </div>
+          <InputBox
+            title={"Password"}
+            type={"password"}
+            handleChange={this.handlePasswordChange}
+          />
           <br />
           <input type="submit" value="Login" />
           <br />

@@ -1,12 +1,3 @@
-/* styling for header */
-/* wrapper styling */
-.header {
-  display: block;
-  height: 64px;
-  margin-top: 0px;
-  margin-bottom: 110px;
-}
-
 /* search bar wrapper */
 .searchBar {
   display: inline-block;
@@ -37,24 +28,4 @@
   width: 300px;
   margin: 0px 10px 0px 0px;
   font-weight: bold;
-}
-
-/* arrow icons (with some overlap for search icon) */
-i {
-  font-size: 36px;
-  color: white;
-  line-height: 200px;
-  background-color: black;
-  opacity: 25%;
-  height: 36px;
-  width: 36px;
-  border-radius: 50%;
-  padding: 20px;
-  margin: 0px 100px 0px 100px;
-}
-
-.fa-arrow-left:active,
-.fa-arrow-right:active {
-  background-color: black;
-  opacity: 10%;
 }
