@@ -78,7 +78,6 @@ class Register extends Component {
   };
 
   render() {
-    //visualize the registration page
     return (
       <div className="register">
         <form onSubmit={this.handleSubmit}>

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./Navigation.css";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import UserButton from "./menu/Menu.js";
 import Search from "./search/Search.js";
+import Arrow from "./arrow/Arrow.js";
 
 class Header extends Component {
   state = {
@@ -18,15 +19,16 @@ class Header extends Component {
     let links = { forwardLink: ``, backLink: `` };
 
     links.backLink =
-      link + `/${this.getCurrent(parseInt(this.state.page) - 1)}`;
+      link + `/${this.applyBounds(parseInt(this.state.page) - 1)}`;
     links.forwardLink =
-      link + `/${this.getCurrent(parseInt(this.state.page) + 1)}`;
+      link + `/${this.applyBounds(parseInt(this.state.page) + 1)}`;
 
     return links;
   }
 
-  getLinks(name) {
+  getLinks() {
     let link = ``;
+    const name = this.props.match.params.name;
 
     if (name) {
       link = `/home/${name}`;
@@ -36,7 +38,7 @@ class Header extends Component {
       link = `/home/abilities/${this.state.ability}`;
     } else if (this.state.group) {
       link = `/home/groups/${this.state.group}`;
-    } else if (this.props.location.pathname.includes(`/captured`)) {
+    } else if (this.state.path.includes(`/captured`)) {
       link = `/captured`;
     } else if (this.state.path === `/home/types/${this.state.page}`) {
       link = `/home/types`;
@@ -51,34 +53,30 @@ class Header extends Component {
     return this.movePage(link);
   }
 
-  //repeated function for getting the current page within the bounds
-  getCurrent = (e) => {
-    return Math.max(1, Math.min(e, this.props.last));
+  applyBounds = (e) => {
+    let result = Math.max(1, Math.min(e, this.props.last));
+
+    if (!result) {
+      result = e;
+    }
+
+    return result;
   };
 
-  //display the view of the header
   render() {
-    const name = this.props.match.params.name;
-    const { forwardLink, backLink } = this.getLinks(name);
+    const name = this.state.name;
+    const { forwardLink, backLink } = this.getLinks();
 
     return (
       <div className="header">
-        <UserButton user={this.props.user}></UserButton>
-        {/* back button */}
-        <Link to={backLink}>
-          <i className="fas fa-arrow-left"></i>
-        </Link>
-        {/* search bar */}
+        <UserButton user={this.props.user} />
+        <Arrow link={backLink} identifier={"fas fa-arrow-left"} />
         <Search
           searchPokemon={this.props.searchPokemon}
-          getCurrent={this.getCurrent}
           loadUserData={this.props.loadUserData}
           name={name}
         />
-        {/* forward button */}
-        <Link to={forwardLink}>
-          <i className="fas fa-arrow-right"></i>
-        </Link>
+        <Arrow link={forwardLink} identifier={"fas fa-arrow-right"} />
       </div>
     );
   }

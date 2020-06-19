@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
 
-//log user out of system
 function logout(props) {
   if (props.user) {
     localStorage.removeItem("user");
@@ -10,7 +9,6 @@ function logout(props) {
   }
 }
 
-//return the appropriate text in the button of the user
 function getUserElements(props) {
   let element = ``;
 
@@ -31,7 +29,6 @@ function getUserElements(props) {
   return element;
 }
 
-// get appropriate button and link for user according to login status
 function getLoginElements(props) {
   let element = ``;
 

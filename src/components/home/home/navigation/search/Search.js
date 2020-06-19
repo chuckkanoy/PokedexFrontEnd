@@ -5,19 +5,22 @@ import { withRouter } from "react-router-dom";
 
 class Search extends Component {
   state = {
-    name: this.props.name,
+    name: this.props.match.params.name,
   };
 
   searchPokemon = (e, current) => {
     let link = ``;
+
     if (e !== "") {
       link = API_BASE_URL + `/pokemon?name=${e}&page=${current}`;
     } else {
       link = API_BASE_URL + `/pokemon?page=${current}`;
     }
+
     this.props.loadUserData(link);
-    //update the name state to what is in input field
+
     this.setState({ name: e });
+
     this.props.history.push(`/home/${e}/${current}`);
   };
 
@@ -30,7 +33,7 @@ class Search extends Component {
           type="text"
           placeholder="Pokédex"
           onChange={(e) => this.searchPokemon(e.target.value, 1)}
-          value={this.props.name}
+          value={this.state.name}
         />
       </span>
     );

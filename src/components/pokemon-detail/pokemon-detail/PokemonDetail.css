@@ -1,96 +1,14 @@
-/* styling for pokemon detail */
-/* pokemon detail wrappers */
 .pokemondDetail {
   font-size: 16pt;
 }
+
 .detailWrapper {
-  text-align: center;
+  height: "100vh";
 }
 
-/* header for pokemon detail (above card) */
-.pokemonDetailHeader {
-  color: white;
-  font-size: 72px;
-  margin: 20px 100px 30px 0px;
-}
-
-/* wrapper for pokemon detail card */
-.pokemonDetailCard {
-  display: grid;
-  color: black;
-  padding: 8px;
-  border-radius: 2px;
-  width: 40%;
-  height: auto;
-  text-align: left;
-  background-color: white;
-  margin: auto;
-  font-weight: normal;
-}
-
-/* pokemon number mod */
-.pokemonNumber {
-  color: lightgray;
-  font-weight: bold;
-}
-
-/* horizontal line */
 hr {
   border: solid;
   border-width: thin;
   border-color: lightgray;
   width: 100%;
-}
-
-/* control the image with wrapper and actual object */
-.pokemonDetailCard img {
-  width: 80%;
-}
-.pokemonImage {
-  display: inline-block;
-  width: 30%;
-  margin: auto;
-  margin-right: 20px;
-  padding-right: 80px;
-}
-
-/* wrapper for graph and image */
-.pokemonDetailCard .middleContainer {
-  text-align: center;
-  position: relative;
-  width: 100%;
-  vertical-align: middle;
-}
-
-/* basic info */
-.infoBox {
-  margin: 20px;
-  position: relative;
-  text-align: left;
-  display: grid;
-}
-
-/* profile header wrapper */
-.profileHeader {
-  background-color: darkgray;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-/* profile data*/
-.profile {
-  margin: 20px;
-}
-
-/* control statistics */
-.statBox {
-  display: inline-block;
-  vertical-align: top;
-}
-
-/* remove text decoration */
-.attributeLink {
-  text-decoration: none;
-  color: black;
 }

@@ -6,7 +6,7 @@ class Graph extends React.Component {
   state = {
     stats: [],
   };
-  //grab the stats from the parent component
+
   initializeStats = () => {
     const stats = [
       this.props.pokemon.stats["hp"],
@@ -41,7 +41,6 @@ class Graph extends React.Component {
     );
   };
 
-  //visualize the graph using bar components
   render() {
     return this.state.stats ? (
       <div className="graph-wrapper">

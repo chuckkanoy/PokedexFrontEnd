@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import Type from "../../type/Type.js";
-import Graph from "./chart/graph/Graph.js";
 import "./PokemonDetail.css";
-import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../../config.js";
-import { uuid } from "uuidv4";
 import UserButton from "../../home/home/navigation/menu/Menu.js";
 import { API_Access } from "../../../API.js";
+import DetailCard from "./detail-card/DetailCard.js";
+import DetailCardLabel from "./detail-card-label/DetailCardHeader";
 
 class PokemonDetail extends Component {
   state = {
@@ -60,49 +58,11 @@ class PokemonDetail extends Component {
     }
   };
 
-  interactPokemon = async (capture) => {
-    let currentComponent = this;
-    let link = capture ? `capture` : `release`;
-    let request = await API_Access.interactPokemon(
-      link,
-      this.props.match.params.id,
-      this.props.user.data.api_token
-    );
-
-    if (request) {
-      currentComponent.setState(request);
-    }
-  };
-
-  // only displays the capture button if logged in
-  getCaptureButton = () => {
-    if (this.props.user) {
-      return (
-        <div>
-          <button
-            className="captureButton"
-            onClick={() => this.interactPokemon(true)}
-          >
-            Capture
-          </button>
-          <button
-            className="captureButton"
-            onClick={() => this.interactPokemon(false)}
-          >
-            Release
-          </button>
-          <label>{this.state.captureMessage}</label>
-        </div>
-      );
-    }
-  };
-
-  // get the pokemon from the api
   loadPokemonData = async (link) => {
-    const result = await API_Access.loadPokemonData(link);
+    const result = await API_Access.loadUserData(link);
 
     if (result) {
-      this.setState(result);
+      this.setState({ pokemon: result.data });
     }
   };
 
@@ -113,7 +73,6 @@ class PokemonDetail extends Component {
     );
   }
 
-  //render the view of the details page
   render() {
     return !this.state.pokemon.types ? (
       <div>
@@ -129,106 +88,12 @@ class PokemonDetail extends Component {
         }}
       >
         <UserButton user={this.props.user} />
-        {/* back button for returning to pagination */}
-        <div className="pokemonDetailHeader">
-          <i
-            className="fas fa-arrow-left"
-            onClick={() => {
-              this.props.history.goBack();
-              localStorage.removeItem("currentPokemon");
-            }}
-          ></i>
-          {this.state.pokemon.name}
-        </div>
-        {/* actual detail card data */}
-        <div className="pokemonDetailCard">
-          {/* header */}
-          <div className="detailHeader">
-            <Type types={this.state.pokemon.types} />
-            <label style={{ fontSize: "32pt" }}>
-              <label>
-                <strong>{this.state.pokemon.name}</strong>
-              </label>
-              <label className="pokemonNumber">
-                &emsp; #{this.state.pokemon.id}
-              </label>
-            </label>
-          </div>
-          <hr />
-          {/* container holding pokemon image and statistics */}
-          <div className="middleContainer">
-            <div className="pokemonImage">
-              <img
-                // crossOrigin={"anonymous"}
-                ref={this.imgRef}
-                src={this.state.pokemon.image}
-                alt="pokemon"
-              />
-            </div>
-            {/* display statistics */}
-            <div className="statBox">
-              <Graph
-                style={{ "vertical-align": "middle" }}
-                pokemon={this.state.pokemon}
-                getPokemonColor={this.getPokemonColor}
-              />
-            </div>
-          </div>
-          <br />
-          {/* profile data */}
-          <div className="infoBox">
-            <strong>{this.state.pokemon.genus}</strong>
-            <br />
-            {this.state.pokemon.description}
-            <br />
-          </div>
-          <p className="profileHeader">&emsp;Profile</p>
-          <div className="profile">
-            <label style={{ fontWeight: "bold" }}>
-              Height:&emsp;&emsp;&emsp;&nbsp;
-            </label>
-            {this.state.pokemon.height}
-            <br />
-            <br />
-            <label style={{ fontWeight: "bold" }}>
-              Weight:&emsp;&emsp;&emsp;
-            </label>
-            {this.state.pokemon.weight}
-            <br />
-            <br />
-            <label style={{ fontWeight: "bold" }}>
-              Abilities:&emsp;&emsp;&nbsp;&nbsp;
-            </label>
-            {this.state.pokemon.abilities.map((ability) => {
-              return (
-                <Link
-                  to={`/home/abilities/${ability}/1`}
-                  className="attributeLink"
-                  key={uuid()}
-                >
-                  {ability}&emsp;
-                </Link>
-              );
-            })}
-            <br />
-            <br />
-            <label style={{ fontWeight: "bold" }}>Egg groups:&emsp;</label>
-            {this.state.pokemon.egg_groups.map((group) => {
-              return (
-                <Link
-                  to={`/home/groups/${group}/1`}
-                  className="attributeLink"
-                  key={uuid()}
-                >
-                  {group}&emsp;
-                </Link>
-              );
-            })}
-          </div>
-          <br />
-          {/* option for logged in users to capture pokemon */}
-          <div className="captureBar">{this.getCaptureButton()}</div>
-        </div>
+        <DetailCardLabel pokemon={this.state.pokemon} />
+        <DetailCard
+          pokemon={this.state.pokemon}
+          getPokemonColor={this.getPokemonColor}
+          user={this.props.user}
+        />
       </div>
     );
   }

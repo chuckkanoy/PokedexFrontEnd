@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Type from "../../type/Type.js";
 import "./PokemonCard.css";
 import { Link } from "react-router-dom";
+import { uuid } from "uuidv4";
 
 class PokemonCard extends Component {
   render() {
@@ -30,9 +31,9 @@ class PokemonCard extends Component {
           <img src={image} alt="pokemon" />
         </Link>
         <br />
-        <div className="typeBar">
-          <Type types={types} />
-        </div>
+        {types.map((type) => (
+          <Type type={type} key={uuid()} />
+        ))}
       </div>
     );
   }

@@ -1,11 +1,9 @@
-/* styling for types */
 .typeBar {
   display: grid;
   height: 20px;
   margin-bottom: 10px;
 }
 
-/* styling for all types */
 .type > * {
   font-family: "SF UI Text", sans-serif;
   float: right;
@@ -19,7 +17,6 @@
   font-size: 12pt;
 }
 
-/* styling for specific types */
 .type .poison {
   border-color: rebeccapurple;
   color: rebeccapurple;

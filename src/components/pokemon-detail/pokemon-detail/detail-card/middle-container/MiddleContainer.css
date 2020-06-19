@@ -1,0 +1,23 @@
+.middleContainer {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.pokemonDetailCard img {
+  width: 80%;
+}
+
+.pokemonImage {
+  display: inline-block;
+  width: 30%;
+  margin: auto;
+  margin-right: 20px;
+  padding-right: 80px;
+}
+
+.statBox {
+  display: inline-block;
+  vertical-align: top;
+}

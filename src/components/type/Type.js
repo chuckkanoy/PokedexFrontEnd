@@ -3,7 +3,6 @@ import "./Type.css";
 import { Link } from "react-router-dom";
 import { uuid } from "uuidv4";
 
-//get the appropriate type of the pokemon and add as classname for styling
 function getType(type) {
   switch (type) {
     case "poison":
@@ -47,18 +46,13 @@ function getType(type) {
   }
 }
 
-//register the type label appropriate for
-const Type = ({ types }) => {
+const Type = ({ type }) => {
   return (
-    <span>
-      {types.map((oneType) => (
-        <div className="typeWrapper" key={uuid()}>
-          <Link to={`/home/types/${oneType}/1`}>
-            <div className="type">{getType(oneType)}</div>
-          </Link>
-        </div>
-      ))}
-    </span>
+    <div className="typeWrapper" key={uuid()}>
+      <Link to={`/home/types/${type}/1`}>
+        <div className="type">{getType(type)}</div>
+      </Link>
+    </div>
   );
 };
 

@@ -30,29 +30,12 @@ export class API_Access {
     return result;
   };
 
-  static interactPokemon = async (link, id, api_token) => {
+  static interactPokemon = async (link, id) => {
     let result = null;
-    //send request to api
     await axios
       .post(API_BASE_URL + `/pokemon/${link}/${id}`)
       .then(function (response) {
         result = { captureMessage: response.data };
-      })
-      .catch(console.log);
-
-    return result;
-  };
-
-  static loadPokemonData = async (link) => {
-    let result = null;
-
-    await axios
-      .get(link)
-      .then((response) => {
-        // grab link data
-        result = {
-          pokemon: response.data.data,
-        };
       })
       .catch(console.log);
 
@@ -65,43 +48,7 @@ export class API_Access {
     await axios
       .get(link)
       .then((response) => {
-        //grab data from link
-        const newPokemon = response.data.data;
-        const newPageData = response.data.meta;
-        const newLinksData = response.data.links;
-        //create new state object
-        const newState = Object.assign({}, this.state, {
-          data: newPokemon,
-          meta: newPageData,
-          links: newLinksData,
-        });
-
-        //store new state in components state
-        result = newState;
-      })
-      .catch(console.log);
-
-    return result;
-  };
-
-  static getCaptured = async (page, api_token) => {
-    let result = null;
-
-    await axios
-      .get(API_BASE_URL + `/pokemon/captured?page=${page}`)
-      .then((response) => {
-        //grab data from link
-        const newPokemon = response.data.data;
-        const newPageData = response.data.meta;
-        const newLinksData = response.data.links;
-        //create new state object
-        const newState = Object.assign({}, this.state, {
-          data: newPokemon,
-          meta: newPageData,
-          links: newLinksData,
-        });
-        //store new state in components state
-        result = newState;
+        result = response.data;
       })
       .catch(console.log);
 
