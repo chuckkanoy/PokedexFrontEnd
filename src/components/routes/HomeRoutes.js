@@ -1,5 +1,10 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Home from "../home/home/Home";
 
 function HomeRoutes() {
@@ -13,8 +18,7 @@ function HomeRoutes() {
         path="/home/:name?/:page"
         render={(props) => <Home {...props} />}
       />
-    ),
-    (<Redirect exact from="*" to="/home/1" />)
+    )
   );
 }
 

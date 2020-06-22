@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./PokemonDetail.css";
 import { API_BASE_URL } from "../../../config.js";
 import UserButton from "../../home/home/navigation/menu/Menu.js";
-import { API_Access } from "../../../API.js";
+import { loadUserData } from "../../../API.js";
 import DetailCard from "./detail-card/DetailCard.js";
 import DetailCardLabel from "./detail-card-label/DetailCardHeader";
 
@@ -14,7 +14,14 @@ class PokemonDetail extends Component {
 
   getPokemonColor = () => {
     if (localStorage.getItem("currentPokemon")) {
-      const types = JSON.parse(localStorage.getItem("currentPokemon")).types;
+      let types = ``;
+
+      try {
+        types = JSON.parse(localStorage.getItem("currentPokemon")).types;
+      } catch {
+        console.log("Type not found in local storage");
+      }
+
       switch (types[types.length - 1]) {
         case "poison":
           return "rgb(198, 150, 247)";
@@ -59,7 +66,7 @@ class PokemonDetail extends Component {
   };
 
   loadPokemonData = async (link) => {
-    const result = await API_Access.loadUserData(link);
+    const result = await loadUserData(link).catch(console.log);
 
     if (result) {
       this.setState({ pokemon: result.data });

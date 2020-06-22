@@ -10,25 +10,13 @@ import {
 import Home from "./components/home/home/Home";
 import Login from "./components/security/Login";
 import Register from "./components/security/Register";
-import HomeRoutes from "./components/routes/HomeRoutes";
-import PokemonDetailRoutes from "./components/routes/PokemonDetailRoutes";
-import AttributeRoutes from "./components/routes/AttributeRoutes";
-import AuthenticationRoutes from "./components/routes/AuthenticationRoutes";
 
 class App extends Component {
-  state = {
-    // user: JSON.parse(localStorage.getItem("user")),
-  };
-
   // renders routes passing props when necessary
   render() {
     return (
       <Router>
         <Switch>
-          {/* <HomeRoutes />
-        <PokemonDetailRoutes />
-        <AttributeRoutes />
-        <AuthenticationRoutes /> */}
           <Route
             exact
             path="/home/:page"
@@ -100,7 +88,7 @@ class App extends Component {
           />
           <Redirect exact from="/home/NaN" to="/home/1" />
           <Redirect exact from="/captured" to="/captured/1" />
-          <Redirect exact from="*" to="/home/1" />
+          <Redirect to="/home/1" />
         </Switch>
       </Router>
     );

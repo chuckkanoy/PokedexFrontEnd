@@ -20,51 +20,45 @@ class Menu extends Component {
     }
   };
 
-  getUserElements = () => {
-    let element = ``;
-    const user = JSON.parse(this.state.user);
-
-    if (user) {
-      element = (
-        <Link to="/captured" className="captureButton">
-          <button onClick={this.props.getCaptured}>{user.data.name}</button>
-        </Link>
-      );
-    } else {
-      element = (
-        <Link to={`/login`}>
-          <button>Guest</button>
-        </Link>
-      );
+  parseUser = () => {
+    try {
+      return JSON.parse(localStorage.getItem("user"));
+    } catch {
+      console.log("User could not be parsed!");
     }
+  };
 
-    return element;
+  getUserElements = () => {
+    let user = this.parseUser();
+
+    return user ? (
+      <Link to="/captured" className="captureButton">
+        <button onClick={this.props.getCaptured}>{user.data.name}</button>
+      </Link>
+    ) : (
+      <Link to={`/login`}>
+        <button>Guest</button>
+      </Link>
+    );
   };
 
   getLoginElements = () => {
-    let element = ``;
-    const user = JSON.parse(this.state.user);
+    let user = this.parseUser();
 
-    if (user) {
-      element = (
-        <Link to={`/home`}>
-          <button onClick={() => this.logout(this.props)}>Logout</button>
-        </Link>
-      );
-    } else {
-      element = (
-        <Link
-          to={`/login`}
-          onClick={() => {
-            localStorage.setItem("preLoginPage", this.props.location.pathname);
-          }}
-        >
-          <button>Login</button>
-        </Link>
-      );
-    }
-
-    return element;
+    return user ? (
+      <Link to={`/home`}>
+        <button onClick={() => this.logout(this.props)}>Logout</button>
+      </Link>
+    ) : (
+      <Link
+        to={`/login`}
+        onClick={() => {
+          localStorage.setItem("preLoginPage", this.props.location.pathname);
+        }}
+      >
+        <button>Login</button>
+      </Link>
+    );
   };
 
   render() {

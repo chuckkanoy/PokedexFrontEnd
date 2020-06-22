@@ -2,7 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Security.css";
 import { Component } from "react";
-import { API_Access } from "../../API.js";
+import { accessUser } from "../../API.js";
 import InputBox from "./input/InputBox";
 
 class Login extends Component {
@@ -45,7 +45,7 @@ class Login extends Component {
   };
 
   registerUser = async (data) => {
-    const result = await API_Access.accessUser(`/login`, data);
+    const result = await accessUser(`/login`, data);
 
     if (result) {
       if (localStorage.getItem("preLoginPage")) {

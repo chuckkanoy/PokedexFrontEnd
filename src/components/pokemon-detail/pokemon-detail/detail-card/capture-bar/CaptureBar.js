@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { API_Access } from "../../../../../API.js";
+import { interactPokemon } from "../../../../../API.js";
 import { withRouter } from "react-router-dom";
 
 class CaptureBar extends Component {
@@ -10,7 +10,7 @@ class CaptureBar extends Component {
   interactPokemon = async (capture) => {
     let currentComponent = this;
     let link = capture ? `capture` : `release`;
-    let request = await API_Access.interactPokemon(
+    let request = await interactPokemon(
       link,
       this.props.match.params.id,
       this.props.user.data.api_token

@@ -3,8 +3,7 @@ import Header from "./navigation/Navigation";
 import PokemonCard from "../pokemon-card/PokemonCard.js";
 import { API_BASE_URL } from "../../../config.js";
 import "./Home.css";
-import { API_Access } from "../../../API";
-import { uuid } from "uuidv4";
+import { loadUserData } from "../../../API";
 import Attribute from "../attribute/Attribute";
 
 class Home extends Component {
@@ -12,30 +11,25 @@ class Home extends Component {
     data: [],
     meta: [],
     links: [],
-    name: this.props.match.params.name,
-    type: this.props.match.params.type,
-    ability: this.props.match.params.ability,
-    group: this.props.match.params.group,
-    path: this.props.location.pathname,
-    page: this.props.match.params.page,
   };
 
   componentWillReceiveProps(newProps) {
     const path = newProps.location.pathname;
     const name = newProps.match.params.name;
+    const currentPath = this.props.location.pathname;
 
-    if (path !== this.state.path && path !== `/home/${name}/1`) {
+    if (path !== currentPath && path !== `/home/${name}/1`) {
       window.location.reload();
     }
   }
 
   componentDidMount() {
-    this.checkConditions(this.state.page);
+    this.checkConditions();
   }
 
   getDisplay = () => {
-    const path = this.state.path;
-    const page = this.state.page;
+    const path = this.props.location.pathname;
+    const page = this.props.match.params.page;
     const name = this.props.match.params.name;
     let element = ``;
 
@@ -50,7 +44,7 @@ class Home extends Component {
         <div className="pokemonCardHolder">
           {this.state.data.map((pokemon) => (
             <PokemonCard
-              key={uuid()}
+              key={pokemon.id}
               pokemon={pokemon}
               updateView={this.updateView}
               user={this.props.user}
@@ -64,7 +58,7 @@ class Home extends Component {
   };
 
   loadUserData = async (link) => {
-    const result = await API_Access.loadUserData(link);
+    const result = await loadUserData(link).catch(console.log);
 
     if (result) {
       this.setState(result);
@@ -75,40 +69,36 @@ class Home extends Component {
     return API_BASE_URL + path;
   }
 
-  checkConditions(page) {
-    if (this.state.name) {
-      this.loadUserData(
-        this.constructURL(`/pokemon?name=${this.state.name}&page=${page}`)
-      );
-    } else if (this.state.type) {
-      this.loadUserData(
-        this.constructURL(
-          `/pokemon/types/${this.state.type}?type=${this.state.type}&page=${page}`
-        )
-      );
-    } else if (this.state.ability) {
-      this.loadUserData(
-        this.constructURL(
-          `/pokemon/abilities/${this.state.ability}?ability=${this.state.ability}&page=${page}`
-        )
-      );
-    } else if (this.state.group) {
-      this.loadUserData(
-        this.constructURL(
-          `/pokemon/groups/${this.state.group}?group=${this.state.group}&page=${page}`
-        )
-      );
-    } else if (this.state.path.includes(`/captured`)) {
-      this.loadUserData(this.constructURL(`/pokemon/captured?page=${page}`));
-    } else if (this.state.path === `/home/types/${page}`) {
-      this.loadUserData(this.constructURL(`/pokemon/types?page=${page}`));
-    } else if (this.state.path === `/home/abilities/${page}`) {
-      this.loadUserData(this.constructURL(`/pokemon/abilities?page=${page}`));
-    } else if (this.state.path === `/home/groups/${page}`) {
-      this.loadUserData(this.constructURL(`/pokemon/groups?page=${page}`));
+  checkConditions() {
+    const name = this.props.match.params.name;
+    const type = this.props.match.params.type;
+    const ability = this.props.match.params.ability;
+    const group = this.props.match.params.group;
+    const path = this.props.location.pathname;
+    const page = this.props.match.params.page;
+    let link = ``;
+
+    if (name) {
+      link = `/pokemon?name=${name}&page=${page}`;
+    } else if (type) {
+      link = `/pokemon/types/${type}?type=${type}&page=${page}`;
+    } else if (ability) {
+      link = `/pokemon/abilities/${ability}?ability=${ability}&page=${page}`;
+    } else if (group) {
+      link = `/pokemon/groups/${group}?group=${group}&page=${page}`;
+    } else if (path.includes(`/captured`)) {
+      link = `/pokemon/captured?page=${page}`;
+    } else if (path === `/home/types/${page}`) {
+      link = `/pokemon/types?page=${page}`;
+    } else if (path === `/home/abilities/${page}`) {
+      link = `/pokemon/abilities?page=${page}`;
+    } else if (path === `/home/groups/${page}`) {
+      link = `/pokemon/groups?page=${page}`;
     } else {
-      this.loadUserData(this.constructURL(`/pokemon?page=${page}`));
+      link = `/pokemon?page=${page}`;
     }
+
+    this.loadUserData(this.constructURL(link));
   }
 
   render() {

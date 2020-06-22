@@ -2,7 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Security.css";
 import { Component } from "react";
-import { API_Access } from "../../API.js";
+import { accessUser } from "../../API.js";
 import InputBox from "./input/InputBox.js";
 
 class Register extends Component {
@@ -62,7 +62,7 @@ class Register extends Component {
   };
 
   registerUser = async (data) => {
-    let result = await API_Access.accessUser(`/register`, data);
+    let result = await accessUser(`/register`, data);
     if (result) {
       if (localStorage.getItem("preLoginPage")) {
         this.props.history.push(localStorage.getItem("preLoginPage"));

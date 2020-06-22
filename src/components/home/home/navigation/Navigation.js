@@ -6,54 +6,48 @@ import Search from "./search/Search.js";
 import Arrow from "./arrow/Arrow.js";
 
 class Header extends Component {
-  state = {
-    page: this.props.match.params.page,
-    name: this.props.match.params.name,
-    type: this.props.match.params.type,
-    ability: this.props.match.params.ability,
-    group: this.props.match.params.group,
-    path: this.props.location.pathname,
-  };
-
-  movePage(link) {
-    let links = { forwardLink: ``, backLink: `` };
-
-    links.backLink =
-      link + `/${this.applyBounds(parseInt(this.state.page) - 1)}`;
-    links.forwardLink =
-      link + `/${this.applyBounds(parseInt(this.state.page) + 1)}`;
-
-    return links;
+  getDirectionalLinks(link) {
+    return {
+      forwardLink:
+        link + `/${this.clamp(parseInt(this.props.match.params.page) + 1)}`,
+      backLink:
+        link + `/${this.clamp(parseInt(this.props.match.params.page) - 1)}`,
+    };
   }
 
   getLinks() {
     let link = ``;
     const name = this.props.match.params.name;
+    const page = this.props.match.params.page;
+    const type = this.props.match.params.type;
+    const ability = this.props.match.params.ability;
+    const group = this.props.match.params.group;
+    const path = this.props.location.pathname;
 
     if (name) {
       link = `/home/${name}`;
-    } else if (this.state.type) {
-      link = `/home/types/${this.state.type}`;
-    } else if (this.state.ability) {
-      link = `/home/abilities/${this.state.ability}`;
-    } else if (this.state.group) {
-      link = `/home/groups/${this.state.group}`;
-    } else if (this.state.path.includes(`/captured`)) {
+    } else if (type) {
+      link = `/home/types/${type}`;
+    } else if (ability) {
+      link = `/home/abilities/${ability}`;
+    } else if (group) {
+      link = `/home/groups/${group}`;
+    } else if (path.includes(`/captured`)) {
       link = `/captured`;
-    } else if (this.state.path === `/home/types/${this.state.page}`) {
+    } else if (path === `/home/types/${page}`) {
       link = `/home/types`;
-    } else if (this.state.path === `/home/groups/${this.state.page}`) {
+    } else if (path === `/home/groups/${page}`) {
       link = `/home/groups`;
-    } else if (this.state.path === `/home/abilities/${this.state.page}`) {
+    } else if (path === `/home/abilities/${page}`) {
       link = `/home/abilities`;
     } else {
       link = `/home`;
     }
 
-    return this.movePage(link);
+    return this.getDirectionalLinks(link);
   }
 
-  applyBounds = (e) => {
+  clamp = (e) => {
     let result = Math.max(1, Math.min(e, this.props.last));
 
     if (!result) {
@@ -64,7 +58,7 @@ class Header extends Component {
   };
 
   render() {
-    const name = this.state.name;
+    const name = this.props.match.params.name;
     const { forwardLink, backLink } = this.getLinks();
     return (
       <div className="header">

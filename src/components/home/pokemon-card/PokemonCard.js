@@ -6,10 +6,9 @@ import { uuid } from "uuidv4";
 
 class PokemonCard extends Component {
   render() {
-    const {
-      pokemon,
-      pokemon: { id, name, image, types },
-    } = this.props;
+    const { pokemon } = this.props;
+
+    const { id, name, image, types } = pokemon;
 
     return (
       <div className="pokemonCard">
