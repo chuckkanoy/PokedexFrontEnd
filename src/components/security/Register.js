@@ -64,7 +64,12 @@ class Register extends Component {
   registerUser = async (data) => {
     let result = await API_Access.accessUser(`/register`, data);
     if (result) {
-      this.props.history.push("/");
+      if (localStorage.getItem("preLoginPage")) {
+        this.props.history.push(localStorage.getItem("preLoginPage"));
+        localStorage.removeItem("preLoginPage");
+      } else {
+        this.props.history.push(`/home`);
+      }
     } else {
       this.setState({
         alreadyRegistered: "A user with that email already exists",

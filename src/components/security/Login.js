@@ -48,7 +48,12 @@ class Login extends Component {
     const result = await API_Access.accessUser(`/login`, data);
 
     if (result) {
-      this.props.history.goBack();
+      if (localStorage.getItem("preLoginPage")) {
+        this.props.history.push(localStorage.getItem("preLoginPage"));
+        localStorage.removeItem("preLoginPage");
+      } else {
+        this.props.history.push(`/home`);
+      }
     } else {
       this.setState({
         alreadyRegistered: "Invalid email or password",

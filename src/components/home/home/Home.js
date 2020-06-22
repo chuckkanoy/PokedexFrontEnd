@@ -34,11 +34,12 @@ class Home extends Component {
   }
 
   getDisplay = () => {
-    let path = this.state.path;
-    let page = this.state.page;
+    const path = this.state.path;
+    const page = this.state.page;
+    const name = this.props.match.params.name;
     let element = ``;
 
-    if (path === `/home/types/${page}`) {
+    if (path === `/home/types/${page}` && !name) {
       element = <Attribute label={"types"} data={this.state} />;
     } else if (path === `/home/abilities/${page}`) {
       element = <Attribute label={"abilities"} data={this.state} />;

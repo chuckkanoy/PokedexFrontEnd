@@ -10,6 +10,9 @@ class Search extends Component {
 
   searchPokemon = (e, current) => {
     let link = ``;
+    let flag = false;
+    const path = this.props.location.pathname;
+    const page = this.props.match.params.page;
 
     if (e !== "") {
       link = API_BASE_URL + `/pokemon?name=${e}&page=${current}`;
@@ -19,9 +22,19 @@ class Search extends Component {
 
     this.props.loadUserData(link);
 
+    flag =
+      !this.state.name &&
+      (path === `/home/types/${page}` ||
+        path === `/home/abilities/${page}` ||
+        path === `/home/groups/${page}`);
+
     this.setState({ name: e });
 
     this.props.history.push(`/home/${e}/${current}`);
+
+    if (flag) {
+      window.location.reload();
+    }
   };
 
   render() {

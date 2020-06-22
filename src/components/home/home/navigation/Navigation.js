@@ -66,7 +66,6 @@ class Header extends Component {
   render() {
     const name = this.state.name;
     const { forwardLink, backLink } = this.getLinks();
-
     return (
       <div className="header">
         <UserButton user={this.props.user} />
