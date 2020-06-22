@@ -116,7 +116,18 @@ class Register extends Component {
             Login Here
           </Link>
           <br />
-          <Link to="/home/" style={{ textDecoration: "none" }}>
+          <Link
+            to={() => {
+              let result = ``;
+              if (localStorage.getItem("preLoginPage")) {
+                result = localStorage.getItem("preLoginPage");
+              } else {
+                result = `/home`;
+              }
+              return result;
+            }}
+            style={{ textDecoration: "none" }}
+          >
             Continue as Guest
           </Link>
           <br />

@@ -117,7 +117,6 @@ class Home extends Component {
         <Header
           loadUserData={this.loadUserData}
           last={this.state.meta.last_page}
-          user={this.props.user}
         />
 
         {this.getDisplay()}

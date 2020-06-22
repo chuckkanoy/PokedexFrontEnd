@@ -3,9 +3,13 @@ import { Link, withRouter } from "react-router-dom";
 import "./Menu.css";
 
 class Menu extends Component {
+  state = {
+    user: localStorage.getItem("user"),
+  };
+
   logout = () => {
     const path = this.props.location.pathname;
-    if (this.props.user) {
+    if (this.state.user) {
       localStorage.removeItem("user");
 
       if (path.includes(`captured`)) {
@@ -18,13 +22,12 @@ class Menu extends Component {
 
   getUserElements = () => {
     let element = ``;
+    const user = JSON.parse(this.state.user);
 
-    if (this.props.user) {
+    if (user) {
       element = (
         <Link to="/captured" className="captureButton">
-          <button onClick={this.props.getCaptured}>
-            {this.props.user.data.name}
-          </button>
+          <button onClick={this.props.getCaptured}>{user.data.name}</button>
         </Link>
       );
     } else {
@@ -40,8 +43,9 @@ class Menu extends Component {
 
   getLoginElements = () => {
     let element = ``;
+    const user = JSON.parse(this.state.user);
 
-    if (this.props.user) {
+    if (user) {
       element = (
         <Link to={`/home`}>
           <button onClick={() => this.logout(this.props)}>Logout</button>

@@ -10,10 +10,14 @@ import {
 import Home from "./components/home/home/Home";
 import Login from "./components/security/Login";
 import Register from "./components/security/Register";
+import HomeRoutes from "./components/routes/HomeRoutes";
+import PokemonDetailRoutes from "./components/routes/PokemonDetailRoutes";
+import AttributeRoutes from "./components/routes/AttributeRoutes";
+import AuthenticationRoutes from "./components/routes/AuthenticationRoutes";
 
 class App extends Component {
   state = {
-    user: JSON.parse(localStorage.getItem("user")),
+    // user: JSON.parse(localStorage.getItem("user")),
   };
 
   // renders routes passing props when necessary
@@ -21,73 +25,67 @@ class App extends Component {
     return (
       <Router>
         <Switch>
+          {/* <HomeRoutes />
+        <PokemonDetailRoutes />
+        <AttributeRoutes />
+        <AuthenticationRoutes /> */}
           <Route
             exact
             path="/home/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/home/types/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/home/abilities/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/home/groups/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/home/types/:type/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/home/abilities/:ability/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
 
           <Route
             exact
             path="/home/captured/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/home/:name?/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/captured/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Route
             exact
             path="/pokemon/:id"
-            render={(props) => (
-              <PokemonDetail {...props} user={this.state.user} />
-            )}
+            render={(props) => <PokemonDetail {...props} />}
           />
-          <Route
-            exact
-            path="/login"
-            render={() => <Login updateUser={this.updateUser} />}
-          />
-          <Route
-            exact
-            path="/register"
-            render={() => <Register updateUser={this.updateUser} />}
-          />
+          <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/register" render={() => <Register />} />
           <Route
             exact
             path="/home/groups/:group/:page"
-            render={(props) => <Home {...props} user={this.state.user} />}
+            render={(props) => <Home {...props} />}
           />
           <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
           <Redirect

@@ -68,7 +68,7 @@ class Header extends Component {
     const { forwardLink, backLink } = this.getLinks();
     return (
       <div className="header">
-        <UserButton user={this.props.user} />
+        <UserButton />
         <Arrow link={backLink} identifier={"fas fa-arrow-left"} />
         <Search
           searchPokemon={this.props.searchPokemon}
