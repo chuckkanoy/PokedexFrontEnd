@@ -13,6 +13,8 @@ class Home extends Component {
     links: [],
   };
 
+  _isMounted = false;
+
   componentWillReceiveProps(newProps) {
     const path = newProps.location.pathname;
     const name = newProps.match.params.name;
@@ -24,7 +26,12 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.checkConditions();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   getDisplay = () => {
@@ -58,9 +65,14 @@ class Home extends Component {
   };
 
   loadUserData = async (link) => {
-    const result = await loadUserData(link).catch(console.log);
+    const result = await loadUserData(link).catch((error) => {
+      console.log(error);
+      if (error.response.status === 500) {
+        this.props.history.push(`/home`);
+      }
+    });
 
-    if (result) {
+    if (result && this._isMounted) {
       this.setState(result);
     }
   };

@@ -7,13 +7,21 @@ class CaptureBar extends Component {
     captureMessage: "",
   };
 
+  getUser() {
+    try {
+      return JSON.parse(localStorage.getItem("user"));
+    } catch {
+      console.log("Unable to parse user!");
+    }
+  }
+
   interactPokemon = async (capture) => {
     let currentComponent = this;
     let link = capture ? `capture` : `release`;
     let request = await interactPokemon(
       link,
       this.props.match.params.id,
-      this.props.user.data.api_token
+      this.getUser().data.api_token
     );
 
     if (request) {
@@ -22,7 +30,7 @@ class CaptureBar extends Component {
   };
 
   getCaptureButton = () => {
-    if (this.props.user) {
+    if (this.getUser()) {
       return (
         <div>
           <button

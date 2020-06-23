@@ -12,7 +12,6 @@ import Login from "./components/security/Login";
 import Register from "./components/security/Register";
 
 class App extends Component {
-  // renders routes passing props when necessary
   render() {
     return (
       <Router>

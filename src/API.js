@@ -35,8 +35,7 @@ export async function interactPokemon(link, id) {
     .post(API_BASE_URL + `/pokemon/${link}/${id}`)
     .then(function (response) {
       result = { captureMessage: response.data };
-    })
-    .catch(console.log);
+    });
 
   return result;
 }
@@ -44,12 +43,9 @@ export async function interactPokemon(link, id) {
 export async function loadUserData(link) {
   let result = null;
 
-  await axios
-    .get(link)
-    .then((response) => {
-      result = response.data;
-    })
-    .catch(console.log);
+  await axios.get(link).then((response) => {
+    result = response.data;
+  });
 
   return result;
 }

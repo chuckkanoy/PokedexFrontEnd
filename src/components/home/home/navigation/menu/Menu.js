@@ -3,13 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 import "./Menu.css";
 
 class Menu extends Component {
-  state = {
-    user: localStorage.getItem("user"),
-  };
-
   logout = () => {
     const path = this.props.location.pathname;
-    if (this.state.user) {
+    if (this.parseUser) {
       localStorage.removeItem("user");
 
       if (path.includes(`captured`)) {
@@ -36,7 +32,12 @@ class Menu extends Component {
         <button onClick={this.props.getCaptured}>{user.data.name}</button>
       </Link>
     ) : (
-      <Link to={`/login`}>
+      <Link
+        to={`/login`}
+        onClick={() => {
+          localStorage.setItem("preLoginPage", this.props.location.pathname);
+        }}
+      >
         <button>Guest</button>
       </Link>
     );
@@ -73,10 +74,10 @@ class Menu extends Component {
         <Link to="/home/groups/1">
           <button>Egg Groups</button>
         </Link>
-        {/* Links to login and register pages */}
         <Link to="/home">
           <button>Home</button>
         </Link>
+
         {this.getUserElements()}
         {this.getLoginElements()}
       </div>

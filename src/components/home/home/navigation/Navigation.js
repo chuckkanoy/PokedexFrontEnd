@@ -48,7 +48,13 @@ class Header extends Component {
   }
 
   clamp = (e) => {
-    let result = Math.max(1, Math.min(e, this.props.last));
+    let result = ``;
+
+    if (1 > e) {
+      result = this.props.last;
+    } else if (this.props.last < e) {
+      result = 1;
+    }
 
     if (!result) {
       result = e;

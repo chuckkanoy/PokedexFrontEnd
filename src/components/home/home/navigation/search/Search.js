@@ -5,14 +5,15 @@ import { withRouter } from "react-router-dom";
 
 class Search extends Component {
   state = {
-    name: this.props.match.params.name,
+    name: ``,
   };
 
-  searchPokemon = (e, current) => {
+  searchPokemon = (event, current) => {
     let link = ``;
     let flag = false;
     const path = this.props.location.pathname;
     const page = this.props.match.params.page;
+    const e = event.target.value;
 
     if (e !== "") {
       link = API_BASE_URL + `/pokemon?name=${e}&page=${current}`;
@@ -37,6 +38,10 @@ class Search extends Component {
     }
   };
 
+  handleChange = (event) => {
+    this.searchPokemon(event, 1);
+  };
+
   render() {
     return (
       <span className="searchBar">
@@ -45,8 +50,8 @@ class Search extends Component {
           className="mainSearch"
           type="text"
           placeholder="Pokédex"
-          onChange={(e) => this.searchPokemon(e.target.value, 1)}
-          value={this.state.name}
+          onChange={this.handleChange}
+          defaultValue={this.props.match.params.name}
         />
       </span>
     );
