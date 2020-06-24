@@ -27,7 +27,7 @@ class Home extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    this.checkConditions();
+    this.checkConditions(this.props.match.params.page);
   }
 
   componentWillUnmount() {
@@ -49,12 +49,12 @@ class Home extends Component {
     } else {
       element = (
         <div className="pokemonCardHolder">
-          {this.state.data.map((pokemon) => (
+          {this.state?.data.map((pokemon) => (
             <PokemonCard
               key={pokemon.id}
               pokemon={pokemon}
               updateView={this.updateView}
-              user={this.props.user}
+              // user={this.props.user}
             />
           ))}
         </div>
@@ -65,12 +65,22 @@ class Home extends Component {
   };
 
   loadUserData = async (link) => {
-    const result = await loadUserData(link).catch((error) => {
+    let result = await loadUserData(link).catch((error) => {
       console.log(error);
-      if (error.response.status === 500) {
-        this.props.history.push(`/home`);
+      if (error.response) {
+        if (error.response.status === 500) {
+          this.props.history.push(`/home`);
+        }
       }
     });
+
+    if (result?.meta.last_page < this.props.match.params.page) {
+      this.checkConditions(result.meta.last_page);
+    }
+
+    if (1 > this.props.match.params.page) {
+      this.checkConditions(1);
+    }
 
     if (result && this._isMounted) {
       this.setState(result);
@@ -81,36 +91,61 @@ class Home extends Component {
     return API_BASE_URL + path;
   }
 
-  checkConditions() {
+  checkConditions(page) {
     const name = this.props.match.params.name;
     const type = this.props.match.params.type;
     const ability = this.props.match.params.ability;
     const group = this.props.match.params.group;
     const path = this.props.location.pathname;
-    const page = this.props.match.params.page;
-    let link = ``;
+    let links = ``;
 
     if (name) {
-      link = `/pokemon?name=${name}&page=${page}`;
+      links = {
+        api: `/pokemon?name=${name}&page=${page}`,
+        browser: `/home/${name}/${page}`,
+      };
     } else if (type) {
-      link = `/pokemon/types/${type}?type=${type}&page=${page}`;
+      links = {
+        api: `/pokemon/types/${type}?type=${type}&page=${page}`,
+        browser: `/home/types/${type}/${page}`,
+      };
     } else if (ability) {
-      link = `/pokemon/abilities/${ability}?ability=${ability}&page=${page}`;
+      links = {
+        api: `/pokemon/abilities/${ability}?ability=${ability}&page=${page}`,
+        browser: `/home/abilities/${ability}/${page}`,
+      };
     } else if (group) {
-      link = `/pokemon/groups/${group}?group=${group}&page=${page}`;
+      links = {
+        api: `/pokemon/groups/${group}?group=${group}&page=${page}`,
+        browser: `/home/groups/${group}/${page}`,
+      };
     } else if (path.includes(`/captured`)) {
-      link = `/pokemon/captured?page=${page}`;
-    } else if (path === `/home/types/${page}`) {
-      link = `/pokemon/types?page=${page}`;
-    } else if (path === `/home/abilities/${page}`) {
-      link = `/pokemon/abilities?page=${page}`;
-    } else if (path === `/home/groups/${page}`) {
-      link = `/pokemon/groups?page=${page}`;
+      links = {
+        api: `/pokemon/captured?page=${page}`,
+        browser: `/home/captured/${page}`,
+      };
+    } else if (path.includes(`/home/types`)) {
+      console.log(page);
+      links = {
+        api: `/pokemon/types?page=${page}`,
+        browser: `/home/types/${page}`,
+      };
+    } else if (path.includes(`/home/abilities`)) {
+      links = {
+        api: `/pokemon/abilities?page=${page}`,
+        browser: `/home/abilities/${page}`,
+      };
+    } else if (path.includes(`/home/groups`)) {
+      links = {
+        api: `/pokemon/groups?page=${page}`,
+        browser: `/home/groups/${page}`,
+      };
     } else {
-      link = `/pokemon?page=${page}`;
+      links = { api: `/pokemon?page=${page}`, browser: `/home/${page}` };
     }
 
-    this.loadUserData(this.constructURL(link));
+    this.loadUserData(this.constructURL(links.api));
+    this.props.history.push(links.browser);
   }
 
   render() {

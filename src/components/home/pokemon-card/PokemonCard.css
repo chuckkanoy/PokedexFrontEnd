@@ -11,6 +11,23 @@
   font-size: 30px;
 }
 
+.pokemonCard:hover {
+  animation-name: elevate;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes elevate {
+  from {
+    box-shadow: 0px 0px;
+  }
+  to {
+    transform: translateX(-4px);
+    transform: translateY(-4px);
+    box-shadow: 4px 4px;
+  }
+}
+
 /* horizontal line on pokemon card */
 .pokemonCard hr {
   border: 2px thin black;

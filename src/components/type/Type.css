@@ -17,6 +17,23 @@
   font-size: 12pt;
 }
 
+.type > *:hover {
+  animation-name: elevate_type;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes elevate_type {
+  from {
+    box-shadow: 0px 0px;
+  }
+  to {
+    transform: translateX(-2px);
+    transform: translateY(-2px);
+    box-shadow: 2px 2px;
+  }
+}
+
 .type .poison {
   border-color: rebeccapurple;
   color: rebeccapurple;

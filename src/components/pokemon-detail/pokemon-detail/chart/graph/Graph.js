@@ -1,6 +1,7 @@
 import React from "react";
 import Bar from "./bar/Bar";
 import "./Graph.css";
+import PropTypes from "prop-types";
 
 class Graph extends React.Component {
   state = {
@@ -64,5 +65,9 @@ class Graph extends React.Component {
     );
   }
 }
+
+Graph.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+};
 
 export default Graph;

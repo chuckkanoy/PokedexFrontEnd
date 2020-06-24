@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Menu.css";
+import PropTypes from "prop-types";
 
 class Menu extends Component {
   logout = () => {
@@ -84,5 +85,9 @@ class Menu extends Component {
     );
   }
 }
+
+Menu.propTypes = {
+  getCaptured: PropTypes.func.isRequired,
+};
 
 export default withRouter(Menu);

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "./Navigation.css";
 import { withRouter } from "react-router-dom";
-import UserButton from "./menu/Menu.js";
+import Menu from "./menu/Menu.js";
 import Search from "./search/Search.js";
 import Arrow from "./arrow/Arrow.js";
+import PropTypes from "prop-types";
 
-class Header extends Component {
+class Navigation extends Component {
   getDirectionalLinks(link) {
     return {
       forwardLink:
@@ -68,17 +69,17 @@ class Header extends Component {
     const { forwardLink, backLink } = this.getLinks();
     return (
       <div className="header">
-        <UserButton />
+        <Menu />
         <Arrow link={backLink} identifier={"fas fa-arrow-left"} />
-        <Search
-          searchPokemon={this.props.searchPokemon}
-          loadUserData={this.props.loadUserData}
-          name={name}
-        />
+        <Search loadUserData={this.props.loadUserData} name={name} />
         <Arrow link={forwardLink} identifier={"fas fa-arrow-right"} />
       </div>
     );
   }
 }
 
-export default withRouter(Header);
+Navigation.propTypes = {
+  loadUserData: PropTypes.func.isRequired,
+};
+
+export default withRouter(Navigation);

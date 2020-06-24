@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import "./DetailCardHeader.css";
+import PropTypes from "prop-types";
 
 class DetailCardLabel extends Component {
   render() {
@@ -18,5 +19,9 @@ class DetailCardLabel extends Component {
     );
   }
 }
+
+DetailCardLabel.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+};
 
 export default withRouter(DetailCardLabel);

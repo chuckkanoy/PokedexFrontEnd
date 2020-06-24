@@ -1,13 +1,15 @@
 /* align content of page */
 .App {
   align-content: center;
+  display: flexbox;
 }
 
 /* pokemon card container */
 .pokemonCardHolder {
-  width: 1200px;
-  text-align: left;
+  width: 65%;
+  text-align: center;
   margin: auto;
+  display: block;
 }
 
 .attributeContainer {

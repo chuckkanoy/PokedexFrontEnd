@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { uuid } from "uuidv4";
 import Type from "../../../../type/Type.js";
 import "./DetailHeader.css";
+import PropTypes from "prop-types";
 
 class DetailHeader extends Component {
   state = {
@@ -24,5 +25,9 @@ class DetailHeader extends Component {
     );
   }
 }
+
+DetailHeader.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+};
 
 export default DetailHeader;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { uuid } from "uuidv4";
 import "./Profile.css";
+import PropTypes from "prop-types";
 
 class Profile extends Component {
   render() {
@@ -55,5 +56,9 @@ class Profile extends Component {
     );
   }
 }
+
+Profile.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+};
 
 export default Profile;

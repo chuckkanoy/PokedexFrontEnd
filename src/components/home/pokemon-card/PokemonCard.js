@@ -30,7 +30,7 @@ class PokemonCard extends Component {
           <img src={image} alt="pokemon" />
         </Link>
         <br />
-        {types.map((type) => (
+        {types?.map((type) => (
           <Type type={type} key={uuid()} />
         ))}
       </div>

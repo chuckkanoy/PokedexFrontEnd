@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Graph from "../../chart/graph/Graph.js";
 import "./MiddleContainer.css";
+import PropType from "prop-types";
 
 class MiddleContainer extends Component {
   render() {
@@ -26,5 +27,9 @@ class MiddleContainer extends Component {
     );
   }
 }
+
+MiddleContainer.propTypes = {
+  pokemon: PropType.object.isRequired,
+};
 
 export default MiddleContainer;

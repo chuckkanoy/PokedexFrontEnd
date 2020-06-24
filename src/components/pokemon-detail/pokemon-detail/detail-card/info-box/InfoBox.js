@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./InfoBox.css";
+import PropTypes from "prop-types";
 
 class InfoBox extends Component {
   render() {
@@ -14,5 +15,9 @@ class InfoBox extends Component {
     );
   }
 }
+
+InfoBox.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+};
 
 export default InfoBox;

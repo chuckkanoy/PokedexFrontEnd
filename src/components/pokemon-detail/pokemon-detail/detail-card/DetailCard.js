@@ -5,6 +5,7 @@ import InfoBox from "./info-box/InfoBox.js";
 import Profile from "./profile/Profile";
 import CaptureBar from "./capture-bar/CaptureBar.js";
 import "./DetailCard.css";
+import PropTypes from "prop-types";
 
 class DetailCard extends Component {
   render() {
@@ -19,10 +20,15 @@ class DetailCard extends Component {
         />
         <InfoBox pokemon={pokemon} />
         <Profile pokemon={pokemon} />
-        <CaptureBar user={this.props.user} />
+        <CaptureBar />
       </div>
     );
   }
 }
+
+DetailCard.propTypes = {
+  getPokemonColor: PropTypes.func.isRequired,
+  pokemon: PropTypes.object.isRequired,
+};
 
 export default DetailCard;

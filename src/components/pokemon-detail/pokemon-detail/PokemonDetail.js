@@ -83,7 +83,7 @@ class PokemonDetail extends Component {
   render() {
     return !this.state.pokemon.types ? (
       <div>
-        <UserButton user={this.props.user} />
+        <UserButton />
         <h1 className="pokemonDetailHeader">Loading...</h1>
       </div>
     ) : (
@@ -94,12 +94,11 @@ class PokemonDetail extends Component {
           height: "100vh",
         }}
       >
-        <UserButton user={this.props.user} />
+        <UserButton />
         <DetailCardLabel pokemon={this.state.pokemon} />
         <DetailCard
           pokemon={this.state.pokemon}
           getPokemonColor={this.getPokemonColor}
-          user={this.props.user}
         />
       </div>
     );

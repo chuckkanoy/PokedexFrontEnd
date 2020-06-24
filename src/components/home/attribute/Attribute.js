@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { uuid } from "uuidv4";
 import "./Attribute.css";
+import PropTypes from "prop-types";
 
 class Attribute extends Component {
   displayHelper = (identifier, attribute) => {
@@ -22,5 +23,9 @@ class Attribute extends Component {
     );
   }
 }
+
+Attribute.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default Attribute;
