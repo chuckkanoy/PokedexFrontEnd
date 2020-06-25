@@ -14,12 +14,15 @@ class Attribute extends Component {
   };
 
   render() {
-    return (
+    return this.props.data.data.data ? (
       <div className="attributeContainer">
-        {this.props.data.data.map((attribute) =>
+        {console.log(this.props.data.data.data)}
+        {this.props.data.data.data.map((attribute) =>
           this.displayHelper(this.props.label, attribute)
         )}
       </div>
+    ) : (
+      <h1>Loading...</h1>
     );
   }
 }

@@ -2,8 +2,9 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Security.css";
 import { Component } from "react";
-import { accessUser } from "../../API.js";
+import { post } from "../../API.js";
 import InputBox from "./input/InputBox.js";
+import { API_BASE_URL } from "../../config";
 
 class Register extends Component {
   state = {
@@ -62,7 +63,22 @@ class Register extends Component {
   };
 
   registerUser = async (data) => {
-    let result = await accessUser(`/register`, data);
+    let result = ``;
+
+    await post({ link: API_BASE_URL + `/register`, data: data })
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response));
+        result = true;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          if (error.response.status === 401) {
+            result = false;
+          }
+        }
+      });
+
     if (result) {
       if (localStorage.getItem("preLoginPage")) {
         this.props.history.push(localStorage.getItem("preLoginPage"));

@@ -2,7 +2,8 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Security.css";
 import { Component } from "react";
-import { accessUser } from "../../API.js";
+import { post } from "../../API.js";
+import { API_BASE_URL } from "../../config.js";
 import InputBox from "./input/InputBox";
 
 class Login extends Component {
@@ -45,7 +46,21 @@ class Login extends Component {
   };
 
   registerUser = async (data) => {
-    const result = await accessUser(`/login`, data);
+    let result = ``;
+
+    await post({ link: API_BASE_URL + `/login`, data: data })
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response));
+        result = true;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          if (error.response.status === 401) {
+            result = false;
+          }
+        }
+      });
 
     if (result) {
       if (localStorage.getItem("preLoginPage")) {

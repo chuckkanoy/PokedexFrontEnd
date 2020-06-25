@@ -87,7 +87,7 @@ class Menu extends Component {
 }
 
 Menu.propTypes = {
-  getCaptured: PropTypes.func.isRequired,
+  getCaptured: PropTypes.func,
 };
 
 export default withRouter(Menu);

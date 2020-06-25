@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { interactPokemon } from "../../../../../API.js";
+import { post } from "../../../../../API.js";
 import { withRouter } from "react-router-dom";
+import { API_BASE_URL } from "../../../../../config.js";
 
 class CaptureBar extends Component {
   state = {
@@ -18,11 +19,14 @@ class CaptureBar extends Component {
   interactPokemon = async (capture) => {
     let currentComponent = this;
     let link = capture ? `capture` : `release`;
-    let request = await interactPokemon(
-      link,
-      this.props.match.params.id,
-      this.getUser().data.api_token
-    );
+    let request = ``;
+    await post({
+      link:
+        API_BASE_URL + `/pokemon/` + link + `/` + this.props.match.params.id,
+      data: ``,
+    }).then((response) => {
+      request = { captureMessage: response.data };
+    });
 
     if (request) {
       currentComponent.setState(request);

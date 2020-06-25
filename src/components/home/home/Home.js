@@ -3,7 +3,7 @@ import Header from "./navigation/Navigation";
 import PokemonCard from "../pokemon-card/PokemonCard.js";
 import { API_BASE_URL } from "../../../config.js";
 import "./Home.css";
-import { loadUserData } from "../../../API";
+import { get } from "../../../API";
 import Attribute from "../attribute/Attribute";
 
 class Home extends Component {
@@ -47,34 +47,41 @@ class Home extends Component {
     } else if (path === `/home/groups/${page}`) {
       element = <Attribute label={"groups"} data={this.state} />;
     } else {
-      element = (
-        <div className="pokemonCardHolder">
-          {this.state?.data.map((pokemon) => (
-            <PokemonCard
-              key={pokemon.id}
-              pokemon={pokemon}
-              updateView={this.updateView}
-              // user={this.props.user}
-            />
-          ))}
-        </div>
-      );
+      if (this.state.data) {
+        element = (
+          <div className="pokemonCardHolder">
+            {this.state.data.map((pokemon) => (
+              <PokemonCard
+                key={pokemon.id}
+                pokemon={pokemon}
+                updateView={this.updateView}
+              />
+            ))}
+          </div>
+        );
+      }
     }
 
     return element;
   };
 
   loadUserData = async (link) => {
-    let result = await loadUserData(link).catch((error) => {
-      console.log(error);
-      if (error.response) {
-        if (error.response.status === 500) {
-          this.props.history.push(`/home`);
-        }
-      }
-    });
+    let result = ``;
 
-    if (result?.meta.last_page < this.props.match.params.page) {
+    await get(link)
+      .then((response) => {
+        result = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          if (error.response.status === 500) {
+            this.props.history.push(`/home`);
+          }
+        }
+      });
+
+    if (result.meta.last_page < this.props.match.params.page) {
       this.checkConditions(result.meta.last_page);
     }
 

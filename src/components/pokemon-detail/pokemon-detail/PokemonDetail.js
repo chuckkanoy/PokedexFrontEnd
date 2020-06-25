@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./PokemonDetail.css";
 import { API_BASE_URL } from "../../../config.js";
 import UserButton from "../../home/home/navigation/menu/Menu.js";
-import { loadUserData } from "../../../API.js";
+import { get } from "../../../API.js";
 import DetailCard from "./detail-card/DetailCard.js";
 import DetailCardLabel from "./detail-card-label/DetailCardHeader";
 
@@ -66,10 +66,10 @@ class PokemonDetail extends Component {
   };
 
   loadPokemonData = async (link) => {
-    const result = await loadUserData(link).catch(console.log);
+    const result = await get(link).catch(console.log);
 
     if (result) {
-      this.setState({ pokemon: result.data });
+      this.setState({ pokemon: result.data.data });
     }
   };
 
