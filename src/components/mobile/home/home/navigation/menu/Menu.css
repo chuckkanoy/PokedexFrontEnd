@@ -1,0 +1,24 @@
+/* buttons for user input */
+button {
+  text-decoration: none;
+  color: white;
+  height: 40px;
+  font-size: 20px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+button:active {
+  opacity: 0.75;
+}
+
+.userLinksMobile {
+  background-color: black;
+  opacity: 0.5;
+}
+
+.userLinksMobile button {
+  font-size: 10px;
+  padding: 0px 10px 0px 10px;
+  margin: 10px 5px 10px 5px;
+}

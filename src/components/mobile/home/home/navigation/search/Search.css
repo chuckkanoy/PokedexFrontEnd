@@ -1,0 +1,31 @@
+/* search bar wrapper */
+.searchBarMobile {
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 1);
+  opacity: 0.25;
+  margin-top: 5px;
+  padding: 10px 0px 35px 0px;
+  border-radius: 4px;
+  height: 5px;
+}
+
+/* search icon */
+.searchBarMobile .fa-search {
+  font-size: 20px;
+  margin: 0px 20px 0px 10px;
+  background-color: black;
+  opacity: 1;
+  padding: 0px;
+}
+
+/* search input */
+.mainSearchMobile {
+  background: transparent;
+  border: none;
+  color: white;
+  opacity: 100%;
+  font-size: 20px;
+  width: 150px;
+  margin: 0px 10px 0px 0px;
+  font-weight: bold;
+}

@@ -1,0 +1,13 @@
+.register h1 {
+  color: black;
+}
+
+/* submit button input */
+input[type="submit"] {
+  background-color: darkslategray;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  padding: 5px;
+  font-size: 32px;
+}

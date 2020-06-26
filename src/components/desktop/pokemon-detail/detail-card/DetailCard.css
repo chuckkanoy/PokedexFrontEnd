@@ -1,0 +1,21 @@
+.pokemonDetailCard {
+  display: grid;
+  color: black;
+  padding: 8px;
+  border-radius: 2px;
+  width: 40%;
+  height: auto;
+  text-align: left;
+  background-color: white;
+  margin: auto;
+  font-weight: normal;
+}
+
+.FadeInTransition-appear {
+  opacity: 0.01;
+}
+
+.FadeInTransition-appear.FadeInTransition-appear-active {
+  opacity: 1;
+  transition: all 0.5s ease-out;
+}

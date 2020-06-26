@@ -1,0 +1,44 @@
+/* wrapper for whole bar */
+.barObject {
+  height: 20px;
+  width: 200px;
+  z-index: 25;
+  text-align: justify;
+  position: relative;
+  color: white;
+  font-weight: bold;
+}
+
+/* background of bar */
+.background {
+  height: 100%;
+  background-color: silver;
+  position: absolute;
+  width: 50px;
+}
+
+/* percent of bar to fill background */
+.actual {
+  height: 100%;
+  background-color: green;
+  position: absolute;
+  text-align: justify;
+}
+
+/* text for statistics */
+.text {
+  position: absolute;
+  z-index: 1;
+}
+
+.actual {
+  animation-name: fillBar;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fillBar {
+  from {
+    width: 0;
+  }
+}

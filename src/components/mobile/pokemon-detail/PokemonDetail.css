@@ -1,0 +1,14 @@
+.pokemondDetail {
+  font-size: 16pt;
+}
+
+.detailWrapperMobile {
+  height: "100vh";
+}
+
+hr {
+  border: solid;
+  border-width: thin;
+  border-color: lightgray;
+  width: 100%;
+}

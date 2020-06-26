@@ -1,0 +1,8 @@
+/* wrapper for graph */
+.graph {
+  position: relative;
+  width: 50%px;
+  height: 200px;
+  background: white;
+  text-align: left;
+}
