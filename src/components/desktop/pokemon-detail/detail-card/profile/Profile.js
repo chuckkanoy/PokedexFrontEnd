@@ -9,7 +9,12 @@ class Profile extends Component {
     const pokemon = this.props.pokemon;
     return (
       <div>
-        <p className="profileHeader">&emsp;Profile</p>
+        <p
+          className="profileHeader"
+          style={{ backgroundColor: this.props.getPokemonColor() }}
+        >
+          &emsp;Profile
+        </p>
         <div className="profile">
           <label style={{ fontWeight: "bold" }}>
             Height:&emsp;&emsp;&emsp;&nbsp;

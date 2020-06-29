@@ -8,14 +8,16 @@ class Attribute extends Component {
   displayHelper = (identifier, attribute) => {
     return (
       <Link to={`/home/${identifier}/${attribute.name}/1`} key={uuid()}>
-        <button className={`${identifier}Button`}>{attribute.name}</button>
+        <button className={`${identifier}ButtonMobile`}>
+          {attribute.name}
+        </button>
       </Link>
     );
   };
 
   render() {
     return this.props.data.data ? (
-      <div className="attributeContainer">
+      <div className="attributeContainerMobile">
         {this.props.data.data.map((attribute) =>
           this.displayHelper(this.props.label, attribute)
         )}

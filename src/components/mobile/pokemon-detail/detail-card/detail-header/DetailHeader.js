@@ -11,16 +11,10 @@ class DetailHeader extends Component {
   render() {
     const pokemon = this.state.pokemon;
     return (
-      <div>
+      <div className="typeDetailMobile">
         {pokemon.types.map((type) => (
           <Type type={type} key={uuid()} />
         ))}
-        <label style={{ fontSize: "20pt" }}>
-          <label>
-            <strong>{pokemon.name}</strong>
-          </label>
-          <label className="pokemonNumber">&emsp; #{pokemon.id}</label>
-        </label>
       </div>
     );
   }

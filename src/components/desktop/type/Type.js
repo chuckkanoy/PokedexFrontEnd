@@ -2,6 +2,9 @@ import React from "react";
 import "./Type.css";
 import { Link } from "react-router-dom";
 import { uuid } from "uuidv4";
+import { Box } from "@chakra-ui/core";
+
+function getBox() {}
 
 function getType(type) {
   switch (type) {

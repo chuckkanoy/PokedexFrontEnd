@@ -49,6 +49,7 @@ class CaptureBar extends Component {
           >
             Release
           </button>
+          <br />
           <label>{this.state.captureMessage}</label>
         </div>
       );

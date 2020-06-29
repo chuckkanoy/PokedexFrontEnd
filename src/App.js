@@ -12,6 +12,14 @@ import Security from "./components/desktop/security/Security";
 import HomeMobile from "./components/mobile/home/home/Home";
 import SecurityMobile from "./components/mobile/security/Security";
 import PokemonDetailMobile from "./components/mobile/pokemon-detail/PokemonDetail";
+import {
+  ThemeProvider,
+  AlertTitle,
+  AlertIcon,
+  AlertDescription,
+  Alert,
+  CloseButton,
+} from "@chakra-ui/core";
 
 class App extends Component {
   state = {

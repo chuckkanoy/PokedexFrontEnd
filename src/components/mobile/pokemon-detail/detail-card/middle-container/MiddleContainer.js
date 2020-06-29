@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Graph from "../../chart/graph/Graph.js";
+import Graph from "./chart/graph/Graph.js";
 import "./MiddleContainer.css";
 import PropType from "prop-types";
 

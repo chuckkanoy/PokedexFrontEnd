@@ -14,14 +14,12 @@ class DetailCardLabel extends Component {
             localStorage.removeItem("currentPokemon");
           }}
         ></i>
-        {this.props.pokemon.name}
+        <label>
+          {this.props.pokemon.name}
+          &nbsp; #{this.props.pokemon.id}
+        </label>
         <div className="pokemonImageMobile">
-          <img
-            // crossOrigin={"anonymous"}
-            ref={this.imgRef}
-            src={JSON.parse(localStorage.getItem("currentPokemon")).image}
-            alt="pokemon"
-          />
+          <img ref={this.imgRef} src={this.props.pokemon.image} alt="pokemon" />
         </div>
       </div>
     );

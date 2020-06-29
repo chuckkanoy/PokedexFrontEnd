@@ -2,11 +2,11 @@
 /* wrapper for individual pokemon cards */
 .pokemonCardMobile {
   display: inline-block;
-  margin: 10px;
+  margin: 5px;
   color: black;
   padding: 8px;
   border-radius: 2px;
-  width: 125px;
+  width: 110px;
   background-color: rgb(255, 255, 255);
   font-size: 30px;
 }

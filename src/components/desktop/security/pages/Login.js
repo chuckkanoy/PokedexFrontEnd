@@ -40,7 +40,9 @@ class Login extends Component {
         email: this.state.email,
         password: this.state.password,
       };
-      this.props.registerUser(data, `/login`);
+      this.props.registerUser(data, `/login`).catch((error) => {
+        console.log(error);
+      });
     }
   };
 

@@ -27,7 +27,10 @@ class DetailCard extends Component {
             getPokemonColor={this.props.getPokemonColor}
           />
           <InfoBox pokemon={pokemon} />
-          <Profile pokemon={pokemon} />
+          <Profile
+            pokemon={pokemon}
+            getPokemonColor={this.props.getPokemonColor}
+          />
           <CaptureBar />
         </div>
       </ReactCSSTransitionGroup>

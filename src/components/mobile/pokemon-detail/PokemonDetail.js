@@ -5,6 +5,7 @@ import UserButton from "../home/home/navigation/menu/Menu.js";
 import { get } from "../../../API.js";
 import DetailCard from "./detail-card/DetailCard.js";
 import DetailCardLabel from "./detail-card-label/DetailCardHeader";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class PokemonDetailMobile extends Component {
   state = {
@@ -87,20 +88,28 @@ class PokemonDetailMobile extends Component {
         <h1 className="pokemonDetailHeaderMobile">Loading...</h1>
       </div>
     ) : (
-      <div
-        className="detailWrapperMobile"
-        style={{
-          backgroundColor: this.getPokemonColor(),
-          height: "100vh",
-        }}
+      <ReactCSSTransitionGroup
+        transitionName="FadeInTransition"
+        transitionAppear={true}
+        transitionAppearTimeout={1000}
+        transitionEnter={false}
+        transitionLeave={false}
       >
-        <UserButton />
-        <DetailCardLabel pokemon={this.state.pokemon} />
-        <DetailCard
-          pokemon={this.state.pokemon}
-          getPokemonColor={this.getPokemonColor}
-        />
-      </div>
+        <div
+          className="detailWrapperMobile"
+          style={{
+            backgroundColor: this.getPokemonColor(),
+            height: "100vh",
+          }}
+        >
+          <UserButton />
+          <DetailCardLabel pokemon={this.state.pokemon} />
+          <DetailCard
+            pokemon={this.state.pokemon}
+            getPokemonColor={this.getPokemonColor}
+          />
+        </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

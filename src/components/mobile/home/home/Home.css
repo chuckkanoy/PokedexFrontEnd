@@ -12,15 +12,6 @@
   display: block;
 }
 
-.attributeContainer {
-  width: 300px;
-  margin: auto;
-  transform: translateX(-5px);
-  padding: 10px;
-  background-color: white;
-  border-radius: 2px;
-}
-
 .AppearTransition-appear {
   opacity: 0.01;
   transform: translateY(80px);

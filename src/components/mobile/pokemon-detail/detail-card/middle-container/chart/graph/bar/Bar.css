@@ -1,7 +1,7 @@
 /* wrapper for whole bar */
 .barObjectMobile {
   height: 20px;
-  width: 100px;
+  width: 200px;
   z-index: 25;
   text-align: justify;
   position: relative;
