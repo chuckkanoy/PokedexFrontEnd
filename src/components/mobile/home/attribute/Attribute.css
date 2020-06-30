@@ -1,15 +1,18 @@
 .typesButtonMobile {
   width: 200px;
+  height: 40px;
   background-color: orange;
 }
 
 .groupsButtonMobile {
   width: 200px;
+  height: 40px;
   background-color: rgb(91, 168, 47);
 }
 
 .abilitiesButtonMobile {
   width: 200px;
+  height: 40px;
   background-color: rgb(134, 45, 134);
 }
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { uuid } from "uuidv4";
 
 function getType(type) {
-  switch (type) {
+  switch (type.toLowerCase()) {
     case "poison":
       return <label className="poison">{type}</label>;
     case "grass":
@@ -50,7 +50,7 @@ const Type = ({ type }) => {
   return (
     <div className="typeWrapper" key={uuid()}>
       <Link to={`/home/types/${type}/1`}>
-        <div className="typeMobile">{getType(type)}</div>
+        <div className="typeMobile">{getType(type.toUpperCase())}</div>
       </Link>
     </div>
   );

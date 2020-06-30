@@ -30,7 +30,9 @@ class Menu extends Component {
 
     return user ? (
       <Link to="/captured" className="captureButton">
-        <button onClick={this.props.getCaptured}>{user.data.name}</button>
+        <button className="userButtonMobile" onClick={this.props.getCaptured}>
+          {user.data.name}
+        </button>
       </Link>
     ) : (
       <Link
@@ -39,7 +41,7 @@ class Menu extends Component {
           localStorage.setItem("preLoginPage", this.props.location.pathname);
         }}
       >
-        <button>Guest</button>
+        <button className="userButtonMobile">Guest</button>
       </Link>
     );
   };
@@ -49,7 +51,12 @@ class Menu extends Component {
 
     return user ? (
       <Link to={`/home`}>
-        <button onClick={() => this.logout(this.props)}>Logout</button>
+        <button
+          className="userButtonMobile"
+          onClick={() => this.logout(this.props)}
+        >
+          Logout
+        </button>
       </Link>
     ) : (
       <Link
@@ -58,7 +65,7 @@ class Menu extends Component {
           localStorage.setItem("preLoginPage", this.props.location.pathname);
         }}
       >
-        <button>Login</button>
+        <button className="userButtonMobile">Login</button>
       </Link>
     );
   };
@@ -67,16 +74,16 @@ class Menu extends Component {
     return (
       <div className="userLinksMobile">
         <Link to="/home/types/1">
-          <button>Types</button>
+          <button className="userButtonMobile">Types</button>
         </Link>
         <Link to="/home/abilities/1">
-          <button>Abilities</button>
+          <button className="userButtonMobile">Abilities</button>
         </Link>
         <Link to="/home/groups/1">
-          <button>Egg Groups</button>
+          <button className="userButtonMobile">Egg Groups</button>
         </Link>
         <Link to="/home">
-          <button>Home</button>
+          <button className="userButtonMobile">Home</button>
         </Link>
 
         {this.getUserElements()}

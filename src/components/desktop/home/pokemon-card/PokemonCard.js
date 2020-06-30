@@ -3,7 +3,6 @@ import Type from "../../type/Type.js";
 import "./PokemonCard.css";
 import { Link } from "react-router-dom";
 import { uuid } from "uuidv4";
-import { Box } from "@chakra-ui/core";
 
 class PokemonCard extends Component {
   render() {

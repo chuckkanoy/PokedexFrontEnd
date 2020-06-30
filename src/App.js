@@ -12,14 +12,6 @@ import Security from "./components/desktop/security/Security";
 import HomeMobile from "./components/mobile/home/home/Home";
 import SecurityMobile from "./components/mobile/security/Security";
 import PokemonDetailMobile from "./components/mobile/pokemon-detail/PokemonDetail";
-import {
-  ThemeProvider,
-  AlertTitle,
-  AlertIcon,
-  AlertDescription,
-  Alert,
-  CloseButton,
-} from "@chakra-ui/core";
 
 class App extends Component {
   state = {
@@ -27,7 +19,6 @@ class App extends Component {
     mobile: false,
   };
   handleWindowSizeChange = () => {
-    console.log(window.innerWidth < 1000);
     if (window.innerWidth < 1000) {
       this.setState({ mobile: true });
     } else {
@@ -122,82 +113,84 @@ class App extends Component {
         </Switch>
       </Router>
     ) : (
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path="/home/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/home/types/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/home/abilities/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/home/groups/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/home/types/:type/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/home/abilities/:ability/:page"
-            render={(props) => <Home {...props} />}
-          />
+      <>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path="/home/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/home/types/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/home/abilities/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/home/groups/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/home/types/:type/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/home/abilities/:ability/:page"
+              render={(props) => <Home {...props} />}
+            />
 
-          <Route
-            exact
-            path="/home/captured/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/home/:name?/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/captured/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Route
-            exact
-            path="/pokemon/:id"
-            render={(props) => <PokemonDetail {...props} />}
-          />
-          <Route exact path="/login" render={() => <Security />} />
-          <Route exact path="/register" render={() => <Security />} />
-          <Route
-            exact
-            path="/home/groups/:group/:page"
-            render={(props) => <Home {...props} />}
-          />
-          <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
-          <Redirect
-            exact
-            from="/home/abilities/:ability"
-            to="/home/abilities/:ability/1"
-          />
-          <Redirect
-            exact
-            from="/home/groups/:group"
-            to="/home/groups/:group/1"
-          />
-          <Redirect exact from="/home/NaN" to="/home/1" />
-          <Redirect exact from="/captured" to="/captured/1" />
-          <Redirect to="/home/1" />
-        </Switch>
-      </Router>
+            <Route
+              exact
+              path="/home/captured/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/home/:name?/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/captured/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Route
+              exact
+              path="/pokemon/:id"
+              render={(props) => <PokemonDetail {...props} />}
+            />
+            <Route exact path="/login" render={() => <Security />} />
+            <Route exact path="/register" render={() => <Security />} />
+            <Route
+              exact
+              path="/home/groups/:group/:page"
+              render={(props) => <Home {...props} />}
+            />
+            <Redirect exact from="/home/types/:type" to="/home/types/:type/1" />
+            <Redirect
+              exact
+              from="/home/abilities/:ability"
+              to="/home/abilities/:ability/1"
+            />
+            <Redirect
+              exact
+              from="/home/groups/:group"
+              to="/home/groups/:group/1"
+            />
+            <Redirect exact from="/home/NaN" to="/home/1" />
+            <Redirect exact from="/captured" to="/captured/1" />
+            <Redirect to="/home/1" />
+          </Switch>
+        </Router>
+      </>
     );
   }
 }

@@ -96,7 +96,11 @@ class Register extends Component {
           <br />
           <br />
           Already a registered trainer?{" "}
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          <Link
+            to="/login"
+            style={{ textDecoration: "none" }}
+            onClick={this.props.clearState}
+          >
             Login Here
           </Link>
           <br />

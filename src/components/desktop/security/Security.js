@@ -9,16 +9,39 @@ import {
   AlertIcon,
   AlertDescription,
   AlertTitle,
-  CloseButton,
-  ThemeProvider,
-  withAlert,
 } from "@chakra-ui/core";
-import { compose } from "redux";
 
 class Security extends Component {
   state = {
     alreadyRegistered: ``,
   };
+
+  clearState = () => {
+    this.setState({ alreadyRegistered: `` });
+  };
+
+  getAlert(message) {
+    return (
+      <Alert
+        status="error"
+        bg="#ff4d4d"
+        p="2px"
+        borderRadius="2px"
+        width="450px"
+        margin="auto"
+        marginTop="10px"
+        alignItems="center"
+      >
+        <AlertIcon height="20px" width="20px" color="#3f0000" />
+        &emsp;&emsp;
+        <AlertTitle mr={2} color="#3f0000">
+          {message}
+        </AlertTitle>
+        <AlertDescription color="#3f0000">Try again</AlertDescription>
+      </Alert>
+    );
+  }
+
   registerUser = async (data, extension) => {
     let result = ``;
 
@@ -32,13 +55,13 @@ class Security extends Component {
           if (error.response.status === 401) {
             result = false;
             this.setState({
-              alreadyRegistered: (
-                <Alert status="error">
-                  <AlertIcon />
-                  <AlertTitle mr={2}>Invalid email or password!</AlertTitle>
-                  <AlertDescription>Try again</AlertDescription>
-                  <CloseButton position="absolute" right="8px" top="8px" />
-                </Alert>
+              alreadyRegistered: this.getAlert("Invalid email or password!"),
+            });
+          } else if (error.response.status === 422) {
+            result = false;
+            this.setState({
+              alreadyRegistered: this.getAlert(
+                "A user with that email already exists!"
               ),
             });
           }
@@ -57,15 +80,25 @@ class Security extends Component {
 
   render() {
     return this.props.location.pathname.includes(`register`) ? (
-      <div className="securityWrapper">
+      <>
         {this.state.alreadyRegistered}
-        <Register registerUser={this.registerUser} />
-      </div>
+        <div className="securityWrapper">
+          <Register
+            registerUser={this.registerUser}
+            clearState={this.clearState}
+          />
+        </div>
+      </>
     ) : (
-      <div className="securityWrapper">
+      <>
         {this.state.alreadyRegistered}
-        <Login registerUser={this.registerUser} />
-      </div>
+        <div className="securityWrapper">
+          <Login
+            registerUser={this.registerUser}
+            clearState={this.clearState}
+          />
+        </div>
+      </>
     );
   }
 }

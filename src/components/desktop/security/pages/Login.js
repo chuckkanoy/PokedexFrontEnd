@@ -74,7 +74,11 @@ class Login extends Component {
           <br />
           <br />
           No account?{" "}
-          <Link to="/register" style={{ textDecoration: "none" }}>
+          <Link
+            to="/register"
+            style={{ textDecoration: "none" }}
+            onClick={this.props.clearState}
+          >
             Sign Up
           </Link>
           <br />
