@@ -1,0 +1,53 @@
+.typesButton {
+  width: 300px;
+  height: 40px;
+  background-color: orange;
+}
+
+.groupsButton {
+  width: 300px;
+  height: 40px;
+  background-color: rgb(91, 168, 47);
+}
+
+.abilitiesButton {
+  width: 300px;
+  height: 40px;
+  background-color: rgb(134, 45, 134);
+}
+
+.attributeContainer {
+  width: 350px;
+  margin: auto;
+  transform: translateX(-5px);
+  padding: 10px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.typesButtonMobile {
+  width: 200px;
+  height: 40px;
+  background-color: orange;
+}
+
+.groupsButtonMobile {
+  width: 200px;
+  height: 40px;
+  background-color: rgb(91, 168, 47);
+}
+
+.abilitiesButtonMobile {
+  width: 200px;
+  height: 40px;
+  background-color: rgb(134, 45, 134);
+}
+
+.attributeContainerMobile {
+  width: 250px;
+  margin: auto;
+  transform: translateX(-5px);
+  padding: 10px;
+  background-color: white;
+  border-radius: 2px;
+}
