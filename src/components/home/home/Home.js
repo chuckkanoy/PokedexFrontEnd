@@ -93,6 +93,8 @@ class Home extends Component {
         if (error.response) {
           if (error.response.status === 500) {
             this.props.history.push(`/home`);
+          } else if (error.response.status === 429) {
+            console.log("You've gone light speed, please slow down!");
           }
         }
       });
